@@ -1,3 +1,16 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@font-face {
+  font-family: 'Sprat-Bold';
+  src: url('../public/fonts/Sprat-Bold.otf');
+}
+@font-face {
+  font-family: 'Sprat-Black';
+  src: url('../public/fonts/Sprat-Black.otf');
+}
+@font-face {
+  font-family: 'Sprat-Regular';
+  src: url('../public/fonts/Sprat-Regular.otf');
+}

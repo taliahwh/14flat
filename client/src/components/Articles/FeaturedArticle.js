@@ -15,7 +15,7 @@ const FeaturedArticle = () => {
             <p className="text-neutral-400">•</p>
             <p className="text-neutral-400">5 min read</p>
           </div>
-          <p className="text-neutral-600 ">
+          <p className="text-neutral-600 text-xs md:text-sm">
             ⸻ <span className="pl-3">BY ELLEN JHOSH</span>
           </p>
         </div>
@@ -28,7 +28,7 @@ const FeaturedArticle = () => {
         Lorem ipsum dolor sit amet consectetur adipisicing elit. Sapiente error,
         necessitatibus, placeat to dk facere labore quia, quis atque laborum
       </p>
-      <div className="space-x-3 md:hidden flex text-xs font-robotoLight">
+      <div className="space-x-3 md:hidden flex text-xs md:text-sm font-robotoLight">
         <p className="text-neutral-400">Feb 11</p>
         <p className="text-neutral-400">•</p>
         <p className="text-neutral-400">5 min read</p>

@@ -11,7 +11,7 @@ import cancel from '../assets/cancel.png';
 const Header = () => {
   const [mobileOpen, setMobileOpen] = useState(false);
   return (
-    <div className="bg-background">
+    <div className="bg-background pb-8">
       <nav className="flex items-center justify-between h-20 px-10 max-w-8xl mx-auto relative z-50">
         <div>
           {' '}

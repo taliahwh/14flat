@@ -14,3 +14,13 @@
   font-family: 'Sprat-Regular';
   src: url('../public/fonts/Sprat-Regular.otf');
 }
+
+@font-face {
+  font-family: 'Roboto-Light';
+  src: url('../public/fonts/Roboto-Light.ttf');
+}
+
+@font-face {
+  font-family: 'Roboto-Regular';
+  src: url('../public/fonts/Roboto-Regular.ttf');
+}

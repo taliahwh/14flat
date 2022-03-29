@@ -5,7 +5,7 @@ const FeaturedArticle = () => {
     <div className="flex flex-col space-y-2 pb-4 md:pl-8 pl-0">
       <div className="flex flex-col space-y-1">
         <img
-          className="w-full h-52 md:h-52 md:object-fill object-cover"
+          className="md:w-full h-48 w-full md:h-52 md:object-fill object-cover"
           src="https://sportshub.cbsistatic.com/i/r/2022/01/11/a886ee4f-011e-4deb-aca3-d209920410bc/thumbnail/1200x675/470eee4b9dbe3be529dee35e99bf0a05/jaylen-brown-jayson-tatum-celtics-getty.jpg"
           alt="Cover"
         />
@@ -21,8 +21,8 @@ const FeaturedArticle = () => {
         </div>
       </div>
 
-      <h1 className="text-2xl font-spratRegular">
-        Boston Celtics: Contenders or Pretenders?
+      <h1 className="text-xl md:text-2xl font-spratRegular ">
+        Boston Celtics: Are They For Real or Pretenders?
       </h1>
       <p className="font-robotoLight text-sm md:block hidden">
         Lorem ipsum dolor sit amet consectetur adipisicing elit. Sapiente error,

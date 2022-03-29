@@ -1,9 +1,6 @@
 import React, { useState } from 'react';
 import { Link, NavLink } from 'react-router-dom';
 
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { FaBars, FaTimes, FaRegUser } from 'react-icons/fa';
-
 import user from '../assets/user.png';
 import menu from '../assets/menu.png';
 import cancel from '../assets/cancel.png';
@@ -12,7 +9,7 @@ const Header = () => {
   const [mobileOpen, setMobileOpen] = useState(false);
   return (
     <div className="bg-background pb-8">
-      <nav className="flex items-center justify-between h-20 px-10 max-w-8xl mx-auto relative z-50">
+      <nav className="flex items-center justify-between h-20 max-w-8xl mx-auto relative z-50">
         <div>
           {' '}
           <NavLink to="/">

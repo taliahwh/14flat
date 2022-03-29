@@ -1,14 +1,15 @@
 import React from 'react';
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
+
+import Header from './components/Header';
+import HomeScreen from './screens/HomeScreen';
 
 const App = () => {
   return (
-    <div>
-      <h1 className="font-spratBlack  text-5xl mb-2">Black</h1>
-      <h1 className="font-spratBold text-5xl mb-2">Bold</h1>
-      <h1 className="font-spratRegular text-5xl mb-2">Regular</h1>
-      <p className="font-roboto text-5xl mb-2">Roboto</p>
-      {/* <p className="text-xl">Test body font style</p> */}
-    </div>
+    <BrowserRouter>
+      <Header />
+      <Routes>{/* <Route path="/" exact element={<HomeScreen />} /> */}</Routes>
+    </BrowserRouter>
   );
 };
 

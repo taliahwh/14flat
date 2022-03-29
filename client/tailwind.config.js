@@ -14,6 +14,7 @@ module.exports = {
       spratBold: ['Sprat-Bold', 'serif'],
       spratBlack: ['Sprat-Black', 'serif'],
       spratRegular: ['Sprat-Regular', 'serif'],
+      spratLight: ['Sprat-Light', 'serif'],
     },
     extend: {
       colors: {

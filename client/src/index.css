@@ -16,6 +16,11 @@
 }
 
 @font-face {
+  font-family: 'Sprat-Light';
+  src: url('../public/fonts/Sprat-CondensedLight.otf');
+}
+
+@font-face {
   font-family: 'Roboto-Light';
   src: url('../public/fonts/Roboto-Light.ttf');
 }

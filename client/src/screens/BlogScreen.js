@@ -21,6 +21,8 @@ const BlogScreen = () => {
             View all
           </NavLink>
 
+          <p className="text-xs font-spratRegular">or</p>
+
           <div className="inline-block relative w-36">
             <select className="font-spratRegular text-neutral-500 block appearance-none bg-background border-none  px-1 py-2 pr-8 focus:outline-none focus:shadow-outline">
               <option className="font-spratRegular">Filter by Team</option>
@@ -75,7 +77,9 @@ const BlogScreen = () => {
         </div> */}
 
         <div className="flex flex-col space-y-10 pt-2 md:pt-14">
-          <LatestArticle />
+          <Link to="/blog/1">
+            <LatestArticle />
+          </Link>
           <LatestArticle />
           <LatestArticle />
           <LatestArticle />

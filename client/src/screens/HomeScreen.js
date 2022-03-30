@@ -57,7 +57,7 @@ const HomeScreen = () => {
           <LatestArticle />
           <Link
             to="/"
-            className="md:hidden font-spratRegular text-sm text-neutral-900 text-center border-1 py-2 border-neutral-900"
+            className="md:hidden font-spratRegular text-sm text-neutral-900 text-center border-1 py-2 border-neutral-900 hover:shadow-md"
           >
             View all articles
           </Link>
@@ -91,7 +91,7 @@ const HomeScreen = () => {
           <LatestPodcast />
           <Link
             to="/"
-            className="md:hidden font-spratRegular text-sm text-neutral-900 text-center border-1 py-2 border-neutral-900"
+            className="md:hidden font-spratRegular text-sm text-neutral-900 text-center border-1 py-2 border-neutral-900 hover:shadow-md"
           >
             View all podcasts
           </Link>

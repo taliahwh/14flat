@@ -51,7 +51,9 @@ const HomeScreen = () => {
         </div>
 
         <div className="flex flex-col space-y-10 pt-5 md:pt-14">
-          <LatestArticle />
+          <Link to="/blog/1">
+            <LatestArticle />
+          </Link>
           <LatestArticle />
           <LatestArticle />
           <LatestArticle />
@@ -85,7 +87,9 @@ const HomeScreen = () => {
           </p>
         </div>
         <div className="flex flex-col space-y-10 pt-3 md:pt-14">
-          <LatestPodcast />
+          <Link to="/podcasts/1">
+            <LatestPodcast />
+          </Link>
           <LatestPodcast />
           <LatestPodcast />
           <LatestPodcast />

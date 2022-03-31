@@ -6,6 +6,7 @@ import CoverArticle from '../components/Articles/CoverArticle';
 import FeaturedArticle from '../components/Articles/FeaturedArticle';
 import LatestArticle from '../components/Articles/LatestArticle';
 import LatestPodcast from '../components/Podcasts/LatestPodcast';
+// import LatestPodcast from '../components/Podcasts/LatestPodcast';
 
 const HomeScreen = () => {
   return (

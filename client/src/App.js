@@ -15,6 +15,7 @@ const App = () => {
           <Route path="/blog" exact element={<BlogScreen />} />
           <Route path="/blog/:id" exact element={<ArticleDetailsScreen />} />
           <Route path="/podcasts/:id" exact element={<PodcastScreen />} />
+          {/* <Route path="/podcasts/:id" exact element={<PodcastScreen />} /> */}
         </Routes>
       </BrowserRouter>
     </div>

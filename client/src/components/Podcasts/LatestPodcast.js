@@ -1,7 +1,5 @@
 import React from 'react';
 
-import play from '../../assets/play.png';
-
 const LatestPodcast = () => {
   return (
     <>

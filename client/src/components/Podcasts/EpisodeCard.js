@@ -13,7 +13,7 @@ const EpisodeCard = () => {
             <h4 className="text-neutral-500 text-xs font-roboto font-bold">
               APR 1, 2022
             </h4>
-            <Link to="/">
+            <Link to="/podcasts/1">
               <h1 className="font-spratRegular text-2xl hover:underline">
                 Nerder vs No Dunks Trivia Battle
               </h1>

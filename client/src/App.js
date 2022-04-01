@@ -3,8 +3,10 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom';
 
 import HomeScreen from './screens/HomeScreen';
 import BlogScreen from './screens/BlogScreen';
-import ArticleDetailsScreen from './screens/ArticleDetailsScreen';
 import PodcastScreen from './screens/PodcastScreen';
+import ArticleDetailsScreen from './screens/ArticleDetailsScreen';
+import PodcastDetailsScreen from './screens/PodcastDetailsScreen';
+import PodcastShowScreen from './screens/PodcastShowScreen';
 
 const App = () => {
   return (
@@ -14,8 +16,17 @@ const App = () => {
           <Route path="/" exact element={<HomeScreen />} />
           <Route path="/blog" exact element={<BlogScreen />} />
           <Route path="/blog/:id" exact element={<ArticleDetailsScreen />} />
-          <Route path="/podcasts/:id" exact element={<PodcastScreen />} />
-          {/* <Route path="/podcasts/:id" exact element={<PodcastScreen />} /> */}
+          <Route path="/podcasts" exact element={<PodcastScreen />} />
+          <Route
+            path="/podcasts/:id"
+            exact
+            element={<PodcastDetailsScreen />}
+          />
+          <Route
+            path="/podcasts/show/:id"
+            exact
+            element={<PodcastShowScreen />}
+          />
         </Routes>
       </BrowserRouter>
     </div>

@@ -3,7 +3,6 @@ import { Link, NavLink } from 'react-router-dom';
 
 import Header from '../components/Header';
 import LatestArticle from '../components/Articles/LatestArticle';
-// import LatestArticle from '../components/Articles/LatestArticle';
 
 const BlogScreen = () => {
   return (

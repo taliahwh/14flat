@@ -15,9 +15,7 @@ const UserProfileScreen = () => {
       <Header />
 
       <h1 className="font-spratBold text-7xl lg:text-8xl pb-5">
-        {location.pathname.includes('/profile/view-articles')
-          ? '/Articles'
-          : '/Profile'}
+        {location.pathname.includes('view-articles') ? '/Articles' : '/Profile'}
       </h1>
 
       <div className="pt-8 md:pt-12 pb-8">

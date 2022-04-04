@@ -10,6 +10,7 @@ import PodcastShowScreen from './screens/PodcastShowScreen';
 import SignInScreen from './screens/SignInScreen';
 import SignUpScreen from './screens/SignUpScreen';
 import SavedArticlesScreen from './screens/SavedArticlesScreen';
+import UserProfileScreen from './screens/UserProfileScreen';
 
 const App = () => {
   return (
@@ -19,6 +20,8 @@ const App = () => {
           <Route path="/" exact element={<HomeScreen />} />
           <Route path="/signin" exact element={<SignInScreen />} />
           <Route path="/signup" exact element={<SignUpScreen />} />
+          <Route path="/profile" exact element={<UserProfileScreen />} />
+          <Route path="/view-articles" exact element={<UserProfileScreen />} />
           <Route path="/blog" exact element={<BlogScreen />} />
           <Route path="/blog/:id" exact element={<ArticleDetailsScreen />} />
           <Route path="/podcasts" exact element={<PodcastScreen />} />

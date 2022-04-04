@@ -11,7 +11,7 @@ const UserProfileScreen = () => {
   const [emailOpen, setEmailOpen] = useState(false);
 
   return (
-    <div className="bg-background px-4 md:px-10 max-w-8xl mx-auto h-screen">
+    <div className="bg-background px-4 md:px-10 max-w-8xl mx-auto h-screen md:h-full">
       <Header />
 
       <h1 className="font-spratBold text-7xl lg:text-8xl pb-5">

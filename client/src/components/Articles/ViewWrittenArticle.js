@@ -5,7 +5,7 @@ import { IoMdEye } from 'react-icons/io';
 const ViewWrittenArticle = () => {
   return (
     <>
-      <div className="md:flex space-x-10 hidden">
+      <div className="lg:flex space-x-10 hidden">
         <img
           className="w-[19rem] h-[12rem] object-fit"
           src="https://www.nbcsports.com/sites/rsnunited/files/article/hero/steph-curry-klay-thompson-warriors-Getty.jpg"
@@ -52,9 +52,9 @@ const ViewWrittenArticle = () => {
       </div>
 
       {/* Mobile view */}
-      <div className="flex flex-col w-full md:hidden space-y-2">
+      <div className="flex flex-col w-full lg:hidden space-y-2">
         <img
-          className="h-60 object-fit"
+          className="h-60 lg:object-fit object-cover"
           src="https://www.nbcsports.com/sites/rsnunited/files/article/hero/steph-curry-klay-thompson-warriors-Getty.jpg"
           alt="latest article"
         />

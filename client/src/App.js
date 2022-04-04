@@ -9,6 +9,7 @@ import PodcastDetailsScreen from './screens/PodcastDetailsScreen';
 import PodcastShowScreen from './screens/PodcastShowScreen';
 import SignInScreen from './screens/SignInScreen';
 import SignUpScreen from './screens/SignUpScreen';
+import SavedArticlesScreen from './screens/SavedArticlesScreen';
 
 const App = () => {
   return (
@@ -30,6 +31,11 @@ const App = () => {
             path="/podcasts/show/:id"
             exact
             element={<PodcastShowScreen />}
+          />
+          <Route
+            path="/saved-articles"
+            exact
+            element={<SavedArticlesScreen />}
           />
         </Routes>
       </BrowserRouter>

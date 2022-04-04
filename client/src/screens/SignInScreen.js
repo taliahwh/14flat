@@ -1,67 +1,67 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-import logo_white from '../assets/logo_white.png';
-
 const SignInScreen = () => {
-  return (
-    <div className="bg-black h-screen text-white font-roboto flex justify-center pt-10 md:pt-20">
-      <div className="w-[20rem] sm:w-[24rem] md:w-[30rem]">
-        <form>
-          <Link to="/">
-            <img
-              className="w-3/6 flex mx-auto"
-              src={logo_white}
-              alt="1-4 flat logo"
-            />
-          </Link>
+  const handleSubmit = () => {};
 
-          <div className="mb-6">
-            <label
-              for="email"
-              className="block mb-2 text-sm font-medium  text-gray-300"
-            >
-              Email
-            </label>
-            <input
-              type="email"
-              id="email"
-              className=" border text-sm  block w-full p-2.5 bg-gray-700 border-gray-600 placeholder-gray-400 text-white focus:outline-none"
-              placeholder="name@14flat.com"
-              required
-            />
-          </div>
-          <div className="mb-6">
-            <label
-              for="password"
-              className="block mb-2 text-sm font-medium  text-gray-300"
-            >
-              Password
-            </label>
-            <input
-              type="password"
-              id="password"
-              className=" border   text-sm  block w-full p-2.5 bg-gray-700 border-gray-600 placeholder-gray-400 text-white focus:outline-none"
-              required
-            />
-          </div>
+  return (
+    <div className="container px-10 py-20 bg-background h-screen font-roboto">
+      <form action="submit" onSubmit={handleSubmit}>
+        <div className="flex flex-col space-y-2 px-2 md:px-14 lg:px-52">
+          {/* <img src="" alt="booklyst" className="w-auto h-6" /> */}
+          <h1 className="text-center font-spratBold text-[8rem] md:text-[10rem]">
+            1-4
+          </h1>
+
+          <label
+            className="block mb-2 text-sm font-medium text-gray-900"
+            htmlFor="email"
+          >
+            Email
+          </label>
+          <input
+            type="email"
+            id="email"
+            // value={email}
+            className="bg-gray-50 border border-gray-300 text-gray-900 text-sm  focus:ring-neutral-500 focus:bg-neutral-100 focus:outline-none block w-full p-2.5"
+            placeholder="example@booklyst.com"
+            // onChange={(e) => setEmail(e.target.value)}
+          />
+
+          <label
+            className="block mb-2 text-sm font-medium text-gray-900 pt-2"
+            htmlFor="password"
+          >
+            Password
+          </label>
+          <input
+            type="password"
+            id="password"
+            // value={password}
+            className="bg-gray-50 border border-gray-300 text-gray-900 text-sm  focus:ring-neutral-500 focus:bg-neutral-100 focus:outline-none block w-full p-2.5"
+            placeholder="•••••••"
+            // onChange={(e) => setPassword(e.target.value)}
+          />
+
+          <div className="py-1"></div>
 
           <button
             type="submit"
-            className="text-white w-full font-medium text-sm px-5 py-2.5 text-center bg-gray-900 hover:bg-gray-800 focus:outline-none"
+            className="text-white w-full font-medium text-sm px-5 py-2.5 text-center bg-neutral-600 hover:bg-neutral-700 focus:outline-none transition-colors"
           >
             Sign in
           </button>
-          <p className="text-sm text-center pt-2">
+
+          <p className="text-sm block mb-2  text-neutral-600 pt-1 text-center">
             Don't have an account?{' '}
             <span>
-              <Link to="/signup" className="underline font-medium">
+              <Link to="/signup" className="font-medium underline ">
                 Sign up
               </Link>
             </span>
           </p>
-        </form>
-      </div>
+        </div>
+      </form>
     </div>
   );
 };

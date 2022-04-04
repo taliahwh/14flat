@@ -9,9 +9,11 @@ const SignUpScreen = () => {
       <form action="submit" onSubmit={handleSubmit}>
         <div className="flex flex-col space-y-2 px-2 md:px-14 lg:px-52">
           {/* <img src="" alt="booklyst" className="w-auto h-6" /> */}
-          <h1 className="text-center font-spratBold text-[8rem] md:text-[10rem]">
-            1-4
-          </h1>
+          <Link to="/">
+            <h1 className="text-center font-spratBold text-[8rem] md:text-[10rem]">
+              1-4
+            </h1>
+          </Link>
 
           <label
             className="block mb-2 text-sm font-medium text-gray-900"

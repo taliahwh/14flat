@@ -4,6 +4,9 @@ import { Transition } from '@headlessui/react';
 
 import Header from '../components/Header';
 import ViewWrittenArticle from '../components/Articles/ViewWrittenArticle';
+import AdminAnalyticsCard from '../components/Admin/AdminAnalyticsCard';
+import Alert from '../components/Alert';
+import UserRequestCard from '../components/Admin/UserRequestCard';
 
 const UserProfileScreen = () => {
   const location = useLocation();
@@ -11,11 +14,15 @@ const UserProfileScreen = () => {
   const [emailOpen, setEmailOpen] = useState(false);
 
   return (
-    <div className="bg-background px-4 md:px-10 max-w-8xl mx-auto h-screen md:h-full">
+    <div className="bg-background px-4 md:px-10 max-w-8xl mx-auto h-screen">
       <Header />
 
       <h1 className="font-spratBold text-7xl lg:text-8xl pb-5">
-        {location.pathname.includes('view-articles') ? '/Articles' : '/Profile'}
+        {location.pathname.includes('view-articles')
+          ? '/Articles'
+          : location.pathname.includes('/admin')
+          ? '/Admin'
+          : '/Profile'}
       </h1>
 
       <div className="pt-8 md:pt-12 pb-8">
@@ -24,8 +31,8 @@ const UserProfileScreen = () => {
             to="/profile"
             className={({ isActive }) =>
               isActive
-                ? 'font-spratRegular text-neutral-900 text-lg py-3 underline  hover:text-neutral-600'
-                : 'font-spratRegular text-neutral-500 text-lg py-3  hover:text-neutral-900 hover:underline'
+                ? 'font-spratRegular text-neutral-900 text-md md:text-lg py-3 underline  hover:text-neutral-600'
+                : 'font-spratRegular text-neutral-500 text-md md:text-lg py-3  hover:text-neutral-900 hover:underline'
             }
           >
             Account Settings
@@ -35,11 +42,22 @@ const UserProfileScreen = () => {
             to="/view-articles"
             className={({ isActive }) =>
               isActive
-                ? 'font-spratRegular text-lg py-3 underline  hover:text-neutral-600'
-                : 'font-spratRegular text-neutral-500 text-lg py-3  hover:text-neutral-900 hover:underline'
+                ? 'font-spratRegular text-md md:text-lg py-3 underline  hover:text-neutral-600'
+                : 'font-spratRegular text-neutral-500 text-md md:text-lg py-3  hover:text-neutral-900 hover:underline'
             }
           >
             View Articles
+          </NavLink>
+
+          <NavLink
+            to="/admin"
+            className={({ isActive }) =>
+              isActive
+                ? 'font-spratRegular text-md md:text-lg py-3 underline  hover:text-neutral-600'
+                : 'font-spratRegular text-neutral-500 text-md md:text-lg py-3  hover:text-neutral-900 hover:underline'
+            }
+          >
+            Admin
           </NavLink>
         </div>
 
@@ -94,11 +112,11 @@ const UserProfileScreen = () => {
                   <div className="flex space-x-2">
                     <button
                       type="sumbit"
-                      className="bg-green-500 px-8 py-2 text-white font-medium text-sm"
+                      className="bg-green-500 px-8 py-2 text-white font-medium text-sm transition ease-in-out hover:-translate-y-1 hover:scale-105  duration-300"
                     >
                       SAVE
                     </button>
-                    <button className="bg-neutral-800 px-8 py-2 text-white font-medium text-sm">
+                    <button className="bg-neutral-800 px-8 py-2 text-white font-medium text-sm transition ease-in-out hover:-translate-y-1 hover:scale-105  duration-300">
                       CANCEL
                     </button>
                   </div>
@@ -159,11 +177,11 @@ const UserProfileScreen = () => {
                   <div className="flex space-x-2">
                     <button
                       type="sumbit"
-                      className="bg-green-500 px-8 py-2 text-white font-medium text-sm"
+                      className="bg-green-500 px-8 py-2 text-white font-medium text-sm transition ease-in-out hover:-translate-y-1 hover:scale-105  duration-300"
                     >
                       SAVE
                     </button>
-                    <button className="bg-neutral-800 px-8 py-2 text-white font-medium text-sm">
+                    <button className="bg-neutral-800 px-8 py-2 text-white font-medium text-sm transition ease-in-out hover:-translate-y-1 hover:scale-105  duration-300">
                       CANCEL
                     </button>
                   </div>
@@ -181,6 +199,28 @@ const UserProfileScreen = () => {
             <ViewWrittenArticle />
             <ViewWrittenArticle />
             <ViewWrittenArticle />
+          </div>
+        )}
+
+        {/* Admin Screen */}
+        {location.pathname.includes('admin') && (
+          <div className="py-8 flex flex-col space-y-7">
+            <h1 className="font-spratRegular text-4xl">Analytics</h1>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
+              <AdminAnalyticsCard users={true} userCount={43} />
+              <AdminAnalyticsCard posts={true} postCount={367} />
+              <AdminAnalyticsCard views={true} dailyViews={1365} />
+            </div>
+            <h1 className="font-spratRegular text-4xl">Requests</h1>
+            <Alert variant="info">
+              There are no requests for writers at this time.
+            </Alert>
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
+              <UserRequestCard />
+              {/* <UserRequestCard />
+              <UserRequestCard />
+              <UserRequestCard /> */}
+            </div>
           </div>
         )}
       </div>

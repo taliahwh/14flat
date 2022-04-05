@@ -14,7 +14,7 @@ import UserProfileScreen from './screens/UserProfileScreen';
 
 const App = () => {
   return (
-    <div className="bg-background">
+    <div className="bg-background h-full">
       <BrowserRouter>
         <Routes>
           <Route path="/" exact element={<HomeScreen />} />

@@ -15,7 +15,7 @@ const ArticleDetailsScreen = () => {
         src="https://www.bostonglobe.com/resizer/NBlPUtk-sIXAiHFy8_3Fu7-OQqU=/arc-anglerfish-arc2-prod-bostonglobe/public/HNAXSDKHOE2FCGBWAGE5I53MJY.jpg"
         alt="cover"
       />
-      <div className="bg-background px-4 md:px-0 max-w-2xl mx-auto h-screen pt-10 flex flex-col items-center">
+      <div className="bg-background px-4 md:px-0 max-w-2xl mx-auto h-full py-10 flex flex-col items-center">
         <h1 className="font-spratRegular text-3xl md:text-4xl text-center">
           Ime Udoka unplugged: On Jayson Tatum, Jaylen Brown, the Celtics’ surge
           and the film session that turned the tide

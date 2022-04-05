@@ -26,7 +26,7 @@ const SignInScreen = () => {
             id="email"
             // value={email}
             className="bg-gray-50 border border-gray-300 text-gray-900 text-sm  focus:ring-neutral-500 focus:bg-neutral-100 focus:outline-none block w-full p-2.5"
-            placeholder="example@booklyst.com"
+            placeholder="email@14flat.com"
             // onChange={(e) => setEmail(e.target.value)}
           />
 

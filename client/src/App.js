@@ -11,6 +11,7 @@ import SignInScreen from './screens/SignInScreen';
 import SignUpScreen from './screens/SignUpScreen';
 import SavedArticlesScreen from './screens/SavedArticlesScreen';
 import UserProfileScreen from './screens/UserProfileScreen';
+import CreateArticleScreen from './screens/CreateArticleScreen';
 
 const App = () => {
   return (
@@ -21,6 +22,7 @@ const App = () => {
           <Route path="/signin" exact element={<SignInScreen />} />
           <Route path="/signup" exact element={<SignUpScreen />} />
           <Route path="/profile" exact element={<UserProfileScreen />} />
+          <Route path="/new-article" exact element={<CreateArticleScreen />} />
           <Route path="/view-articles" exact element={<UserProfileScreen />} />
           <Route path="/admin" exact element={<UserProfileScreen />} />
           <Route path="/blog" exact element={<BlogScreen />} />

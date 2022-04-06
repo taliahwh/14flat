@@ -1,13 +1,20 @@
 import React, { useState } from 'react';
 import ImageUploading from 'react-images-uploading';
-import { BsFileEarmarkImage, BsCardImage } from 'react-icons/bs';
-import { FcCancel } from 'react-icons/fc';
+import { CKEditor } from '@ckeditor/ckeditor5-react';
+import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
+
+import { BsFileEarmarkImage } from 'react-icons/bs';
 import { FiCheck } from 'react-icons/fi';
 import { MdCancel } from 'react-icons/md';
 
 const CreateArticleScreen = () => {
   const [image, setImage] = useState([]);
   const maxNumber = 1;
+
+  const editorConfiguration = {
+    plugins: [],
+    toolbar: ['bold', 'italic'],
+  };
 
   const handleFormSubmit = (e) => {
     e.preventDefault();
@@ -48,14 +55,7 @@ const CreateArticleScreen = () => {
             maxNumber={maxNumber}
             dataURLKey="data_url"
           >
-            {({
-              imageList,
-              onImageUpload,
-              onImageUpdate,
-              onImageRemove,
-              isDragging,
-              dragProps,
-            }) => (
+            {({ imageList, onImageUpload, onImageRemove, dragProps }) => (
               <div className="bg-neutral-200 px-2 py-2">
                 <div className="grid grid-cols-1">
                   <div className="upload__image-wrapper col-span-1 py-6 flex justify-center border-1 border-dashed border-neutral-50 font-roboto">
@@ -118,14 +118,25 @@ const CreateArticleScreen = () => {
           </ImageUploading>
         </div>
 
-        <textarea
-          name="article"
-          id="article"
-          cols="30"
-          rows="10"
-          placeholder="Start writing..."
-          className="w-full font-roboto text-ld py-2 text-neutral-800 bg-background border-1 border-neutral-900 focus:outline-none"
-        ></textarea>
+        <CKEditor
+          editor={ClassicEditor}
+          config={editorConfiguration}
+          data="<p>Start writing your article..</p>"
+          onReady={(editor) => {
+            // You can store the "editor" and use when it is needed.
+            console.log('Editor is ready to use!', editor);
+          }}
+          onChange={(event, editor) => {
+            const data = editor.getData();
+            // console.log({ event, editor, data });
+          }}
+          onBlur={(event, editor) => {
+            // console.log('Blur.', editor);
+          }}
+          onFocus={(event, editor) => {
+            // console.log('Focus.', editor);
+          }}
+        />
 
         {/* <input
           type="text"

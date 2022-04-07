@@ -6,6 +6,7 @@ import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import { BsFileEarmarkImage } from 'react-icons/bs';
 import { FiCheck } from 'react-icons/fi';
 import { MdCancel } from 'react-icons/md';
+// import { MdCancel } from 'react-icons/md';
 
 const CreateArticleScreen = () => {
   const [image, setImage] = useState([]);

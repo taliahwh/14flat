@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 
 import Header from '../components/Header';
 import EpisodeCard from '../components/Podcasts/EpisodeCard';
+// import EpisodeCard from '../components/Podcasts/EpisodeCard';
 
 const PodcastShowScreen = () => {
   return (

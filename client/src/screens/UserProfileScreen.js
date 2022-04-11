@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import { Link, NavLink, useLocation } from 'react-router-dom';
 import { Transition } from '@headlessui/react';
 
+import { MdCircleNotifications } from 'react-icons/md';
+
 import Header from '../components/Header';
 import ViewWrittenArticle from '../components/Articles/ViewWrittenArticle';
 import AdminAnalyticsCard from '../components/Admin/AdminAnalyticsCard';
@@ -59,6 +61,10 @@ const UserProfileScreen = () => {
           >
             Admin
           </NavLink>
+
+          <span className="hidden sm:inline-flex bg-neutral-300 text-neutral-800 text-xs font-medium font-roboto items-center px-2.5 py-0.5 rounded">
+            <MdCircleNotifications className="text-sm mr-1" />2 requests
+          </span>
         </div>
 
         {/* Account Settings Screen */}
@@ -216,6 +222,7 @@ const UserProfileScreen = () => {
               There are no requests for writers at this time.
             </Alert>
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
+              <UserRequestCard />
               <UserRequestCard />
               {/* <UserRequestCard />
               <UserRequestCard />

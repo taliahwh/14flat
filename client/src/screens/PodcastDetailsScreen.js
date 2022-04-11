@@ -1,12 +1,12 @@
 import React from 'react';
+import AudioPlayer from 'react-h5-audio-player';
+import 'react-h5-audio-player/lib/styles.css';
 
 import Header from '../components/Header';
 
-import { FaTwitterSquare } from 'react-icons/fa';
-import { FaFacebookSquare } from 'react-icons/fa';
-import { FaLinkedin } from 'react-icons/fa';
-// import { FaLinkedin } from 'react-icons/fa';
-// import { FaLinkedin } from 'react-icons/fa';
+import { FaFacebookSquare, FaTwitterSquare, FaLinkedin } from 'react-icons/fa';
+import { GoPlay } from 'react-icons/go';
+import { GiPauseButton } from 'react-icons/gi';
 
 const PodcastDetailsScreen = () => {
   return (
@@ -35,8 +35,22 @@ const PodcastDetailsScreen = () => {
         </div>
       </div>
       <div>
-        <div className="hidden border-1 border-neutral-900 py-10 px-5 sm:flex justify-center shadow-md mt-10">
+        {/* <div className="hidden border-1 border-neutral-900 py-10 px-5 sm:flex justify-center shadow-md mt-10">
           Media player
+        </div> */}
+        <div className="pt-5 drop-shadow hidden sm:flex">
+          <AudioPlayer
+            // autoPlay
+            src="https://www.learningcontainer.com/wp-content/uploads/2020/02/Kalimba.mp3"
+            onPlay={(e) => console.log('onPlay')}
+            layout="stacked-reverse"
+            showJumpControls={false}
+            customIcons={{
+              play: <GoPlay className="text-neutral-500" />,
+              pause: <GiPauseButton className="text-neutral-500 text-md" />,
+            }}
+            // other props here
+          />
         </div>
       </div>
 
@@ -57,8 +71,22 @@ const PodcastDetailsScreen = () => {
           alt="podcast"
         />
         {/* Media player */}
-        <div className="border-1 border-neutral-900 py-10 px-5 flex justify-center shadow-md">
+        {/* <div className="border-1 border-neutral-900 py-10 px-5 flex justify-center shadow-md">
           Media player
+        </div> */}
+        <div className="pt-5 drop-shadow flex">
+          <AudioPlayer
+            // autoPlay
+            src="https://www.learningcontainer.com/wp-content/uploads/2020/02/Kalimba.mp3"
+            onPlay={(e) => console.log('onPlay')}
+            layout="stacked-reverse"
+            showJumpControls={false}
+            customIcons={{
+              play: <GoPlay className="text-neutral-500" />,
+              pause: <GiPauseButton className="text-neutral-500 text-md" />,
+            }}
+            // other props here
+          />
         </div>
       </div>
       {/* Border */}

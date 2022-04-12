@@ -1,15 +1,24 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
 
+// ACTIONS
+import { listArticles } from '../actions/articleActions';
+
+// COMPONENTS
 import Header from '../components/Header';
 import CoverArticle from '../components/Articles/CoverArticle';
 import FeaturedArticle from '../components/Articles/FeaturedArticle';
 import LatestArticle from '../components/Articles/LatestArticle';
 import LatestPodcast from '../components/Podcasts/LatestPodcast';
-// import LatestPodcast from '../components/Podcasts/LatestPodcast';
-// import LatestPodcast from '../components/Podcasts/LatestPodcast';
 
 const HomeScreen = () => {
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(listArticles());
+  }, [dispatch]);
+
   return (
     <div className="bg-background px-4 md:px-10 max-w-8xl mx-auto">
       <Header />

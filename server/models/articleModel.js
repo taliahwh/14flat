@@ -1,6 +1,6 @@
 import mongoose from 'mongoose';
 
-const articleSchema = new mongoose.Schema(
+export const articleSchema = new mongoose.Schema(
   {
     title: {
       type: String,
@@ -23,8 +23,14 @@ const articleSchema = new mongoose.Schema(
       default: [],
     },
     writtenBy: {
-      type: mongoose.Schema.Types.Mixed,
-      required: true,
+      name: {
+        type: String,
+        required: true,
+      },
+      writerId: {
+        type: mongoose.Schema.Types.ObjectId,
+        required: true,
+      },
     },
   },
   {

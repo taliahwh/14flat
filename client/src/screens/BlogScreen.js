@@ -1,11 +1,29 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { Link, NavLink } from 'react-router-dom';
 
+// Components
 import Header from '../components/Header';
+import Alert from '../components/Alert';
+import Loader from '../components/Loader';
 import LatestArticle from '../components/Articles/LatestArticle';
-// import LatestArticle from '../components/Articles/LatestArticle';
+
+// Actions
+import { listArticles } from '../actions/articleActions';
 
 const BlogScreen = () => {
+  const dispatch = useDispatch();
+
+  const {
+    loading: loadingArticleList,
+    articles,
+    error: errorArticleList,
+  } = useSelector((state) => state.articleList);
+
+  useEffect(() => {
+    dispatch(listArticles());
+  }, [dispatch]);
+
   return (
     <div className="bg-background px-4 md:px-10 max-w-8xl mx-auto">
       <Header />
@@ -78,18 +96,26 @@ const BlogScreen = () => {
         </div> */}
 
         <div className="flex flex-col space-y-10 pt-2 md:pt-14">
-          <Link to="/blog/1">
-            <LatestArticle />
-          </Link>
-          <LatestArticle />
-          <LatestArticle />
-          <LatestArticle />
-          <Link
-            to="/"
-            className="font-spratRegular text-sm text-neutral-900 text-center border-1 py-2 border-neutral-900 hover:shadow-md"
-          >
-            Show more
-          </Link>
+          {loadingArticleList ? (
+            <Loader />
+          ) : errorArticleList ? (
+            <Alert variant="error">{errorArticleList}</Alert>
+          ) : (
+            <>
+              {articles.map((article) => (
+                <Link to={`/blog/${article._id}`} key={article._id}>
+                  <LatestArticle article={article} />
+                </Link>
+              ))}
+
+              <Link
+                to="/"
+                className="md:hidden font-spratRegular text-sm text-neutral-900 text-center border-1 py-2 border-neutral-900 hover:shadow-md"
+              >
+                Show more
+              </Link>
+            </>
+          )}
         </div>
       </div>
     </div>

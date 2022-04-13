@@ -4,7 +4,7 @@ const Alert = ({ variant, children }) => {
   return (
     <div
       className={
-        variant === 'danger'
+        variant === 'error'
           ? 'p-4 mb-4 text-sm text-red-700 bg-red-100 font-robotoLight'
           : variant === 'warning'
           ? 'p-4 mb-4 text-sm text-yellow-700 bg-yellow-100 font-robotoLight'
@@ -22,7 +22,7 @@ const Alert = ({ variant, children }) => {
 };
 
 Alert.defaultProps = {
-  variant: 'danger',
+  variant: 'error',
 };
 
 export default Alert;

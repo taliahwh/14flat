@@ -1,12 +1,14 @@
 import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 // ACTIONS
 import { listArticles } from '../actions/articleActions';
 
 // COMPONENTS
 import Header from '../components/Header';
+import Loader from '../components/Loader';
+import Alert from '../components/Alert';
 import CoverArticle from '../components/Articles/CoverArticle';
 import FeaturedArticle from '../components/Articles/FeaturedArticle';
 import LatestArticle from '../components/Articles/LatestArticle';
@@ -14,6 +16,12 @@ import LatestPodcast from '../components/Podcasts/LatestPodcast';
 
 const HomeScreen = () => {
   const dispatch = useDispatch();
+
+  const {
+    loading: loadingArticleList,
+    articles,
+    error: errorArticleList,
+  } = useSelector((state) => state.articleList);
 
   useEffect(() => {
     dispatch(listArticles());
@@ -53,7 +61,6 @@ const HomeScreen = () => {
             View all
           </Link>
         </div>
-
         {/* Mobile Header View */}
         <div className="block md:hidden w-full border-t-1 border-b-1 border-neutral-300">
           <p className="font-spratRegular text-center text-xl md:text-3xl py-3">
@@ -62,18 +69,26 @@ const HomeScreen = () => {
         </div>
 
         <div className="flex flex-col space-y-10 pt-5 md:pt-14">
-          <Link to="/blog/1">
-            <LatestArticle />
-          </Link>
-          <LatestArticle />
-          <LatestArticle />
-          <LatestArticle />
-          <Link
-            to="/"
-            className="md:hidden font-spratRegular text-sm text-neutral-900 text-center border-1 py-2 border-neutral-900 hover:shadow-md"
-          >
-            View all articles
-          </Link>
+          {loadingArticleList ? (
+            <Loader />
+          ) : errorArticleList ? (
+            <Alert variant="error">{errorArticleList}</Alert>
+          ) : (
+            <>
+              {articles.map((article) => (
+                <Link to={`/blog/${article._id}`} key={article._id}>
+                  <LatestArticle article={article} />
+                </Link>
+              ))}
+
+              <Link
+                to="/"
+                className="md:hidden font-spratRegular text-sm text-neutral-900 text-center border-1 py-2 border-neutral-900 hover:shadow-md"
+              >
+                View all articles
+              </Link>
+            </>
+          )}
         </div>
       </div>
 

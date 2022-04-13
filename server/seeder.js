@@ -18,11 +18,16 @@ const importData = async () => {
     await User.deleteMany();
 
     const createdUsers = await User.insertMany(users);
-    const adminUser = createdUsers[0]._id;
+    const adminUser = { id: createdUsers[0]._id, name: createdUsers[0].name };
 
     const sampleArticles = articles.map((article) => {
-      return { ...article, writtenBy: adminUser };
+      return {
+        ...article,
+        writtenBy: { name: adminUser.name, writerId: adminUser.id },
+      };
     });
+
+    // console.log(adminUser);
 
     await Article.insertMany(sampleArticles);
 

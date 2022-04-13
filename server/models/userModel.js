@@ -1,5 +1,6 @@
 import mongoose from 'mongoose';
 import Article from './articleModel.js';
+import { articleSchema } from './articleModel.js';
 
 const userSchema = new mongoose.Schema(
   {
@@ -20,14 +21,14 @@ const userSchema = new mongoose.Schema(
       type: Boolean,
       required: true,
     },
-    // articles: {
-    //   type: [Article],
-    //   default: [],
-    // },
-    // savedArticles: {
-    //   type: [Article],
-    //   default: [],
-    // },
+    articles: {
+      type: [articleSchema],
+      default: [],
+    },
+    savedArticles: {
+      type: [articleSchema],
+      default: [],
+    },
   },
   {
     // Automatically generates createdAt and updatedAt fields

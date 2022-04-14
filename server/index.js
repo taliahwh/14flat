@@ -3,9 +3,13 @@ import dotenv from 'dotenv';
 import connectDB from './config/db.js';
 import bodyParser from 'body-parser';
 import colors from 'colors';
+
 import { notFound, errorHandler } from './middleware/errorMiddleware.js';
 
+import getSpotifyAuth from './config/spotify_config.js';
+
 import articleRoutes from './routes/articleRoutes.js';
+import spotifyRoutes from './routes/spotifyRoutes.js';
 
 dotenv.config();
 
@@ -17,10 +21,13 @@ const app = express();
 app.use(bodyParser.json());
 
 app.use('/api/articles', articleRoutes);
+app.use('/api/podcasts', spotifyRoutes);
 
 app.get('/', (req, res) => {
   res.send('API is running...');
 });
+
+// getSpotifyAuth();
 
 // Error handling middleware
 app.use(notFound);

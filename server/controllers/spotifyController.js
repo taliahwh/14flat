@@ -35,6 +35,7 @@ const getFeaturedPodcasts = asyncHandler(async (req, res) => {
 // @desc Fetch podcast from Spotify API by id
 // @route GET /podcasts/show/:id
 // @access Public
+// @access Public
 const getPodcastById = asyncHandler(async (req, res) => {
   const id = req.params.id;
   //request token using getSpotifyAuth() function

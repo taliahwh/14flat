@@ -27,6 +27,7 @@ app.get('/', (req, res) => {
   res.send('API is running...');
 });
 
+// used to get spotify API token
 // getSpotifyAuth();
 
 // Error handling middleware

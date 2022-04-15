@@ -7,9 +7,18 @@ import {
   articleListReducer,
 } from './reducers/articleReducers';
 
+import {
+  featuredPodcastReducer,
+  podcastDetailsReducer,
+  podcastEpisodeDetailsReducer,
+} from './reducers/podcastReducers';
+
 const reducer = combineReducers({
   articleList: articleListReducer,
   articleDetails: articleDetailsReducer,
+  featuredPodcasts: featuredPodcastReducer,
+  podcastDetails: podcastDetailsReducer,
+  episodeDetails: podcastEpisodeDetailsReducer,
 });
 
 // Initial state when the redux store loads

@@ -1,6 +1,5 @@
 import asyncHandler from 'express-async-handler';
 import axios from 'axios';
-import qs from 'qs';
 
 import getSpotifyAuth from '../config/spotify_config.js';
 
@@ -53,8 +52,8 @@ const getPodcastById = asyncHandler(async (req, res) => {
   }
 });
 
-// @desc Fetch episode details from Spotify API by Podcast id
-// @route GET /podcasts/:id/all-episodes
+// @desc Fetch list of podcast's episodes from Spotify API by Podcast id
+// @route GET /podcasts/all-episodes/:id
 // @access Public
 const getPodcastEpisodesById = asyncHandler(async (req, res) => {
   const id = req.params.id;
@@ -76,8 +75,8 @@ const getPodcastEpisodesById = asyncHandler(async (req, res) => {
   }
 });
 
-// @desc Fetch list of podcast's episodes by Id from Spotify API
-// @route GET /podcasts/episode/:id
+// @desc Fetch podcast episode details by Id from Spotify API by episode id
+// @route GET /podcasts/episode-details/:id
 // @access Public
 const getEpisodeDetailsById = asyncHandler(async (req, res) => {
   const id = req.params.id;
@@ -93,6 +92,7 @@ const getEpisodeDetailsById = asyncHandler(async (req, res) => {
         },
       }
     );
+
     return res.json(data);
   } catch (error) {
     console.log(error);

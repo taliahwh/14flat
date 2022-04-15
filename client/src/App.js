@@ -5,7 +5,7 @@ import HomeScreen from './screens/HomeScreen';
 import BlogScreen from './screens/BlogScreen';
 import PodcastScreen from './screens/PodcastScreen';
 import ArticleDetailsScreen from './screens/ArticleDetailsScreen';
-import PodcastDetailsScreen from './screens/PodcastDetailsScreen';
+import PodcastEpisodeScreen from './screens/PodcastEpisodeScreen';
 import PodcastShowScreen from './screens/PodcastShowScreen';
 import SignInScreen from './screens/SignInScreen';
 import SignUpScreen from './screens/SignUpScreen';
@@ -29,9 +29,9 @@ const App = () => {
           <Route path="/blog/:id" exact element={<ArticleDetailsScreen />} />
           <Route path="/podcasts" exact element={<PodcastScreen />} />
           <Route
-            path="/podcasts/:id"
+            path="/podcasts/episode/:id"
             exact
-            element={<PodcastDetailsScreen />}
+            element={<PodcastEpisodeScreen />}
           />
           <Route
             path="/podcasts/show/:id"

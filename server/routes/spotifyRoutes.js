@@ -10,8 +10,13 @@ import {
 const router = express.Router();
 
 router.get('/show/:id', getPodcastById);
+
 router.get('/featured-shows', getFeaturedPodcasts);
-router.get('/episodes/:id', getEpisodeDetailsById);
-router.get('/:id/all-episodes', getPodcastEpisodesById);
+
+router.get('/all-episodes/:id', getPodcastEpisodesById);
+
+router.get('/episode-details/:id', getEpisodeDetailsById);
+
+router.get('/artist/:id', getArtistById);
 
 export default router;

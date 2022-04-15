@@ -6,7 +6,7 @@ import colors from 'colors';
 
 import { notFound, errorHandler } from './middleware/errorMiddleware.js';
 
-import getSpotifyAuth from './config/spotify_config.js';
+// import getSpotifyAuth from './config/spotify_config.js';
 
 import articleRoutes from './routes/articleRoutes.js';
 import spotifyRoutes from './routes/spotifyRoutes.js';

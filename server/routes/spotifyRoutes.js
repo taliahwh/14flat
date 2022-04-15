@@ -17,6 +17,4 @@ router.get('/all-episodes/:id', getPodcastEpisodesById);
 
 router.get('/episode-details/:id', getEpisodeDetailsById);
 
-router.get('/artist/:id', getArtistById);
-
 export default router;

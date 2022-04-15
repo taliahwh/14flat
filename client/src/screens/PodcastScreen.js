@@ -1,11 +1,29 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
 
+// Components
 import Header from '../components/Header';
+import Loader from '../components/Loader';
+import Alert from '../components/Alert';
 import PodcastCard from '../components/Podcasts/PodcastCard';
-// import PodcastCard from '../components/Podcasts/PodcastCard';
+
+// Actions
+import { listFeaturedPodcasts } from '../actions/podcastActions';
 
 const PodcastScreen = () => {
+  const dispatch = useDispatch();
+
+  const {
+    loading: loadingFeaturedPodcasts,
+    featuredPodcasts,
+    error: errorFeaturedPodcasts,
+  } = useSelector((state) => state.featuredPodcasts);
+
+  useEffect(() => {
+    dispatch(listFeaturedPodcasts());
+  }, [dispatch]);
+
   return (
     <div className="bg-background px-4 md:px-10 max-w-8xl mx-auto">
       <Header />
@@ -21,20 +39,27 @@ const PodcastScreen = () => {
         </div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 py-10">
-          <Link to="/podcasts/show/1">
-            <PodcastCard />
-          </Link>
-          <PodcastCard />
-          <PodcastCard />
-          <PodcastCard />
-          <PodcastCard />
-          <PodcastCard />
-          <PodcastCard />
-          <PodcastCard />
-          <PodcastCard />
-          <PodcastCard />
-          <PodcastCard />
-          <PodcastCard />
+          {loadingFeaturedPodcasts && (
+            <div className="h-screen bg-background flex justify-center">
+              <Loader />
+            </div>
+          )}
+
+          {errorFeaturedPodcasts && (
+            <Alert variant="error">errorFeaturedPodcasts</Alert>
+          )}
+
+          {featuredPodcasts &&
+            featuredPodcasts.shows &&
+            featuredPodcasts.shows.length > 0 && (
+              <>
+                {featuredPodcasts.shows.map((show, index) => (
+                  <Link to={`/podcasts/show/${show.id}`} key={index}>
+                    <PodcastCard show={show} />
+                  </Link>
+                ))}
+              </>
+            )}
         </div>
       </div>
     </div>

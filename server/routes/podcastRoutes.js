@@ -5,7 +5,7 @@ import {
   getFeaturedPodcasts,
   getPodcastEpisodesById,
   getEpisodeDetailsById,
-} from '../controllers/spotifyController.js';
+} from '../controllers/podcastController.js';
 
 const router = express.Router();
 

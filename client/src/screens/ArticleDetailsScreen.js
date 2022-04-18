@@ -43,28 +43,29 @@ const ArticleDetailsScreen = () => {
         <>
           <img
             className="w-full max-h-[40rem] object-cover mx-auto"
-            src={article.coverImage}
+            src={article.coverImage && article.coverImage}
             alt="cover"
           />
           <div className="bg-background px-4 md:px-0 max-w-2xl mx-auto h-full py-10 flex flex-col items-center">
             <h1 className="font-spratRegular text-3xl md:text-4xl text-center">
-              {article.title}
+              {article.title && article.title}
             </h1>
 
             <div className="flex space-x-5 pt-3 text-sm items-center">
               <p className="text-neutral-600 text-sm font-roboto ">
                 ⸻{' '}
                 <span className="pl-3">
-                  BY {article.writtenBy.name.toUpperCase()}
+                  BY {article.writtenBy && article.writtenBy.name.toUpperCase()}
                 </span>
               </p>
               <p className="text-neutral-700 font-robotoLight">
-                {moment(article.createdAt).format('MMMM Do')}
+                {article.createdAt &&
+                  moment(article.createdAt).format('MMMM Do')}
               </p>
             </div>
 
             <div className="text-left font-robotoLight pt-16">
-              {parse(`${article.content}`)}
+              {article.content && parse(`${article.content}`)}
             </div>
           </div>
         </>

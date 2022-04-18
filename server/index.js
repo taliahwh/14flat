@@ -8,8 +8,9 @@ import { notFound, errorHandler } from './middleware/errorMiddleware.js';
 
 // import getSpotifyAuth from './config/spotify_config.js';
 
+import userRoutes from './routes/userRoutes.js';
 import articleRoutes from './routes/articleRoutes.js';
-import spotifyRoutes from './routes/spotifyRoutes.js';
+import podcastRoutes from './routes/podcastRoutes.js';
 
 dotenv.config();
 
@@ -20,8 +21,9 @@ const app = express();
 // Allows access JSON data in the body
 app.use(bodyParser.json());
 
+app.use('/api/users', userRoutes);
 app.use('/api/articles', articleRoutes);
-app.use('/api/podcasts', spotifyRoutes);
+app.use('/api/podcasts', podcastRoutes);
 
 app.get('/', (req, res) => {
   res.send('API is running...');

@@ -9,7 +9,7 @@ const Alert = ({ variant, children }) => {
           : variant === 'warning'
           ? 'p-4 mb-4 text-sm text-yellow-700 bg-yellow-100 font-robotoLight'
           : variant === 'success'
-          ? 'p-4 mb-4 text-sm text-green-800 bg-green-300 font-robotoLight'
+          ? 'p-4 mb-4 text-sm text-green-800 bg-[#7abf75] font-robotoLight'
           : variant === 'info'
           ? 'p-4 mb-4 text-sm text-neutral-600 bg-neutral-200 font-robotoLight'
           : ''

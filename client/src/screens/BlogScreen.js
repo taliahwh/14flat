@@ -7,6 +7,7 @@ import Header from '../components/Header';
 import Alert from '../components/Alert';
 import Loader from '../components/Loader';
 import LatestArticle from '../components/Articles/LatestArticle';
+import ScrollToTop from '../config/ScrollToTop';
 
 // Actions
 import { listArticles } from '../actions/articleActions';
@@ -27,6 +28,7 @@ const BlogScreen = () => {
   return (
     <div className="bg-background px-4 md:px-10 max-w-8xl mx-auto">
       <Header />
+      <ScrollToTop />
 
       <h1 className="font-spratBold text-7xl lg:text-8xl pb-5">Blog</h1>
 

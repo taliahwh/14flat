@@ -39,6 +39,8 @@ const PodcastShowScreen = () => {
     featuredPodcasts.shows.length > 0 &&
     featuredPodcasts.shows.filter((show) => id === show.id);
 
+  // console.log(show);
+
   useEffect(() => {
     dispatch(listFeaturedPodcasts());
     dispatch(listPodcastDetails(id));
@@ -81,14 +83,19 @@ const PodcastShowScreen = () => {
           <h1 className="font-spratRegular text-5xl">{show[0].name}</h1>
           <p className="font-robotoLight text-xl pb-5">{show[0].publisher}</p>
           <div className="flex space-x-2 pb-5">
-            <Link to="/">
+            <a
+              href={`https://open.spotify.com/show/${id}`}
+              target="_blank"
+              rel="noreferrer"
+              aria-label={show[0].name}
+            >
               <p className="font-robotoLight text-sm border-1 border-green-600 text-green-600 hover:bg-green-600 hover:text-white py-1.5 px-3 ">
                 Listen on
                 <span className="font-roboto font-medium pl-1">
                   Spotify Podcasts
                 </span>
               </p>
-            </Link>
+            </a>
 
             <Link to="/">
               <p className="font-robotoLight text-sm border-1 border-[#7D50DF] text-[#7D50DF] hover:bg-[#7D50DF] hover:text-white py-1.5 px-3">

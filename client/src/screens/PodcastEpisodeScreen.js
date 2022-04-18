@@ -17,7 +17,10 @@ import Alert from '../components/Alert';
 import ScrollToTop from '../config/ScrollToTop';
 
 // Actions
-import { listEpisodeDetails } from '../actions/podcastActions';
+import {
+  listEpisodeDetails,
+  listFeaturedPodcasts,
+} from '../actions/podcastActions';
 
 const PodcastEpisodeScreen = () => {
   const dispatch = useDispatch();
@@ -31,6 +34,7 @@ const PodcastEpisodeScreen = () => {
 
   useEffect(() => {
     dispatch(listEpisodeDetails(id));
+    dispatch(listFeaturedPodcasts());
   }, [dispatch, id]);
 
   return (
@@ -67,7 +71,7 @@ const PodcastEpisodeScreen = () => {
                   {moment(episodeDetails.release_date).format('MMM D, YYYY')}
                 </p>
                 <p className="text-neutral-600 text-lg md:text-xl text-center md:text-left mx-auto md:mx-0 font-robotoLight">
-                  Shattered: Hope, Heartbreak and the New York Knicks
+                  {episodeDetails.show.name}
                 </p>
 
                 <h1 className="font-spratRegular text-4xl text-center md:text-left">
@@ -81,7 +85,8 @@ const PodcastEpisodeScreen = () => {
         </div> */}
               <div className="pt-5 drop-shadow hidden sm:flex">
                 <AudioPlayer
-                  // autoPlay
+                  autoPlay={false}
+                  muted
                   src={episodeDetails.audio_preview_url}
                   // onPlay={(e) => console.log('onPlay')}
                   layout="stacked-reverse"
@@ -119,7 +124,7 @@ const PodcastEpisodeScreen = () => {
         </div> */}
               <div className="pt-5 drop-shadow flex">
                 <AudioPlayer
-                  // autoPlay
+                  autoPlay={false}
                   src={episodeDetails.audio_preview_url}
                   // onPlay={(e) => console.log('onPlay')}
                   layout="stacked-reverse"

@@ -1,13 +1,23 @@
 import React, { useState } from 'react';
-import { Link, NavLink } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
 
+// Icons
 import user from '../assets/user.png';
 import menu from '../assets/line_menu.png';
 import cancel from '../assets/cancel.png';
 
+// Action
+import { logout } from '../actions/userActions';
+
 const Header = () => {
+  const dispatch = useDispatch();
   const [mobileOpen, setMobileOpen] = useState(false);
   const [userOpen, setUserOpen] = useState(false);
+
+  const handleLogout = () => {
+    dispatch(logout());
+  };
 
   return (
     <div className="bg-background pb-8">
@@ -110,12 +120,12 @@ const Header = () => {
                   Saved Articles
                 </NavLink>
 
-                <NavLink
-                  to="/logout"
+                <button
+                  onClick={handleLogout}
                   className="'underline underline-offset-12 font-roboto font-medium text-sm"
                 >
                   Logout
-                </NavLink>
+                </button>
               </div>
             </div>
           )}
@@ -206,12 +216,12 @@ const Header = () => {
                 Saved Articles
               </NavLink>
 
-              <NavLink
-                to="/logout"
+              <button
+                onClick={handleLogout}
                 className="'underline underline-offset-12 font-roboto font-medium text-sm"
               >
                 Logout
-              </NavLink>
+              </button>
             </div>
           </div>
         )}

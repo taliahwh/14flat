@@ -55,7 +55,7 @@ const HomeScreen = () => {
             THE LATEST ARTICLES
           </p>
           <Link
-            to="/"
+            to="/blog"
             className="font-spratLight text-md py-3 underline text-neutral-400 hover:text-neutral-600"
           >
             View all

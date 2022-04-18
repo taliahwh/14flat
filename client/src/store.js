@@ -13,16 +13,26 @@ import {
   podcastEpisodeDetailsReducer,
 } from './reducers/podcastReducers';
 
+import { userSignInReducer, userSignUpReducer } from './reducers/userReducers';
+
 const reducer = combineReducers({
   articleList: articleListReducer,
   articleDetails: articleDetailsReducer,
   featuredPodcasts: featuredPodcastReducer,
   podcastDetails: podcastDetailsReducer,
   episodeDetails: podcastEpisodeDetailsReducer,
+  userSignIn: userSignInReducer,
+  userSignUp: userSignUpReducer,
 });
 
+const userInfoFromStorage = localStorage.getItem('userInfo')
+  ? JSON.parse(localStorage.getItem('userInfo'))
+  : null;
+
 // Initial state when the redux store loads
-const initialState = {};
+const initialState = {
+  userSignIn: { userInfo: userInfoFromStorage },
+};
 
 const middleware = [thunk];
 

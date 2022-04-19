@@ -30,6 +30,7 @@ export const signIn = (email, password) => async (dispatch) => {
 
     // Save userInfo to local storage
     localStorage.setItem('userInfo', JSON.stringify(data));
+    document.location.href = '/';
   } catch (error) {
     dispatch({
       type: USER_SIGN_IN_FAILURE,
@@ -71,6 +72,7 @@ export const signUp =
 
       // Save userInfo to local storage
       localStorage.setItem('userInfo', JSON.stringify(data));
+      document.location.href = '/';
     } catch (error) {
       dispatch({
         type: USER_SIGN_UP_FAILURE,

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import { NavLink } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
+import { NavLink, Link } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
 
 // Icons
 import user from '../assets/user.png';
@@ -14,6 +14,8 @@ const Header = () => {
   const dispatch = useDispatch();
   const [mobileOpen, setMobileOpen] = useState(false);
   const [userOpen, setUserOpen] = useState(false);
+
+  const { userInfo } = useSelector((state) => state.userSignIn);
 
   const handleLogout = () => {
     dispatch(logout());
@@ -79,10 +81,10 @@ const Header = () => {
               <img src={user} className="w-7 h-7" alt="open menu" />
             )}
           </div>
-          {userOpen && (
+          {userOpen && userInfo && (
             <div className=" absolute top-full right-0 flex flex-col  w-1/5 h-[20rem] py-8 bg-background shadow-md">
               <h1 className="font-roboto font-medium text-md text-center py-4 text-neutral-600">
-                Toni Miller
+                {userInfo.name}
               </h1>
 
               {/* Border */}
@@ -129,6 +131,28 @@ const Header = () => {
               </div>
             </div>
           )}
+
+          {userOpen && !userInfo && (
+            <div className=" absolute top-full right-0 flex flex-col  w-1/5 h-[8rem] py-8 bg-background shadow-md">
+              <div className="flex-1 flex flex-col items-center text-md space-y-1">
+                <Link
+                  to="/signin"
+                  className="no-underline font-roboto font-medium"
+                >
+                  Sign In
+                </Link>
+
+                <p className="text-sm font-roboto">or</p>
+
+                <Link
+                  to="/signup"
+                  className="no-underline font-roboto font-medium"
+                >
+                  Create an Account
+                </Link>
+              </div>
+            </div>
+          )}
         </div>
 
         {/* Mobile Dropdown */}
@@ -142,7 +166,7 @@ const Header = () => {
             <img src={menu} className="w-7 h-7" alt="open menu" />
           )}
         </div>
-        {mobileOpen && (
+        {mobileOpen && userInfo && (
           <div className=" absolute top-full left-0 flex flex-col  w-full h-screen py-8 bg-background lg:hidden">
             <div className="flex flex-col items-center text-lg space-y-8 pt-4 pb-8">
               <NavLink
@@ -181,7 +205,7 @@ const Header = () => {
             <div className="border-t-1 border-x-neutral-500 pb-5"></div>
 
             <h1 className="font-roboto font-medium text-md text-center py-4 text-neutral-600">
-              Toni Miller
+              {userInfo.name}
             </h1>
 
             <div className="flex-1 flex flex-col items-center text-md space-y-4">
@@ -222,6 +246,64 @@ const Header = () => {
               >
                 Logout
               </button>
+            </div>
+          </div>
+        )}
+
+        {mobileOpen && !userInfo && (
+          <div className=" absolute top-full left-0 flex flex-col  w-full h-screen py-8 bg-background lg:hidden">
+            <div className="flex flex-col items-center text-lg space-y-8 pt-4 pb-8">
+              <NavLink
+                to="/"
+                className={({ isActive }) =>
+                  isActive
+                    ? 'underline underline-offset-12 font-roboto font-medium'
+                    : 'no-underline font-robotoLight'
+                }
+              >
+                Home
+              </NavLink>
+              <NavLink
+                to="/blog"
+                className={({ isActive }) =>
+                  isActive
+                    ? 'underline underline-offset-12 font-roboto font-medium'
+                    : 'no-underline font-robotoLight'
+                }
+              >
+                Blog
+              </NavLink>
+              <NavLink
+                to="/podcasts"
+                className={({ isActive }) =>
+                  isActive
+                    ? 'underline underline-offset-12 font-roboto font-medium'
+                    : 'no-underline font-robotoLight'
+                }
+              >
+                Podcasts
+              </NavLink>
+            </div>
+
+            {/* Border */}
+            <div className="border-t-1 border-x-neutral-500 pb-5"></div>
+
+            <div className="flex-1 flex flex-col items-center text-md space-y-2">
+              <Link
+                to="/signin"
+                className="no-underline font-roboto font-medium pt-2"
+              >
+                Sign In
+              </Link>
+
+              <p className="text-sm font-roboto">or</p>
+
+              <Link
+                to="/signup"
+                className="no-underline font-roboto font-medium"
+              >
+                Create an Account
+              </Link>
             </div>
           </div>
         )}

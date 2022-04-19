@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 
 // Actions
@@ -10,7 +10,6 @@ import Alert from '../components/Alert';
 
 const SignUpScreen = () => {
   const dispatch = useDispatch();
-  const navigate = useNavigate();
 
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
@@ -24,7 +23,6 @@ const SignUpScreen = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     dispatch(signUp(name, email, password, confirmPassword));
-    navigate('/');
   };
 
   return (

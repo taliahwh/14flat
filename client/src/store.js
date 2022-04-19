@@ -11,6 +11,7 @@ import {
   featuredPodcastReducer,
   podcastDetailsReducer,
   podcastEpisodeDetailsReducer,
+  podcastLatestEpsiodeReducer,
 } from './reducers/podcastReducers';
 
 import { userSignInReducer, userSignUpReducer } from './reducers/userReducers';
@@ -21,6 +22,7 @@ const reducer = combineReducers({
   featuredPodcasts: featuredPodcastReducer,
   podcastDetails: podcastDetailsReducer,
   episodeDetails: podcastEpisodeDetailsReducer,
+  latestEpisodes: podcastLatestEpsiodeReducer,
   userSignIn: userSignInReducer,
   userSignUp: userSignUpReducer,
 });

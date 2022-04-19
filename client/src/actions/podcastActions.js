@@ -10,6 +10,9 @@ import {
   PODCAST_EPISODE_DETAILS_REQUEST,
   PODCAST_EPISODE_DETAILS_SUCCESS,
   PODCAST_EPISODE_DETAILS_FAILURE,
+  PODCAST_LATEST_EPISODES_REQUEST,
+  PODCAST_LATEST_EPISODES_SUCCESS,
+  PODCAST_LATEST_EPISODES_FAILURE,
 } from '../constants/podcastConstants';
 
 export const listFeaturedPodcasts = () => async (dispatch) => {
@@ -58,6 +61,24 @@ export const listEpisodeDetails = (id) => async (dispatch) => {
   } catch (error) {
     dispatch({
       type: PODCAST_EPISODE_DETAILS_FAILURE,
+      payload:
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message,
+    });
+  }
+};
+
+export const listLatestEpisodes = () => async (dispatch) => {
+  try {
+    dispatch({ type: PODCAST_LATEST_EPISODES_REQUEST });
+
+    const { data } = await axios.get(`/api/podcasts/latest-episodes`);
+
+    dispatch({ type: PODCAST_LATEST_EPISODES_SUCCESS, payload: data });
+  } catch (error) {
+    dispatch({
+      type: PODCAST_LATEST_EPISODES_FAILURE,
       payload:
         error.response && error.response.data.message
           ? error.response.data.message

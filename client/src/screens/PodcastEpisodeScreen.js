@@ -80,9 +80,6 @@ const PodcastEpisodeScreen = () => {
               </div>
             </div>
             <div>
-              {/* <div className="hidden border-1 border-neutral-900 py-10 px-5 sm:flex justify-center shadow-md mt-10">
-          Media player
-        </div> */}
               <div className="pt-5 drop-shadow hidden sm:flex">
                 <AudioPlayer
                   autoPlay={false}
@@ -99,6 +96,11 @@ const PodcastEpisodeScreen = () => {
                   }}
                   // other props here
                 />
+              </div>
+              <div className="hidden sm:flex w-full justify-center mt-5 font-spratRegular text-sm border-green-600 text-green-600 hover:bg-green-600 hover:text-white text-center border-1 py-2  hover:shadow-md">
+                <a href={episodeDetails.uri}>
+                  Listen to full episode on Spotify
+                </a>
               </div>
             </div>
 
@@ -137,6 +139,12 @@ const PodcastEpisodeScreen = () => {
                   }}
                   // other props here
                 />
+              </div>
+
+              <div className="sm:hidden w-full mt-5 font-spratRegular text-sm border-green-600 text-green-600 hover:bg-green-600 hover:text-white text-center border-1 py-2  hover:shadow-md">
+                <a href={episodeDetails.uri}>
+                  Listen to full episode on Spotify
+                </a>
               </div>
             </div>
             {/* Border */}

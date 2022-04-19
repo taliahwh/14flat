@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 
 // ACTIONS
 import { listArticles } from '../actions/articleActions';
+import { listLatestEpisodes } from '../actions/podcastActions';
 
 // COMPONENTS
 import Header from '../components/Header';
@@ -23,8 +24,17 @@ const HomeScreen = () => {
     error: errorArticleList,
   } = useSelector((state) => state.articleList);
 
+  const {
+    loading: loadingLatestEpisodes,
+    latestEpisodes,
+    error: errorLatestEpisodes,
+  } = useSelector((state) => state.latestEpisodes);
+
+  // console.log(latestEpisodes);
+
   useEffect(() => {
     dispatch(listArticles());
+    dispatch(listLatestEpisodes());
   }, [dispatch]);
 
   return (
@@ -96,7 +106,7 @@ const HomeScreen = () => {
       <div className="pt-4 pb-8">
         <div className="hidden md:flex w-full border-t-1 border-b-1 border-neutral-300 items-center justify-between">
           <p className="font-spratLight text-xl md:text-3xl py-3">
-            THE LATEST PODCASTS
+            THE LATEST PODCAST EPISODES
           </p>
           <Link
             to="/podcasts"
@@ -109,22 +119,32 @@ const HomeScreen = () => {
         {/* Mobile Header View */}
         <div className="block md:hidden w-full border-t-1 border-b-1 border-neutral-300">
           <p className="font-spratRegular text-center text-xl md:text-3xl py-3">
-            THE LATEST PODCASTS
+            THE LATEST PODCAST EPISODES
           </p>
         </div>
+
         <div className="flex flex-col space-y-10 pt-3 md:pt-14">
-          <Link to="/podcasts/1">
-            <LatestPodcast />
-          </Link>
-          <LatestPodcast />
-          <LatestPodcast />
-          <LatestPodcast />
-          <Link
-            to="/"
-            className="md:hidden font-spratRegular text-sm text-neutral-900 text-center border-1 py-2 border-neutral-900 hover:shadow-md"
-          >
-            View all podcasts
-          </Link>
+          {loadingLatestEpisodes && <Loader />}
+          {errorLatestEpisodes && (
+            <Alert variant="error">{errorLatestEpisodes}</Alert>
+          )}
+
+          {latestEpisodes &&
+            latestEpisodes.episodes &&
+            latestEpisodes.episodes.length > 0 && (
+              <>
+                {latestEpisodes.episodes.map((episode) => (
+                  <LatestPodcast episode={episode} key={episode.id} />
+                ))}
+
+                <Link
+                  to="/podcasts"
+                  className="md:hidden font-spratRegular text-sm text-neutral-900 text-center border-1 py-2 border-neutral-900 hover:shadow-md"
+                >
+                  View all podcasts
+                </Link>
+              </>
+            )}
         </div>
       </div>
     </div>

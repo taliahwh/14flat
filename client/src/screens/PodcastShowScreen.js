@@ -142,11 +142,8 @@ const PodcastShowScreen = () => {
       {/* Mobile View */}
       <div>
         <div className="grid grid-cols-5 md:hidden">
-          <div className="col-span-2 bg-blue-100">
-            <img
-              src="https://cdn.theathletic.com/app/uploads/2021/10/18160943/NBA_SHOW2-copy-scaled.jpg"
-              alt="podcast"
-            />
+          <div className="col-span-2 ">
+            <img src={show[0].images[0].url} alt="podcast" />
           </div>
           <div className="col-span-3 pl-5 justify-center flex flex-col space-y-1">
             <p className="font-spratRegular text-2xl">{show[0].name}</p>

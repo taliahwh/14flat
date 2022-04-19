@@ -5,6 +5,7 @@ import {
   getFeaturedPodcasts,
   getPodcastEpisodesById,
   getEpisodeDetailsById,
+  getLatestEpisodes,
 } from '../controllers/podcastController.js';
 
 const router = express.Router();
@@ -12,6 +13,8 @@ const router = express.Router();
 router.get('/show/:id', getPodcastById);
 
 router.get('/featured-shows', getFeaturedPodcasts);
+
+router.get('/latest-episodes', getLatestEpisodes);
 
 router.get('/all-episodes/:id', getPodcastEpisodesById);
 

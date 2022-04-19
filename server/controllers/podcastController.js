@@ -99,9 +99,93 @@ const getEpisodeDetailsById = asyncHandler(async (req, res) => {
   }
 });
 
+// @desc Fetch latest podcast episode
+// @route GET /podcasts/latest-episodes
+// @access Public
+const getLatestEpisodes = asyncHandler(async (req, res) => {
+  const id = req.params.id;
+  //request token using getSpotifyAuth() function
+  const access_token = await getSpotifyAuth();
+
+  const podcastIds = [
+    '5vMLIaAcXeWUpXRpUt5qXY',
+    '7hVMyKCBLJ6uqIKcvKuz88',
+    '6xbt4cCcUqtMT5sPdbWkrb',
+    '3Cdge5G5apw1LsC8jGcl4j',
+    '2XdegS23ImVZldex799DUS',
+  ];
+
+  try {
+    const show1 = await axios.get(
+      `${SPOTIFY_URL}/shows/${podcastIds[0]}/episodes?market=US`,
+      {
+        headers: {
+          Authorization: `Bearer ${access_token}`,
+        },
+      }
+    );
+    const episode1 = show1.data.items[0];
+
+    // -------------------------------------------------------------
+
+    const show2 = await axios.get(
+      `${SPOTIFY_URL}/shows/${podcastIds[1]}/episodes?market=US`,
+      {
+        headers: {
+          Authorization: `Bearer ${access_token}`,
+        },
+      }
+    );
+    const episode2 = show2.data.items[0];
+
+    // -------------------------------------------------------------
+
+    const show3 = await axios.get(
+      `${SPOTIFY_URL}/shows/${podcastIds[2]}/episodes?market=US`,
+      {
+        headers: {
+          Authorization: `Bearer ${access_token}`,
+        },
+      }
+    );
+    const episode3 = show3.data.items[0];
+
+    // -------------------------------------------------------------
+
+    const show4 = await axios.get(
+      `${SPOTIFY_URL}/shows/${podcastIds[3]}/episodes?market=US`,
+      {
+        headers: {
+          Authorization: `Bearer ${access_token}`,
+        },
+      }
+    );
+    const episode4 = show4.data.items[0];
+
+    // -------------------------------------------------------------
+
+    const show5 = await axios.get(
+      `${SPOTIFY_URL}/shows/${podcastIds[4]}/episodes?market=US`,
+      {
+        headers: {
+          Authorization: `Bearer ${access_token}`,
+        },
+      }
+    );
+    const episode5 = show5.data.items[0];
+
+    return res.json({
+      episodes: [episode1, episode2, episode3, episode4, episode5],
+    });
+  } catch (error) {
+    console.log(error);
+  }
+});
+
 export {
   getPodcastById,
   getFeaturedPodcasts,
   getPodcastEpisodesById,
   getEpisodeDetailsById,
+  getLatestEpisodes,
 };

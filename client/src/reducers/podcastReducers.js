@@ -8,6 +8,9 @@ import {
   PODCAST_EPISODE_DETAILS_REQUEST,
   PODCAST_EPISODE_DETAILS_SUCCESS,
   PODCAST_EPISODE_DETAILS_FAILURE,
+  PODCAST_LATEST_EPISODES_REQUEST,
+  PODCAST_LATEST_EPISODES_SUCCESS,
+  PODCAST_LATEST_EPISODES_FAILURE,
 } from '../constants/podcastConstants';
 
 export const featuredPodcastReducer = (
@@ -61,6 +64,25 @@ export const podcastEpisodeDetailsReducer = (
         episodeDetails: action.payload,
       };
     case PODCAST_EPISODE_DETAILS_FAILURE:
+      return { loading: false, error: action.payload };
+    default:
+      return state;
+  }
+};
+
+export const podcastLatestEpsiodeReducer = (
+  state = { latestEpisodes: {} },
+  action
+) => {
+  switch (action.type) {
+    case PODCAST_LATEST_EPISODES_REQUEST:
+      return { loading: true, ...state };
+    case PODCAST_LATEST_EPISODES_SUCCESS:
+      return {
+        loading: false,
+        latestEpisodes: action.payload,
+      };
+    case PODCAST_LATEST_EPISODES_FAILURE:
       return { loading: false, error: action.payload };
     default:
       return state;

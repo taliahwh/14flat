@@ -51,7 +51,7 @@ const PodcastEpisodeScreen = () => {
           <>
             <ScrollToTop />
             <Link
-              to="/podcasts"
+              to={`/podcasts/show/${episodeDetails.show.id}`}
               className="font-robotoLight underline text-sm flex items-center space-x-2 pt-2 pb-5 text-neutral-500"
             >
               <BsArrowLeft />

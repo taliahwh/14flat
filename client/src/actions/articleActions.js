@@ -7,6 +7,9 @@ import {
   ARTICLE_DETAILS_REQUEST,
   ARTICLE_DETAILS_SUCCESS,
   ARTICLE_DETAILS_FAILURE,
+  NEW_ARTICLE_REQUEST,
+  NEW_ARTICLE_SUCCESS,
+  NEW_ARTICLE_FAILURE,
 } from '../constants/articleConstants';
 
 export const listArticles = () => async (dispatch) => {
@@ -44,3 +47,34 @@ export const listArticleDetails = (id) => async (dispatch) => {
     });
   }
 };
+
+export const createNewArticle =
+  (title, coverImage, content, excerpt) => async (dispatch, getState) => {
+    try {
+      dispatch({ type: NEW_ARTICLE_REQUEST });
+
+      const { userInfo } = getState().userSignIn;
+      const config = {
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${userInfo.token}`,
+        },
+      };
+
+      const { data } = await axios.post(
+        `/api/articles`,
+        { title, coverImage, content, excerpt },
+        config
+      );
+
+      dispatch({ type: NEW_ARTICLE_SUCCESS, payload: data });
+    } catch (error) {
+      dispatch({
+        type: NEW_ARTICLE_FAILURE,
+        payload:
+          error.response && error.response.data.message
+            ? error.response.data.message
+            : error.message,
+      });
+    }
+  };

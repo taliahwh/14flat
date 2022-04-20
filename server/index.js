@@ -1,3 +1,4 @@
+import path from 'path';
 import express from 'express';
 import dotenv from 'dotenv';
 import connectDB from './config/db.js';
@@ -11,6 +12,7 @@ import { notFound, errorHandler } from './middleware/errorMiddleware.js';
 import userRoutes from './routes/userRoutes.js';
 import articleRoutes from './routes/articleRoutes.js';
 import podcastRoutes from './routes/podcastRoutes.js';
+import uploadRoutes from './routes/uploadRoutes.js';
 
 dotenv.config();
 
@@ -24,6 +26,7 @@ app.use(bodyParser.json());
 app.use('/api/users', userRoutes);
 app.use('/api/articles', articleRoutes);
 app.use('/api/podcasts', podcastRoutes);
+app.use('/api/upload', uploadRoutes);
 
 app.get('/', (req, res) => {
   res.send('API is running...');
@@ -31,6 +34,10 @@ app.get('/', (req, res) => {
 
 // used to get spotify API token
 // getSpotifyAuth();
+
+// Making uploads folder static
+const __dirname = path.resolve();
+app.use('/upload', express.static(path.join(__dirname, '/uploads')));
 
 // Error handling middleware
 app.use(notFound);

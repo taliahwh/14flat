@@ -1,6 +1,7 @@
 import asyncHandler from 'express-async-handler';
 
 import Article from '../models/articleModel.js';
+import User from '../models/userModel.js';
 
 // @desc Fetch all articles
 // @route GET /api/articles
@@ -24,4 +25,22 @@ const getArticleById = asyncHandler(async (req, res) => {
   }
 });
 
-export { getArticles, getArticleById };
+// @desc Create new article
+// @route POST /api/articles
+// @access Public
+const createArticle = asyncHandler(async (req, res) => {
+  // console.log(req);
+  const newArticle = new Article({
+    title: req.body.title,
+    coverImage: req.body.coverImage,
+    content: req.body.coverImage,
+    excerpt: req.body.excerpt,
+    writtenBy: { name: req.user.name, writerId: req.user._id },
+  });
+
+  const createdArticle = await newArticle.save();
+
+  res.status(201).json(createdArticle);
+});
+
+export { getArticles, getArticleById, createArticle };

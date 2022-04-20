@@ -11,7 +11,7 @@ export const articleSchema = new mongoose.Schema(
       required: true,
     },
     content: {
-      type: mongoose.Schema.Types.Mixed,
+      type: String,
       required: true,
     },
     excerpt: {

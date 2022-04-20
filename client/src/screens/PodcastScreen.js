@@ -46,7 +46,7 @@ const PodcastScreen = () => {
           )}
 
           {errorFeaturedPodcasts && (
-            <Alert variant="error">errorFeaturedPodcasts</Alert>
+            <Alert variant="error">{errorFeaturedPodcasts}</Alert>
           )}
 
           {featuredPodcasts &&

@@ -26,7 +26,7 @@ const SignUpScreen = () => {
   };
 
   return (
-    <div className="container px-10 py-20 bg-background h-screen font-roboto">
+    <div className="container px-10 py-20 mx-auto bg-background h-screen font-roboto">
       <form action="submit" onSubmit={handleSubmit}>
         <div className="flex flex-col space-y-2 px-2 md:px-14 lg:px-52">
           <Link to="/">

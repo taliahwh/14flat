@@ -5,6 +5,7 @@ import { composeWithDevTools } from '@redux-devtools/extension';
 import {
   articleDetailsReducer,
   articleListReducer,
+  newArticleReducer,
 } from './reducers/articleReducers';
 
 import {
@@ -19,6 +20,7 @@ import { userSignInReducer, userSignUpReducer } from './reducers/userReducers';
 const reducer = combineReducers({
   articleList: articleListReducer,
   articleDetails: articleDetailsReducer,
+  newArticle: newArticleReducer,
   featuredPodcasts: featuredPodcastReducer,
   podcastDetails: podcastDetailsReducer,
   episodeDetails: podcastEpisodeDetailsReducer,

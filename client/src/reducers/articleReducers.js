@@ -5,6 +5,9 @@ import {
   ARTICLE_DETAILS_REQUEST,
   ARTICLE_DETAILS_SUCCESS,
   ARTICLE_DETAILS_FAILURE,
+  NEW_ARTICLE_REQUEST,
+  NEW_ARTICLE_SUCCESS,
+  NEW_ARTICLE_FAILURE,
 } from '../constants/articleConstants';
 
 export const articleListReducer = (state = { articles: [] }, action) => {
@@ -27,6 +30,19 @@ export const articleDetailsReducer = (state = { article: {} }, action) => {
     case ARTICLE_DETAILS_SUCCESS:
       return { loading: false, success: true, article: action.payload };
     case ARTICLE_DETAILS_FAILURE:
+      return { loading: false, error: action.payload };
+    default:
+      return state;
+  }
+};
+
+export const newArticleReducer = (state = {}, action) => {
+  switch (action.type) {
+    case NEW_ARTICLE_REQUEST:
+      return { loading: true };
+    case NEW_ARTICLE_SUCCESS:
+      return { loading: false, success: true, newArticle: action.payload };
+    case NEW_ARTICLE_FAILURE:
       return { loading: false, error: action.payload };
     default:
       return state;

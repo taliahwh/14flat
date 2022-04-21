@@ -1,40 +1,78 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
-import ImageUploading from 'react-images-uploading';
+import { Link, useNavigate } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import axios from 'axios';
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 
 import { BsFileEarmarkImage, BsArrowLeft } from 'react-icons/bs';
-import { FiCheck } from 'react-icons/fi';
-import { MdCancel } from 'react-icons/md';
+
+// Components
+import Alert from '../components/Alert';
+import Loader from '../components/Loader';
+
+// Actions
+import { createNewArticle } from '../actions/articleActions';
 
 const CreateArticleScreen = () => {
-  // const [content, setContent] = useState('');
-  const [image, setImage] = useState([]);
-  const [articleData, setArticleData] = useState({
-    title: '',
-    content: '',
-    excerpt: '',
-  });
-  const maxNumber = 1;
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  const [image, setImage] = useState('');
+  const [title, setTitle] = useState('');
+  const [content, setContent] = useState('');
+  const [excerpt, setExcerpt] = useState('');
+  const [uploading, setUploading] = useState(false);
+
+  const { success: newArticleSuccess } = useSelector(
+    (state) => state.newArticle
+  );
+
+  const uploadFileHandler = async (e) => {
+    const file = e.target.files[0];
+    const formData = new FormData();
+    formData.append('image', file);
+    setUploading(true);
+
+    try {
+      const config = {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      };
+      const { data } = await axios.post('/api/upload', formData, config);
+
+      setImage(data.data);
+      setUploading(false);
+    } catch (error) {
+      console.error(error);
+      setUploading(false);
+    }
+  };
+
+  const modules = {
+    toolbar: [
+      [{ header: [1, 2] }],
+      [['bold', 'italic', 'underline']],
+      [
+        { list: 'ordered' },
+        { list: 'bullet' },
+        { indent: '-1' },
+        { indent: '+1' },
+      ],
+      ['link', 'image'],
+    ],
+  };
 
   const handleFormSubmit = (e) => {
     e.preventDefault();
 
-    console.log(articleData, image);
-
-    console.log('submit');
-  };
-
-  const handleChange = (imageList, appUpdateIndex) => {
-    // data for submit
-    // console.log(imageList, appUpdateIndex);
-    // setArticleData({ ...articleData, coverImage: imageList[0].data_url });
-    setImage(imageList);
+    dispatch(createNewArticle(title, image, content, excerpt));
+    navigate('/blog');
   };
 
   return (
-    <div className="h-screen bg-background max-w-6xl mx-auto w-full px-4">
+    <div className="h-full bg-background max-w-6xl mx-auto w-full px-4">
       <Link
         to="/"
         className="font-robotoLight underline text-sm flex items-center space-x-2 pt-10 text-neutral-500"
@@ -42,105 +80,82 @@ const CreateArticleScreen = () => {
         <BsArrowLeft />
         <p>Back to home</p>
       </Link>
-      {/* Image Uploading Component */}
-      <div className="pt-16 ">
-        <h1 className="font-spratRegular text-2xl md:text-3xl text-[#9CA3AF] pb-2">
-          Cover Image
-        </h1>
-        <ImageUploading
-          multiple={false}
-          value={image}
-          onChange={handleChange}
-          maxNumber={maxNumber}
-          dataURLKey="data_url"
-        >
-          {({ imageList, onImageUpload, onImageRemove, dragProps }) => (
-            <div className="bg-neutral-200 px-2 py-2">
-              <div className="grid grid-cols-1">
-                <div className="upload__image-wrapper col-span-1 py-6 flex justify-center border-1 border-dashed border-neutral-50 font-roboto">
-                  {/* Upload Button */}
-                  <button
-                    onClick={onImageUpload}
-                    {...dragProps}
-                    className="flex flex-col space-y-3 items-center"
+      <form
+        action="submitForm"
+        onSubmit={handleFormSubmit}
+        className="flex flex-col space-y-8"
+      >
+        {/* Image Uploading Component */}
+        <div className="pt-16 ">
+          {newArticleSuccess && (
+            <Alert variant="success">Article successfully created.</Alert>
+          )}
+          <h1 className="font-spratRegular text-2xl md:text-3xl text-[#9CA3AF] pb-2">
+            Cover Image
+          </h1>
+          <div className="bg-neutral-200 px-2 py-2">
+            <div className="grid grid-cols-1">
+              <div className="upload__image-wrapper col-span-1 py-6 flex justify-center border-1 border-dashed border-neutral-50 font-roboto">
+                {/* Upload Button */}
+                <button className="flex flex-col space-y-3 items-center">
+                  <BsFileEarmarkImage className="text-4xl md:text-5xl text-neutral-600" />
+                  <label
+                    htmlFor="image-file"
+                    className="custom-image-file text-md"
                   >
-                    <BsFileEarmarkImage className="text-4xl md:text-5xl text-neutral-600" />
-                    <h1>
-                      Drop your image here, or{' '}
-                      <span className="text-neutral-600 font-medium">
-                        browse
-                      </span>
-                    </h1>
-                    <p className="font-light text-xs text-center px-4">
-                      For best results, upload PNG or JPG images of at least
-                      1280×720 pixels. 5MB file-size limit.
-                    </p>
-                  </button>
-                </div>
-
-                {/* Image Display */}
-                <div className="col-span-1">
-                  {imageList.map((image, index) => (
-                    <div
-                      key={index}
-                      className="image-item flex bg-neutral-50 px-4 py-2 items-center justify-between"
-                    >
-                      <div className="flex space-x-8 items-center">
-                        <img
-                          src={image.data_url}
-                          alt="cover"
-                          width="75"
-                          className=""
-                        />
-                        <h4 className="text-sm font-medium text-neutral-500 font-roboto">
-                          {image.file.name}
-                        </h4>
-                      </div>
-
-                      <div className="image-item__btn-wrapper pl-2 flex space-x-2 items-center">
-                        <button className="text-green-600 text-3xl">
-                          <FiCheck />
-                        </button>
-                        <button
-                          onClick={() => onImageRemove(index)}
-                          className="text-red-500 text-2xl"
-                        >
-                          <MdCancel />
-                        </button>
-                      </div>
-                    </div>
-                  ))}
-                </div>
+                    <span className="underline underline-offset-1">
+                      Choose file
+                    </span>{' '}
+                    to upload or paste image address
+                  </label>
+                  <input
+                    type="file"
+                    id="image-file"
+                    className="bg-gray-50 border border-gray-300 text-gray-900 text-sm block w-full "
+                    onChange={uploadFileHandler}
+                  />
+                  <input
+                    type="text"
+                    id="image"
+                    value={image}
+                    placeholder="Paste image address"
+                    required
+                    className="border border-gray-300 text-gray-900 bg-neutral-100 text-sm block w-full font-roboto py-1.5 px-1.5"
+                    onChange={(e) => setImage(e.target.value)}
+                  />
+                  <p className="font-light text-xs text-center px-4">
+                    For best results, upload PNG or JPG images of at least
+                    1280×720 pixels. 5MB file-size limit.
+                  </p>
+                </button>
               </div>
             </div>
-          )}
-        </ImageUploading>
-      </div>
+          </div>
 
-      <form onSubmit={handleFormSubmit} className="flex flex-col space-y-8">
+          {uploading && <Loader />}
+        </div>
+
         <div className="editor-container">
           <input
+            required
             type="text"
             name="title"
             id="title"
-            value={articleData.title}
-            onChange={(e) =>
-              setArticleData({ ...articleData, title: e.target.value })
-            }
+            value={title}
+            onChange={(e) => setTitle(e.target.value)}
             placeholder="Title"
             className="w-full font-spratRegular text-4xl md:text-5xl pt-7 pb-2 text-neutral-800 bg-background focus:outline-none"
-            required
           />
 
           {/* Text Editor */}
           <ReactQuill
             theme="snow"
+            // modules={modules}
             name="content"
             label="content"
             placeholder={'Start writing your article...'}
-            value={articleData.content}
-            onChange={(e) => setArticleData({ ...articleData, content: e })}
-            required
+            value={content}
+            onChange={(e) => setContent(e)}
           />
         </div>
 
@@ -155,25 +170,25 @@ const CreateArticleScreen = () => {
             </span>
           </label>
           <textarea
+            required
             // maxLength="251"
             name="excerpt"
             id="excerpt"
-            value={articleData.excerpt}
-            onChange={(e) =>
-              setArticleData({ ...articleData, excerpt: e.target.value })
-            }
+            value={excerpt}
+            onChange={(e) => setExcerpt(e.target.value)}
             // placeholder="Enter excerpt to be displayed"
             className="w-full font-robotoLight text-md py-2 italic text-neutral-800 bg-background border-1 px-3 border-neutral-300 focus:outline-none"
-            required
           />
+
+          <button
+            type="submitForm"
+            className="font-roboto font-medium text-white bg-neutral-500 w-full py-2 text-md"
+          >
+            PUBLISH POST
+          </button>
         </div>
 
-        <button
-          type=""
-          className="font-roboto font-medium text-white bg-neutral-500 w-full py-2 text-md"
-        >
-          PUBLISH POST
-        </button>
+        <div className="py-3"></div>
       </form>
     </div>
   );

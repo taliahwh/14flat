@@ -104,7 +104,7 @@ const BlogScreen = () => {
             <Alert variant="error">{errorArticleList}</Alert>
           ) : (
             <>
-              {articles.map((article) => (
+              {articles.reverse().map((article) => (
                 <Link to={`/blog/${article._id}`} key={article._id}>
                   <LatestArticle article={article} />
                 </Link>

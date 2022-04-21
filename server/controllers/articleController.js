@@ -33,7 +33,7 @@ const createArticle = asyncHandler(async (req, res) => {
   const newArticle = new Article({
     title: req.body.title,
     coverImage: req.body.coverImage,
-    content: req.body.coverImage,
+    content: req.body.content,
     excerpt: req.body.excerpt,
     writtenBy: { name: req.user.name, writerId: req.user._id },
   });

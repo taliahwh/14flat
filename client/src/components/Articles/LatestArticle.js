@@ -9,7 +9,7 @@ const LatestArticle = ({ article }) => {
     <>
       <div className="md:flex space-x-10 hidden">
         <img
-          className="w-[19rem] h-[12rem] object-fit"
+          className="min-w-[19rem] max-w-[19rem] h-[12rem] object-fit"
           src={article.coverImage}
           alt="latest article"
         />

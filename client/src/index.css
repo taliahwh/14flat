@@ -38,3 +38,15 @@ input[type='file'] {
   padding: 6px 12px;
   cursor: pointer;
 }
+
+.react-tag-input {
+  font-family: 'Roboto-Regular';
+}
+
+.react-tag-input__input::placeholder,
+.react-tag-input__input:-moz-placeholder,
+.react-tag-input__input:-ms-input-placeholder,
+.react-tag-input__input::-moz-placeholder,
+.react-tag-input__input::-webkit-input-placeholder {
+  font-family: 'Roboto-Regular';
+}

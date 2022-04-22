@@ -1,8 +1,15 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useParams } from 'react-router';
+import { useParams, Link } from 'react-router-dom';
 import moment from 'moment';
 import parse from 'html-react-parser';
+import {
+  BsBookmarkFill,
+  BsBookmark,
+  BsHandThumbsUp,
+  BsHandThumbsUpFill,
+  BsArrowLeft,
+} from 'react-icons/bs';
 
 // Actions
 import { listArticleDetails } from '../actions/articleActions';
@@ -41,6 +48,13 @@ const ArticleDetailsScreen = () => {
         <Alert variant="error">errorArticleDetails</Alert>
       ) : (
         <>
+          <Link
+            to="/blog"
+            className="font-robotoLight underline text-sm flex items-center space-x-2 pb-5 pl-5 text-neutral-500"
+          >
+            <BsArrowLeft />
+            <p>Back to blog</p>
+          </Link>
           <img
             className="w-full max-h-[40rem] object-cover mx-auto"
             src={article.coverImage && article.coverImage}
@@ -64,8 +78,32 @@ const ArticleDetailsScreen = () => {
               </p>
             </div>
 
-            <div className="text-left font-robotoLight pt-16">
+            <div className="mt-5 flex space-x-1 w-full justify-end items-center text-neutral-800 pb-5">
+              <div className="flex space-x-1 items-center">
+                <BsHandThumbsUp className="text-2xl cursor-pointer" />
+                <p className="font-robotoLight text-sm">31</p>
+              </div>
+              <BsBookmark className="text-2xl cursor-pointer" />
+            </div>
+
+            {/* Border */}
+            <div className="border-t-1 border-x-neutral-500 w-full"></div>
+
+            <div className="text-left font-robotoLight pt-10">
               {article.content && parse(`${article.content}`)}
+            </div>
+
+            <div className="flex space-x-2 pt-8 w-full font-robotoLight text-sm">
+              {article.tags &&
+                article.tags.length > 0 &&
+                article.tags.map((tag, index) => (
+                  <span
+                    key={index}
+                    className="text-xs font-semibold inline-block py-1 px-2 uppercase rounded-full text-neutral-600 bg-neutral-200 last:mr-0 mr-1"
+                  >
+                    {tag}
+                  </span>
+                ))}
             </div>
           </div>
         </>

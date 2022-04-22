@@ -12,7 +12,7 @@ import {
 } from 'react-icons/bs';
 
 // Actions
-import { listArticleDetails } from '../actions/articleActions';
+import { listArticleDetails, likeArticle } from '../actions/articleActions';
 
 // Components
 import ScrollToTop from '../config/ScrollToTop';
@@ -29,6 +29,10 @@ const ArticleDetailsScreen = () => {
     article,
     error: errorArticleDetails,
   } = useSelector((state) => state.articleDetails);
+
+  const handleLikePost = () => {
+    dispatch(likeArticle(id));
+  };
 
   useEffect(() => {
     dispatch(listArticleDetails(id));
@@ -80,8 +84,13 @@ const ArticleDetailsScreen = () => {
 
             <div className="mt-5 flex space-x-1 w-full justify-end items-center text-neutral-800 pb-5">
               <div className="flex space-x-1 items-center">
-                <BsHandThumbsUp className="text-2xl cursor-pointer" />
-                <p className="font-robotoLight text-sm">31</p>
+                <BsHandThumbsUp
+                  className="text-2xl cursor-pointer"
+                  onClick={handleLikePost}
+                />
+                <p className="font-robotoLight text-sm">
+                  {article && article.likes && article.likes.length}
+                </p>
               </div>
               <BsBookmark className="text-2xl cursor-pointer" />
             </div>

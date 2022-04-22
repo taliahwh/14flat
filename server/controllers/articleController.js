@@ -1,4 +1,5 @@
 import asyncHandler from 'express-async-handler';
+import mongoose from 'mongoose';
 
 import Article from '../models/articleModel.js';
 import User from '../models/userModel.js';
@@ -47,4 +48,41 @@ const createArticle = asyncHandler(async (req, res) => {
   res.status(201).json(createdArticle);
 });
 
-export { getArticles, getArticleById, createArticle };
+// @desc Fetch article by id
+// @route PATCH /api/:id/likearticle
+// @access Public
+const likeArticle = asyncHandler(async (req, res) => {
+  console.log(req.user);
+  const { id } = req.params;
+  const user = await User.findById(req.user._id);
+
+  if (!user) {
+    res.status(404);
+    throw new Error('Must be logged in to like article');
+  }
+
+  if (!mongoose.Types.ObjectId.isValid(id))
+    return res.status(404).send('No article with that id');
+
+  const article = await Article.findById(id);
+
+  /* checks the index to see if the userId already appears in the post's likes */
+  const index = article.likes.findIndex((id) => id === String(req.user._id));
+
+  if (index === -1) {
+    // like the article
+    article.likes.push(req.user._id);
+  } else {
+    // dislike the article
+    // returns an array of likes without the current user's like (removes)
+    article.likes = article.likes.filter((id) => id !== String(req.user._id));
+  }
+
+  const updatedArticle = await Article.findByIdAndUpdate(id, article, {
+    new: true,
+  });
+
+  res.json(updatedArticle);
+});
+
+export { getArticles, getArticleById, createArticle, likeArticle };

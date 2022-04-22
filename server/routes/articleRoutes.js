@@ -4,6 +4,7 @@ import {
   getArticles,
   getArticleById,
   createArticle,
+  likeArticle,
 } from '../controllers/articleController.js';
 
 import { isAdmin, authMiddleware } from '../middleware/authMiddleware.js';
@@ -15,5 +16,7 @@ router.get('/', getArticles);
 router.post('/', authMiddleware, createArticle);
 
 router.get('/:id', getArticleById);
+
+router.patch('/:id/likearticle', authMiddleware, likeArticle);
 
 export default router;

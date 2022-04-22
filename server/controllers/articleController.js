@@ -8,7 +8,10 @@ import User from '../models/userModel.js';
 // @access Public
 const getArticles = asyncHandler(async (req, res) => {
   const articles = await Article.find();
-  res.json(articles);
+  const latestArticles = articles.reverse();
+  // console.log(latestArticles);
+
+  res.json(latestArticles);
 });
 
 // @desc Fetch article by id
@@ -35,6 +38,7 @@ const createArticle = asyncHandler(async (req, res) => {
     coverImage: req.body.coverImage,
     content: req.body.content,
     excerpt: req.body.excerpt,
+    tags: req.body.tags,
     writtenBy: { name: req.user.name, writerId: req.user._id },
   });
 

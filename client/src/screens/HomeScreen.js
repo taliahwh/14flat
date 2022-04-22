@@ -85,11 +85,13 @@ const HomeScreen = () => {
             <Alert variant="error">{errorArticleList}</Alert>
           ) : (
             <>
-              {articles.reverse().map((article) => (
-                <Link to={`/blog/${article._id}`} key={article._id}>
-                  <LatestArticle article={article} />
-                </Link>
-              ))}
+              {articles &&
+                articles.length > 0 &&
+                articles.map((article) => (
+                  <Link to={`/blog/${article._id}`} key={article._id}>
+                    <LatestArticle article={article} />
+                  </Link>
+                ))}
 
               <Link
                 to="/"

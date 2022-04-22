@@ -22,6 +22,10 @@ export const articleSchema = new mongoose.Schema(
       type: [String],
       default: [],
     },
+    tags: {
+      type: [String],
+      default: [],
+    },
     writtenBy: {
       name: {
         type: String,

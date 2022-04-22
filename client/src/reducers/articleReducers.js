@@ -8,6 +8,9 @@ import {
   NEW_ARTICLE_REQUEST,
   NEW_ARTICLE_SUCCESS,
   NEW_ARTICLE_FAILURE,
+  LIKE_ARTICLE_REQUEST,
+  LIKE_ARTICLE_SUCCESS,
+  LIKE_ARTICLE_FAILURE,
 } from '../constants/articleConstants';
 
 export const articleListReducer = (state = { articles: [] }, action) => {
@@ -43,6 +46,19 @@ export const newArticleReducer = (state = {}, action) => {
     case NEW_ARTICLE_SUCCESS:
       return { loading: false, success: true, newArticle: action.payload };
     case NEW_ARTICLE_FAILURE:
+      return { loading: false, error: action.payload };
+    default:
+      return state;
+  }
+};
+
+export const likeArticleReducer = (state = {}, action) => {
+  switch (action.type) {
+    case LIKE_ARTICLE_REQUEST:
+      return { loading: true };
+    case LIKE_ARTICLE_SUCCESS:
+      return { loading: false, success: true };
+    case LIKE_ARTICLE_FAILURE:
       return { loading: false, error: action.payload };
     default:
       return state;

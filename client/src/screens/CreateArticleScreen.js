@@ -1,9 +1,11 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import axios from 'axios';
 import ReactQuill from 'react-quill';
+import ReactTagInput from '@pathofdev/react-tag-input';
 import 'react-quill/dist/quill.snow.css';
+import '@pathofdev/react-tag-input/build/index.css';
 
 import { BsFileEarmarkImage, BsArrowLeft } from 'react-icons/bs';
 
@@ -23,10 +25,13 @@ const CreateArticleScreen = () => {
   const [content, setContent] = useState('');
   const [excerpt, setExcerpt] = useState('');
   const [uploading, setUploading] = useState(false);
+  const [tags, setTags] = useState(['example']);
 
   const { success: newArticleSuccess } = useSelector(
     (state) => state.newArticle
   );
+
+  const { userInfo } = useSelector((state) => state.userSignin);
 
   const uploadFileHandler = async (e) => {
     const file = e.target.files[0];
@@ -67,12 +72,19 @@ const CreateArticleScreen = () => {
   const handleFormSubmit = (e) => {
     e.preventDefault();
 
-    dispatch(createNewArticle(title, image, content, excerpt));
+    dispatch(createNewArticle(title, image, content, excerpt, tags));
+    // console.log(tags);
     navigate('/blog');
   };
 
+  useEffect(() => {
+    if (!userInfo) {
+      navigate('/');
+    }
+  }, [userInfo, navigate]);
+
   return (
-    <div className="h-full bg-background max-w-6xl mx-auto w-full px-4">
+    <div className="h-screen bg-background max-w-6xl mx-auto w-full px-4">
       <Link
         to="/"
         className="font-robotoLight underline text-sm flex items-center space-x-2 pt-10 text-neutral-500"
@@ -179,14 +191,31 @@ const CreateArticleScreen = () => {
             // placeholder="Enter excerpt to be displayed"
             className="w-full font-robotoLight text-md py-2 italic text-neutral-800 bg-background border-1 px-3 border-neutral-300 focus:outline-none"
           />
-
-          <button
-            type="submitForm"
-            className="font-roboto font-medium text-white bg-neutral-500 w-full py-2 text-md"
-          >
-            PUBLISH POST
-          </button>
         </div>
+
+        <div className="tags-container flex flex-col space-y-2">
+          <label
+            htmlFor="tags"
+            className="font-spratRegular text-2xl md:text-3xl text-[#9CA3AF]"
+          >
+            Tags <span className={'text-xl'}>(add up to 3 tags)</span>
+          </label>
+          <ReactTagInput
+            tags={tags}
+            onChange={(newTags) => setTags(newTags)}
+            maxTags={3}
+            placeholder="Type and press enter to submit tag"
+            removeOnBackspace={true}
+            editable={true}
+          />
+        </div>
+
+        <button
+          type="submitForm"
+          className="font-roboto font-medium text-white bg-neutral-500 w-full py-2 text-md"
+        >
+          PUBLISH POST
+        </button>
 
         <div className="py-3"></div>
       </form>

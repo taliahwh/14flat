@@ -6,6 +6,7 @@ import {
   articleDetailsReducer,
   articleListReducer,
   newArticleReducer,
+  likeArticleReducer,
 } from './reducers/articleReducers';
 
 import {
@@ -21,6 +22,7 @@ const reducer = combineReducers({
   articleList: articleListReducer,
   articleDetails: articleDetailsReducer,
   newArticle: newArticleReducer,
+  likeArticle: likeArticleReducer,
   featuredPodcasts: featuredPodcastReducer,
   podcastDetails: podcastDetailsReducer,
   episodeDetails: podcastEpisodeDetailsReducer,

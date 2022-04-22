@@ -10,6 +10,9 @@ import {
   NEW_ARTICLE_REQUEST,
   NEW_ARTICLE_SUCCESS,
   NEW_ARTICLE_FAILURE,
+  LIKE_ARTICLE_REQUEST,
+  LIKE_ARTICLE_SUCCESS,
+  LIKE_ARTICLE_FAILURE,
 } from '../constants/articleConstants';
 
 export const listArticles = () => async (dispatch) => {
@@ -78,3 +81,29 @@ export const createNewArticle =
       });
     }
   };
+
+export const likeArticle = (id) => async (dispatch, getState) => {
+  try {
+    dispatch({ type: LIKE_ARTICLE_REQUEST });
+
+    const { userInfo } = getState().userSignIn;
+    console.log(userInfo);
+    const config = {
+      headers: {
+        Authorization: `Bearer ${userInfo.token}`,
+      },
+    };
+
+    await axios.patch(`/api/articles/${id}/likearticle`, config);
+
+    dispatch({ type: LIKE_ARTICLE_SUCCESS });
+  } catch (error) {
+    dispatch({
+      type: LIKE_ARTICLE_FAILURE,
+      payload:
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message,
+    });
+  }
+};

@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useParams, Link } from 'react-router-dom';
+import { useParams, Link, useNavigate } from 'react-router-dom';
 import moment from 'moment';
 import parse from 'html-react-parser';
 import {
@@ -21,7 +21,9 @@ import Loader from '../components/Loader';
 import Alert from '../components/Alert';
 
 const ArticleDetailsScreen = () => {
+  const user = JSON.parse(localStorage.getItem('userInfo'));
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const { id } = useParams();
 
   const {
@@ -30,13 +32,49 @@ const ArticleDetailsScreen = () => {
     error: errorArticleDetails,
   } = useSelector((state) => state.articleDetails);
 
+  /* TODO Create alert module with link for user to sign in
+  instead of redirecting to signin screen */
+
   const handleLikePost = () => {
-    dispatch(likeArticle(id));
+    if (user) {
+      dispatch(likeArticle(article));
+    } else {
+      navigate('/signin');
+    }
   };
 
   useEffect(() => {
     dispatch(listArticleDetails(id));
   }, [dispatch, id]);
+
+  const Likes = () => {
+    if (article && article.likes && article.likes.length > 0) {
+      return article.likes.find((like) => like === user._id) ? (
+        <div className="flex space-x-1 items-center">
+          <BsHandThumbsUpFill className="text-2xl" />
+          <p className="font-robotoLight text-sm">{`${
+            article && article.likes && article.likes.length
+          }`}</p>
+        </div>
+      ) : (
+        <div className="flex space-x-1 items-center">
+          <BsHandThumbsUp className="text-2xl" />
+          <p className="font-robotoLight text-sm">{`${
+            article && article.likes && article.likes.length
+          }`}</p>
+        </div>
+      );
+    }
+
+    return (
+      <div className="flex space-x-1 items-center">
+        <BsHandThumbsUp className="text-2xl" />
+        <p className="font-robotoLight text-sm">{`${
+          article && article.likes && article.likes.length
+        }`}</p>
+      </div>
+    );
+  };
 
   return (
     <>
@@ -83,7 +121,7 @@ const ArticleDetailsScreen = () => {
             </div>
 
             <div className="mt-5 flex space-x-1 w-full justify-end items-center text-neutral-800 pb-5">
-              <div className="flex space-x-1 items-center">
+              {/* <div className="flex space-x-1 items-center">
                 <BsHandThumbsUp
                   className="text-2xl cursor-pointer"
                   onClick={handleLikePost}
@@ -91,7 +129,10 @@ const ArticleDetailsScreen = () => {
                 <p className="font-robotoLight text-sm">
                   {article && article.likes && article.likes.length}
                 </p>
-              </div>
+              </div> */}
+              <button onClick={handleLikePost}>
+                <Likes />
+              </button>
               <BsBookmark className="text-2xl cursor-pointer" />
             </div>
 

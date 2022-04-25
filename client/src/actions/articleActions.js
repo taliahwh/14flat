@@ -82,19 +82,24 @@ export const createNewArticle =
     }
   };
 
-export const likeArticle = (id) => async (dispatch, getState) => {
+export const likeArticle = (article) => async (dispatch, getState) => {
   try {
     dispatch({ type: LIKE_ARTICLE_REQUEST });
 
     const { userInfo } = getState().userSignIn;
-    console.log(userInfo);
+
     const config = {
       headers: {
+        'Content-Type': 'application/json',
         Authorization: `Bearer ${userInfo.token}`,
       },
     };
 
-    await axios.patch(`/api/articles/${id}/likearticle`, config);
+    await axios.put(
+      `/api/articles/${article._id}/likearticle`,
+      article,
+      config
+    );
 
     dispatch({ type: LIKE_ARTICLE_SUCCESS });
   } catch (error) {

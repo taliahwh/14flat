@@ -9,6 +9,7 @@ import Alert from '../components/Alert';
 import PodcastCard from '../components/Podcasts/PodcastCard';
 
 // Actions
+// Actions
 import { listFeaturedPodcasts } from '../actions/podcastActions';
 
 const PodcastScreen = () => {

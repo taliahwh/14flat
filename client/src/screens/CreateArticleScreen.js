@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import axios from 'axios';
@@ -7,7 +7,11 @@ import ReactTagInput from '@pathofdev/react-tag-input';
 import 'react-quill/dist/quill.snow.css';
 import '@pathofdev/react-tag-input/build/index.css';
 
-import { BsFileEarmarkImage, BsArrowLeft } from 'react-icons/bs';
+import {
+  BsFileEarmarkImage,
+  BsArrowLeft,
+  BsFillInfoCircleFill,
+} from 'react-icons/bs';
 
 // Components
 import Alert from '../components/Alert';
@@ -19,19 +23,20 @@ import { createNewArticle } from '../actions/articleActions';
 const CreateArticleScreen = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const tooltipRef = useRef();
 
   const [image, setImage] = useState('');
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
   const [excerpt, setExcerpt] = useState('');
   const [uploading, setUploading] = useState(false);
-  const [tags, setTags] = useState(['example']);
+  const [tags, setTags] = useState([]);
 
   const { success: newArticleSuccess } = useSelector(
     (state) => state.newArticle
   );
 
-  const { userInfo } = useSelector((state) => state.userSignin);
+  const { userInfo } = useSelector((state) => state.userSignIn);
 
   const uploadFileHandler = async (e) => {
     const file = e.target.files[0];
@@ -65,7 +70,8 @@ const CreateArticleScreen = () => {
         { indent: '-1' },
         { indent: '+1' },
       ],
-      ['link', 'image'],
+      ['link'],
+      ['image'],
     ],
   };
 

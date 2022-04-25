@@ -48,11 +48,11 @@ const createArticle = asyncHandler(async (req, res) => {
   res.status(201).json(createdArticle);
 });
 
-// @desc Fetch article by id
-// @route PATCH /api/:id/likearticle
+// @desc Like article by atricle id
+// @route PUT /api/:id/likearticle
 // @access Public
 const likeArticle = asyncHandler(async (req, res) => {
-  console.log(req.user);
+  // console.log(req.user);
   const { id } = req.params;
   const user = await User.findById(req.user._id);
 

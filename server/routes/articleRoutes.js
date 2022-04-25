@@ -17,6 +17,6 @@ router.post('/', authMiddleware, createArticle);
 
 router.get('/:id', getArticleById);
 
-router.patch('/:id/likearticle', authMiddleware, likeArticle);
+router.put('/:id/likearticle', authMiddleware, likeArticle);
 
 export default router;

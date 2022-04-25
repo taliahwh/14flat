@@ -7,6 +7,7 @@
     "@editorjs/header": "^2.6.2",
     "@editorjs/list": "^1.7.0",
     "@headlessui/react": "^1.5.0",
+    "@material-tailwind/react": "0.3.4",
     "@pathofdev/react-tag-input": "^1.0.7",
     "@redux-devtools/extension": "^3.2.2",
     "@testing-library/jest-dom": "^5.16.3",

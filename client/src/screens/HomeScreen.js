@@ -30,8 +30,6 @@ const HomeScreen = () => {
     error: errorLatestEpisodes,
   } = useSelector((state) => state.latestEpisodes);
 
-  console.log(latestEpisodes);
-
   useEffect(() => {
     dispatch(listArticles());
     dispatch(listLatestEpisodes());

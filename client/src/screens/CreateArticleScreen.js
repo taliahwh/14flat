@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import axios from 'axios';
 import ReactQuill from 'react-quill';
 import ReactTagInput from '@pathofdev/react-tag-input';
+import ReactTooltip from 'react-tooltip';
 import 'react-quill/dist/quill.snow.css';
 import '@pathofdev/react-tag-input/build/index.css';
 
@@ -154,16 +155,26 @@ const CreateArticleScreen = () => {
         </div>
 
         <div className="editor-container">
-          <input
-            required
-            type="text"
-            name="title"
-            id="title"
-            value={title}
-            onChange={(e) => setTitle(e.target.value)}
-            placeholder="Title"
-            className="w-full font-spratRegular text-4xl md:text-5xl pt-7 pb-2 text-neutral-800 bg-background focus:outline-none"
-          />
+          <div className="grid grid-cols-12 items-end">
+            <div className="col-span-11">
+              <input
+                required
+                type="text"
+                name="title"
+                id="title"
+                value={title}
+                onChange={(e) => setTitle(e.target.value)}
+                placeholder="Title"
+                className="w-full font-spratRegular text-4xl md:text-5xl pt-7 pb-2 text-neutral-800 bg-background focus:outline-none"
+              />
+            </div>
+            <div className="col-span-1 flex justify-end pb-3">
+              <div data-tip="To include images in your article, copy image <br/> (not image address) and paste it into the article's content">
+                <BsFillInfoCircleFill className="text-neutral-700" />
+                <ReactTooltip multiline={true} />
+              </div>
+            </div>
+          </div>
 
           {/* Text Editor */}
           <ReactQuill

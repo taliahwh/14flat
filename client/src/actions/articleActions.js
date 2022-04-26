@@ -13,6 +13,12 @@ import {
   LIKE_ARTICLE_REQUEST,
   LIKE_ARTICLE_SUCCESS,
   LIKE_ARTICLE_FAILURE,
+  USER_ARTICLES_REQUEST,
+  USER_ARTICLES_SUCCESS,
+  USER_ARTICLES_FAILURE,
+  DELETE_ARTICLE_REQUEST,
+  DELETE_ARTICLE_SUCCESS,
+  DELETE_ARTICLE_FAILURE,
 } from '../constants/articleConstants';
 
 export const listArticles = () => async (dispatch) => {
@@ -25,6 +31,35 @@ export const listArticles = () => async (dispatch) => {
   } catch (error) {
     dispatch({
       type: ARTICLE_LIST_FAILURE,
+      payload:
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message,
+    });
+  }
+};
+
+export const listUserArticles = (id) => async (dispatch, getState) => {
+  const { userInfo } = getState().userSignIn;
+  const config = {
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${userInfo.token}`,
+    },
+  };
+
+  try {
+    dispatch({ type: USER_ARTICLES_REQUEST });
+
+    const { data } = await axios.get(
+      `/api/articles/user/${id}/articles`,
+      config
+    );
+
+    dispatch({ type: USER_ARTICLES_SUCCESS, payload: data });
+  } catch (error) {
+    dispatch({
+      type: USER_ARTICLES_FAILURE,
       payload:
         error.response && error.response.data.message
           ? error.response.data.message
@@ -105,6 +140,33 @@ export const likeArticle = (article) => async (dispatch, getState) => {
   } catch (error) {
     dispatch({
       type: LIKE_ARTICLE_FAILURE,
+      payload:
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message,
+    });
+  }
+};
+
+export const deleteArticle = (id) => async (dispatch, getState) => {
+  try {
+    dispatch({ type: DELETE_ARTICLE_REQUEST });
+
+    const { userInfo } = getState().userSignIn;
+
+    const config = {
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${userInfo.token}`,
+      },
+    };
+
+    await axios.delete(`/api/articles/${id}`, config);
+
+    dispatch({ type: DELETE_ARTICLE_SUCCESS });
+  } catch (error) {
+    dispatch({
+      type: DELETE_ARTICLE_FAILURE,
       payload:
         error.response && error.response.data.message
           ? error.response.data.message

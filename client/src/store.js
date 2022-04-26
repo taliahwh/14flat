@@ -7,6 +7,8 @@ import {
   articleListReducer,
   newArticleReducer,
   likeArticleReducer,
+  userArticleReducer,
+  deleteArticleReducer,
 } from './reducers/articleReducers';
 
 import {
@@ -23,10 +25,12 @@ const reducer = combineReducers({
   articleDetails: articleDetailsReducer,
   newArticle: newArticleReducer,
   likeArticle: likeArticleReducer,
+  deleteArticle: deleteArticleReducer,
   featuredPodcasts: featuredPodcastReducer,
   podcastDetails: podcastDetailsReducer,
   episodeDetails: podcastEpisodeDetailsReducer,
   latestEpisodes: podcastLatestEpsiodeReducer,
+  userArticles: userArticleReducer,
   userSignIn: userSignInReducer,
   userSignUp: userSignUpReducer,
 });

@@ -11,6 +11,12 @@ import {
   LIKE_ARTICLE_REQUEST,
   LIKE_ARTICLE_SUCCESS,
   LIKE_ARTICLE_FAILURE,
+  USER_ARTICLES_REQUEST,
+  USER_ARTICLES_SUCCESS,
+  USER_ARTICLES_FAILURE,
+  DELETE_ARTICLE_REQUEST,
+  DELETE_ARTICLE_SUCCESS,
+  DELETE_ARTICLE_FAILURE,
 } from '../constants/articleConstants';
 
 export const articleListReducer = (state = { articles: [] }, action) => {
@@ -59,6 +65,32 @@ export const likeArticleReducer = (state = {}, action) => {
     case LIKE_ARTICLE_SUCCESS:
       return { loading: false, success: true };
     case LIKE_ARTICLE_FAILURE:
+      return { loading: false, error: action.payload };
+    default:
+      return state;
+  }
+};
+
+export const userArticleReducer = (state = { userArticles: {} }, action) => {
+  switch (action.type) {
+    case USER_ARTICLES_REQUEST:
+      return { loading: true };
+    case USER_ARTICLES_SUCCESS:
+      return { loading: false, userArticles: action.payload };
+    case USER_ARTICLES_FAILURE:
+      return { loading: false, error: action.payload };
+    default:
+      return state;
+  }
+};
+
+export const deleteArticleReducer = (state = {}, action) => {
+  switch (action.type) {
+    case DELETE_ARTICLE_REQUEST:
+      return { loading: true };
+    case DELETE_ARTICLE_SUCCESS:
+      return { loading: false, success: true };
+    case DELETE_ARTICLE_FAILURE:
       return { loading: false, error: action.payload };
     default:
       return state;

@@ -33,10 +33,6 @@ const CreateArticleScreen = () => {
   const [uploading, setUploading] = useState(false);
   const [tags, setTags] = useState([]);
 
-  const { success: newArticleSuccess } = useSelector(
-    (state) => state.newArticle
-  );
-
   const { userInfo } = useSelector((state) => state.userSignIn);
 
   const uploadFileHandler = async (e) => {
@@ -106,9 +102,6 @@ const CreateArticleScreen = () => {
       >
         {/* Image Uploading Component */}
         <div className="pt-16 ">
-          {newArticleSuccess && (
-            <Alert variant="success">Article successfully created.</Alert>
-          )}
           <h1 className="font-spratRegular text-2xl md:text-3xl text-[#9CA3AF] pb-2">
             Cover Image
           </h1>

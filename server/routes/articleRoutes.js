@@ -5,6 +5,8 @@ import {
   getArticleById,
   createArticle,
   likeArticle,
+  getUserArticles,
+  deleteArticle,
 } from '../controllers/articleController.js';
 
 import { isAdmin, authMiddleware } from '../middleware/authMiddleware.js';
@@ -15,7 +17,11 @@ router.get('/', getArticles);
 
 router.post('/', authMiddleware, createArticle);
 
+router.get('/user/:id/articles', authMiddleware, getUserArticles);
+
 router.get('/:id', getArticleById);
+
+router.delete('/:id', authMiddleware, deleteArticle);
 
 router.put('/:id/likearticle', authMiddleware, likeArticle);
 

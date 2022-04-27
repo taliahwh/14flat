@@ -19,6 +19,7 @@ const Header = () => {
 
   const handleLogout = () => {
     dispatch(logout());
+    //TODO delete
   };
 
   return (

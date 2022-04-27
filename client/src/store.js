@@ -9,6 +9,7 @@ import {
   likeArticleReducer,
   userArticleReducer,
   deleteArticleReducer,
+  saveArticleReducer,
 } from './reducers/articleReducers';
 
 import {
@@ -25,6 +26,7 @@ const reducer = combineReducers({
   articleDetails: articleDetailsReducer,
   newArticle: newArticleReducer,
   likeArticle: likeArticleReducer,
+  saveArticle: saveArticleReducer,
   deleteArticle: deleteArticleReducer,
   featuredPodcasts: featuredPodcastReducer,
   podcastDetails: podcastDetailsReducer,

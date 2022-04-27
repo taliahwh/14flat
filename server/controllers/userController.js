@@ -33,6 +33,7 @@ const signIn = asyncHandler(async (req, res) => {
       name: user.name,
       email: user.email,
       isAdmin: user.isAdmin,
+      savedArticles: user.savedArticles,
       token: generateToken(user._id),
     });
   } else {

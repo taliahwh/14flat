@@ -1,4 +1,5 @@
 import React from 'react';
+// TODO delete this
 
 const Loader = () => {
   return (

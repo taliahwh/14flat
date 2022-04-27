@@ -35,6 +35,9 @@ const UserProfileScreen = () => {
     (state) => state.deleteArticle
   );
 
+  /* TODO Create alert module for user to confirm they want
+  to delete article before dispatching the action */
+
   useEffect(() => {
     if (!user._id) {
       navigate('/signin');

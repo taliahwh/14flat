@@ -55,7 +55,9 @@ const ViewWrittenArticle = ({ article }) => {
             <div className="flex space-x-2">
               <div className="bg-neutral-500 px-6 py-2 text-white font-medium text-sm flex space-x-2 items-center">
                 <FaThumbsUp />
-                <p className="font-roboto tracking-wide">27</p>
+                <p className="font-roboto tracking-wide">
+                  {article && article.likes.length}
+                </p>
               </div>
               <div className="bg-neutral-800 px-6 py-2 text-white font-medium text-sm flex space-x-2 items-center">
                 <IoMdEye className="text-xl" />

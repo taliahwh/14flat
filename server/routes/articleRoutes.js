@@ -5,6 +5,7 @@ import {
   getArticleById,
   createArticle,
   likeArticle,
+  saveArticle,
   getUserArticles,
   deleteArticle,
 } from '../controllers/articleController.js';
@@ -24,5 +25,7 @@ router.get('/:id', getArticleById);
 router.delete('/:id', authMiddleware, deleteArticle);
 
 router.put('/:id/likearticle', authMiddleware, likeArticle);
+
+router.put('/:id/savearticle', authMiddleware, saveArticle);
 
 export default router;

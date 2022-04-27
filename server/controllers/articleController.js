@@ -106,7 +106,7 @@ const deleteArticle = asyncHandler(async (req, res) => {
   res.status(200).json('Article successfully deleted');
 });
 
-// @desc Like article by atricle id
+// @desc Like article by article id
 // @route PUT /api/:id/likearticle
 // @access Public
 const likeArticle = asyncHandler(async (req, res) => {
@@ -140,7 +140,45 @@ const likeArticle = asyncHandler(async (req, res) => {
     new: true,
   });
 
+  // Updating likes in user model
+  const writerOfArticle = await User.find({ 'articles._id': String(id) });
+  const userArticleToUpdate = writerOfArticle[0].articles.find(
+    (article) => String(article._id) === String(id)
+  );
+
+  userArticleToUpdate.likes = updatedArticle.likes;
+  await writerOfArticle[0].save();
+
+  console.log(writerOfArticle[0]);
+
   res.json(updatedArticle);
+});
+
+// @desc Save article (bookmark) by article id
+// @route PUT /api/:id/likearticle
+// @access Public
+const saveArticle = asyncHandler(async (req, res) => {
+  const { id } = req.params;
+  const user = await User.findById(req.user._id);
+
+  if (!user) {
+    res.status(404);
+    throw new Error('Must be logged in to save article');
+  }
+
+  if (!mongoose.Types.ObjectId.isValid(id))
+    return res.status(404).send('No article with that id');
+
+  const article = await Article.findById(id);
+
+  user.savedArticles.push(article);
+
+  const updatedUser = await User.findByIdAndUpdate(req.user._id, user, {
+    new: true,
+  });
+
+  res.status(200);
+  res.json(updatedUser);
 });
 
 export {
@@ -148,6 +186,7 @@ export {
   getArticleById,
   createArticle,
   likeArticle,
+  saveArticle,
   getUserArticles,
   deleteArticle,
 };

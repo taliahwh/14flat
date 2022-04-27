@@ -16,10 +16,14 @@ import {
   USER_ARTICLES_REQUEST,
   USER_ARTICLES_SUCCESS,
   USER_ARTICLES_FAILURE,
+  SAVE_ARTICLE_REQUEST,
+  SAVE_ARTICLE_SUCCESS,
+  SAVE_ARTICLE_FAILURE,
   DELETE_ARTICLE_REQUEST,
   DELETE_ARTICLE_SUCCESS,
   DELETE_ARTICLE_FAILURE,
 } from '../constants/articleConstants';
+import { USER_SIGN_IN_SUCCESS } from '../constants/userConstants';
 
 export const listArticles = () => async (dispatch) => {
   try {
@@ -140,6 +144,41 @@ export const likeArticle = (article) => async (dispatch, getState) => {
   } catch (error) {
     dispatch({
       type: LIKE_ARTICLE_FAILURE,
+      payload:
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message,
+    });
+  }
+};
+
+export const saveArticle = (article, user) => async (dispatch, getState) => {
+  try {
+    dispatch({ type: SAVE_ARTICLE_REQUEST });
+
+    const { userInfo } = getState().userSignIn;
+
+    const config = {
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${userInfo.token}`,
+      },
+    };
+
+    const { data } = await axios.put(
+      `/api/articles/${article._id}/savearticle`,
+      user,
+      config
+    );
+
+    dispatch({ type: SAVE_ARTICLE_SUCCESS });
+    dispatch({
+      type: USER_SIGN_IN_SUCCESS,
+      payload: { ...userInfo, savedArticles: data.savedArticles },
+    });
+  } catch (error) {
+    dispatch({
+      type: SAVE_ARTICLE_FAILURE,
       payload:
         error.response && error.response.data.message
           ? error.response.data.message

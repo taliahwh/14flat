@@ -176,6 +176,13 @@ export const saveArticle = (article, user) => async (dispatch, getState) => {
       type: USER_SIGN_IN_SUCCESS,
       payload: { ...userInfo, savedArticles: data.savedArticles },
     });
+
+    // Updating localStorage
+    const updatedUserObject = {
+      ...userInfo,
+      savedArticles: data.savedArticles,
+    };
+    localStorage.setItem('userInfo', JSON.stringify(updatedUserObject));
   } catch (error) {
     dispatch({
       type: SAVE_ARTICLE_FAILURE,

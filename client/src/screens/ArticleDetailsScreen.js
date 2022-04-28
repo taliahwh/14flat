@@ -66,8 +66,6 @@ const ArticleDetailsScreen = () => {
     }
   };
 
-  console.log(userInfo);
-
   useEffect(() => {
     dispatch(listArticleDetails(id));
   }, [dispatch, id, successLikeArticle, successSaveArticle]);
@@ -127,7 +125,7 @@ const ArticleDetailsScreen = () => {
             <Loader />
           </div>
         ) : errorArticleDetails ? (
-          <Alert variant="error">errorArticleDetails</Alert>
+          <Alert variant="error">{errorArticleDetails}</Alert>
         ) : (
           <>
             <Link

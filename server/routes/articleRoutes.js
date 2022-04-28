@@ -3,6 +3,7 @@ import express from 'express';
 import {
   getArticles,
   getArticleById,
+  getSavedArticles,
   createArticle,
   likeArticle,
   saveArticle,
@@ -19,6 +20,8 @@ router.get('/', getArticles);
 router.post('/', authMiddleware, createArticle);
 
 router.get('/user/:id/articles', authMiddleware, getUserArticles);
+
+router.get('/user/:id/saved-articles', authMiddleware, getSavedArticles);
 
 router.get('/:id', getArticleById);
 

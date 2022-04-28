@@ -19,6 +19,9 @@ import {
   SAVE_ARTICLE_REQUEST,
   SAVE_ARTICLE_SUCCESS,
   SAVE_ARTICLE_FAILURE,
+  GET_SAVED_ARTICLES_REQUEST,
+  GET_SAVED_ARTICLES_SUCCESS,
+  GET_SAVED_ARTICLES_FAILURE,
   DELETE_ARTICLE_REQUEST,
   DELETE_ARTICLE_SUCCESS,
   DELETE_ARTICLE_FAILURE,
@@ -64,6 +67,35 @@ export const listUserArticles = (id) => async (dispatch, getState) => {
   } catch (error) {
     dispatch({
       type: USER_ARTICLES_FAILURE,
+      payload:
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message,
+    });
+  }
+};
+
+export const listSavedArticles = (id) => async (dispatch, getState) => {
+  const { userInfo } = getState().userSignIn;
+  const config = {
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${userInfo.token}`,
+    },
+  };
+
+  try {
+    dispatch({ type: GET_SAVED_ARTICLES_REQUEST });
+
+    const { data } = await axios.get(
+      `/api/articles/user/${id}/saved-articles`,
+      config
+    );
+
+    dispatch({ type: GET_SAVED_ARTICLES_SUCCESS, payload: data });
+  } catch (error) {
+    dispatch({
+      type: GET_SAVED_ARTICLES_FAILURE,
       payload:
         error.response && error.response.data.message
           ? error.response.data.message

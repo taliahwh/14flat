@@ -25,7 +25,7 @@ const LatestArticle = ({ article }) => {
 
           <div className="flex space-x-3 text-xs pt-3">
             <p className="text-neutral-400">
-              {moment(article.createdAt).format('MMMM Do')}
+              {moment(article.createdAt).format('MMMM D')}
             </p>
             <p className="text-neutral-400">•</p>
             <p className="text-neutral-400">{readingLength}</p>
@@ -45,7 +45,7 @@ const LatestArticle = ({ article }) => {
           <div className="flex space-x-3 text-xs">
             <p className="text-neutral-400">
               {' '}
-              {moment(article.createdAt).format('MMMM Do')}
+              {moment(article.createdAt).format('MMMM D')}
             </p>
             <p className="text-neutral-400">•</p>
             <p className="text-neutral-400">5 min read</p>

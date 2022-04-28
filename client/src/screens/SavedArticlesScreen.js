@@ -1,14 +1,39 @@
-import React from 'react';
-import { Link, NavLink } from 'react-router-dom';
+import React, { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { Link, NavLink, useNavigate } from 'react-router-dom';
 
+// Actions
+import { listSavedArticles } from '../actions/articleActions';
+
+// Components
 import Header from '../components/Header';
+import Alert from '../components/Alert';
+import Loader from '../components/Loader';
+import Body from '../components/Body';
 import SavedArticle from '../components/Articles/SavedArticle';
-// import SavedArticle from '../components/Articles/SavedArticle';
 
 const SavedArticlesScreen = () => {
+  const user = JSON.parse(localStorage.getItem('userInfo'));
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  const {
+    loading: loadingSavedArticles,
+    savedArticles,
+    error: errorSavedArticles,
+  } = useSelector((state) => state.savedArticles);
+
   const handleSearch = (e) => {
     e.preventDefault();
   };
+
+  useEffect(() => {
+    if (!user._id) {
+      navigate('/');
+    }
+
+    dispatch(listSavedArticles(user._id));
+  }, [user._id, navigate, dispatch]);
   return (
     <div className="bg-background px-4 md:px-10 max-w-8xl mx-auto">
       <Header />
@@ -67,12 +92,17 @@ const SavedArticlesScreen = () => {
         </div> */}
 
         <div className="flex flex-col space-y-10 pt-5 md:pt-14">
-          <Link to="/blog/1">
-            <SavedArticle />
-          </Link>
-          <SavedArticle />
-          <SavedArticle />
-          <SavedArticle />
+          {loadingSavedArticles && <Loader />}
+          {errorSavedArticles && (
+            <Alert variant="error">{errorSavedArticles}</Alert>
+          )}
+          {savedArticles &&
+            savedArticles.length > 0 &&
+            savedArticles.map((article) => (
+              <div key={article._id}>
+                <SavedArticle article={article} />
+              </div>
+            ))}
           <Link
             to="/"
             className="font-spratRegular text-sm text-neutral-900 text-center border-1 py-2 border-neutral-900 hover:shadow-md"

@@ -85,7 +85,7 @@ const HomeScreen = () => {
             <>
               {articles &&
                 articles.length > 0 &&
-                articles.map((article) => (
+                articles.slice(0, 5).map((article) => (
                   <Link to={`/blog/${article._id}`} key={article._id}>
                     <LatestArticle article={article} />
                   </Link>

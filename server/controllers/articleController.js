@@ -56,6 +56,28 @@ const getUserArticles = asyncHandler(async (req, res) => {
   }
 });
 
+// @desc Fetch user's saved article by user id
+// @route GET /api/articles/:id
+// @access Public
+const getSavedArticles = asyncHandler(async (req, res) => {
+  const user = await User.findById(req.user._id);
+
+  if (!user) {
+    res.status(404);
+    throw new Error('User not found. Please sign in to view saved articles.');
+  }
+
+  const savedArticles = user.savedArticles.reverse();
+
+  if (savedArticles.length > 0) {
+    res.status(200);
+    res.json(savedArticles);
+  } else {
+    res.status(204);
+    throw new Error('No saved articles found.');
+  }
+});
+
 // @desc Create new article
 // @route POST /api/articles
 // @access Public
@@ -188,6 +210,7 @@ const saveArticle = asyncHandler(async (req, res) => {
 export {
   getArticles,
   getArticleById,
+  getSavedArticles,
   createArticle,
   likeArticle,
   saveArticle,

@@ -17,6 +17,9 @@ import {
   SAVE_ARTICLE_REQUEST,
   SAVE_ARTICLE_SUCCESS,
   SAVE_ARTICLE_FAILURE,
+  GET_SAVED_ARTICLES_REQUEST,
+  GET_SAVED_ARTICLES_SUCCESS,
+  GET_SAVED_ARTICLES_FAILURE,
   DELETE_ARTICLE_REQUEST,
   DELETE_ARTICLE_SUCCESS,
   DELETE_ARTICLE_FAILURE,
@@ -81,6 +84,22 @@ export const userArticleReducer = (state = { userArticles: {} }, action) => {
     case USER_ARTICLES_SUCCESS:
       return { loading: false, userArticles: action.payload };
     case USER_ARTICLES_FAILURE:
+      return { loading: false, error: action.payload };
+    default:
+      return state;
+  }
+};
+
+export const listSavedArticlesReducer = (
+  state = { savedArticles: {} },
+  action
+) => {
+  switch (action.type) {
+    case GET_SAVED_ARTICLES_REQUEST:
+      return { loading: true };
+    case GET_SAVED_ARTICLES_SUCCESS:
+      return { loading: false, savedArticles: action.payload };
+    case GET_SAVED_ARTICLES_FAILURE:
       return { loading: false, error: action.payload };
     default:
       return state;

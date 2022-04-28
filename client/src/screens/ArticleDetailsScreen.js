@@ -155,7 +155,7 @@ const ArticleDetailsScreen = () => {
                 </p>
                 <p className="text-neutral-700 font-robotoLight">
                   {article.createdAt &&
-                    moment(article.createdAt).format('MMMM Do')}
+                    moment(article.createdAt).format('MMMM D')}
                 </p>
               </div>
 

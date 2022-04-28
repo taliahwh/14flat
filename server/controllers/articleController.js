@@ -149,8 +149,6 @@ const likeArticle = asyncHandler(async (req, res) => {
   userArticleToUpdate.likes = updatedArticle.likes;
   await writerOfArticle[0].save();
 
-  console.log(writerOfArticle[0]);
-
   res.json(updatedArticle);
 });
 
@@ -171,12 +169,18 @@ const saveArticle = asyncHandler(async (req, res) => {
 
   const article = await Article.findById(id);
 
-  user.savedArticles.push(article);
+  const existingSavedArticles = user.savedArticles.map((article) =>
+    String(article._id)
+  );
+  const articleExists = existingSavedArticles.includes(String(article._id));
+
+  if (!articleExists) {
+    user.savedArticles.push(article);
+  }
 
   const updatedUser = await User.findByIdAndUpdate(req.user._id, user, {
     new: true,
   });
-
   res.status(200);
   res.json(updatedUser);
 });

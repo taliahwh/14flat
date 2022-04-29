@@ -2,6 +2,8 @@ import express from 'express';
 
 import {
   getArticles,
+  getCoverArticle,
+  getFeaturedArticles,
   getArticleById,
   getSavedArticles,
   createArticle,
@@ -17,6 +19,10 @@ import { isAdmin, authMiddleware } from '../middleware/authMiddleware.js';
 const router = express.Router();
 
 router.get('/', getArticles);
+
+router.get('/cover-article', getCoverArticle);
+
+router.get('/featured-articles', getFeaturedArticles);
 
 router.post('/', authMiddleware, createArticle);
 

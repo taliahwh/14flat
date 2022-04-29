@@ -6,7 +6,7 @@ import { Link, NavLink } from 'react-router-dom';
 import Header from '../components/Header';
 import Alert from '../components/Alert';
 import Loader from '../components/Loader';
-import Body from '../components/Body';
+import FullHeight from '../components/FullHeight';
 import LatestArticle from '../components/Articles/LatestArticle';
 import ScrollToTop from '../config/ScrollToTop';
 
@@ -35,7 +35,7 @@ const BlogScreen = () => {
       <Header />
       <ScrollToTop />
 
-      <Body>
+      <FullHeight>
         <h1 className="font-spratBold text-7xl lg:text-8xl pb-5">Blog</h1>
 
         {/* Latest Articles Section */}
@@ -110,7 +110,7 @@ const BlogScreen = () => {
             )}
           </div>
         </div>
-      </Body>
+      </FullHeight>
     </div>
   );
 };

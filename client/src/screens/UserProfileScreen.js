@@ -12,7 +12,7 @@ import { listUserArticles } from '../actions/articleActions';
 import Header from '../components/Header';
 import Loader from '../components/Loader';
 import Alert from '../components/Alert';
-import Body from '../components/Body';
+import FullScreen from '../components/FullScreen';
 import ViewWrittenArticle from '../components/Articles/ViewWrittenArticle';
 import AdminAnalyticsCard from '../components/Admin/AdminAnalyticsCard';
 import UserRequestCard from '../components/Admin/UserRequestCard';
@@ -55,7 +55,7 @@ const UserProfileScreen = () => {
       }
     >
       <Header />
-      <Body>
+      <FullScreen>
         <h1 className="font-spratBold text-7xl lg:text-8xl pb-5">
           {location.pathname.includes('view-articles')
             ? '/Articles'
@@ -274,7 +274,7 @@ const UserProfileScreen = () => {
             </div>
           )}
         </div>
-      </Body>
+      </FullScreen>
     </div>
   );
 };

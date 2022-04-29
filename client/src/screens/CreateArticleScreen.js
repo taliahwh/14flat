@@ -15,7 +15,6 @@ import {
 } from 'react-icons/bs';
 
 // Components
-import Alert from '../components/Alert';
 import Loader from '../components/Loader';
 
 // Actions

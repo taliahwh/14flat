@@ -23,7 +23,7 @@ import ScrollToTop from '../config/ScrollToTop';
 import Header from '../components/Header';
 import Loader from '../components/Loader';
 import Alert from '../components/Alert';
-import Body from '../components/Body';
+import FullHeight from '../components/FullHeight';
 
 const ArticleDetailsScreen = () => {
   const user = JSON.parse(localStorage.getItem('userInfo'));
@@ -71,7 +71,7 @@ const ArticleDetailsScreen = () => {
   }, [dispatch, id, successLikeArticle, successSaveArticle]);
 
   const Likes = () => {
-    if (article && article.likes && article.likes.length > 0) {
+    if (user && article && article.likes && article.likes.length > 0) {
       return article.likes.find((like) => like === user._id) ? (
         <div className="flex space-x-1 items-center">
           <BsHandThumbsUpFill className="text-2xl" />
@@ -119,7 +119,7 @@ const ArticleDetailsScreen = () => {
       <div className="px-4 md:px-10 max-w-8xl mx-auto">
         <Header />
       </div>
-      <Body>
+      <FullHeight>
         {loadingArticleDetails ? (
           <div className="h-screen bg-background">
             <Loader />
@@ -190,7 +190,7 @@ const ArticleDetailsScreen = () => {
             </div>
           </>
         )}
-      </Body>
+      </FullHeight>
     </>
   );
 };

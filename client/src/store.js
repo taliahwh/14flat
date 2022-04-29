@@ -12,6 +12,8 @@ import {
   saveArticleReducer,
   listSavedArticlesReducer,
   deleteSavedArticleReducer,
+  coverArticleReducer,
+  featuredArticlesReducer,
 } from './reducers/articleReducers';
 
 import {
@@ -25,6 +27,8 @@ import { userSignInReducer, userSignUpReducer } from './reducers/userReducers';
 
 const reducer = combineReducers({
   articleList: articleListReducer,
+  coverArticle: coverArticleReducer,
+  featuredArticles: featuredArticlesReducer,
   articleDetails: articleDetailsReducer,
   newArticle: newArticleReducer,
   likeArticle: likeArticleReducer,

@@ -4,6 +4,12 @@ import {
   ARTICLE_LIST_REQUEST,
   ARTICLE_LIST_SUCCESS,
   ARTICLE_LIST_FAILURE,
+  COVER_ARTICLE_REQUEST,
+  COVER_ARTICLE_SUCCESS,
+  COVER_ARTICLE_FAILURE,
+  FEATURED_ARTICLES_REQUEST,
+  FEATURED_ARTICLES_SUCCESS,
+  FEATURED_ARTICLES_FAILURE,
   ARTICLE_DETAILS_REQUEST,
   ARTICLE_DETAILS_SUCCESS,
   ARTICLE_DETAILS_FAILURE,
@@ -41,6 +47,42 @@ export const listArticles = () => async (dispatch) => {
   } catch (error) {
     dispatch({
       type: ARTICLE_LIST_FAILURE,
+      payload:
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message,
+    });
+  }
+};
+
+export const listCoverArticle = () => async (dispatch) => {
+  try {
+    dispatch({ type: COVER_ARTICLE_REQUEST });
+
+    const { data } = await axios.get('/api/articles/cover-article');
+
+    dispatch({ type: COVER_ARTICLE_SUCCESS, payload: data });
+  } catch (error) {
+    dispatch({
+      type: COVER_ARTICLE_FAILURE,
+      payload:
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message,
+    });
+  }
+};
+
+export const listFeaturedArticles = () => async (dispatch) => {
+  try {
+    dispatch({ type: FEATURED_ARTICLES_REQUEST });
+
+    const { data } = await axios.get('/api/articles/featured-articles');
+
+    dispatch({ type: FEATURED_ARTICLES_SUCCESS, payload: data });
+  } catch (error) {
+    dispatch({
+      type: FEATURED_ARTICLES_FAILURE,
       payload:
         error.response && error.response.data.message
           ? error.response.data.message

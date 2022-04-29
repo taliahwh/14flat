@@ -19,6 +19,9 @@ import {
   SAVE_ARTICLE_REQUEST,
   SAVE_ARTICLE_SUCCESS,
   SAVE_ARTICLE_FAILURE,
+  DELETE_SAVED_ARTICLE_REQUEST,
+  DELETE_SAVED_ARTICLE_SUCCESS,
+  DELETE_SAVED_ARTICLE_FAILURE,
   GET_SAVED_ARTICLES_REQUEST,
   GET_SAVED_ARTICLES_SUCCESS,
   GET_SAVED_ARTICLES_FAILURE,
@@ -225,6 +228,49 @@ export const saveArticle = (article, user) => async (dispatch, getState) => {
     });
   }
 };
+
+export const deleteSavedArticle =
+  (article, user) => async (dispatch, getState) => {
+    try {
+      dispatch({ type: DELETE_SAVED_ARTICLE_REQUEST });
+
+      const { userInfo } = getState().userSignIn;
+
+      const config = {
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${userInfo.token}`,
+        },
+      };
+
+      const { data } = await axios.put(
+        `/api/articles/${article._id}/delete-saved-article`,
+        user,
+        config
+      );
+
+      dispatch({ type: DELETE_SAVED_ARTICLE_SUCCESS });
+      dispatch({
+        type: USER_SIGN_IN_SUCCESS,
+        payload: { ...userInfo, savedArticles: data.savedArticles },
+      });
+
+      // Updating localStorage
+      const updatedUserObject = {
+        ...userInfo,
+        savedArticles: data.savedArticles,
+      };
+      localStorage.setItem('userInfo', JSON.stringify(updatedUserObject));
+    } catch (error) {
+      dispatch({
+        type: DELETE_SAVED_ARTICLE_FAILURE,
+        payload:
+          error.response && error.response.data.message
+            ? error.response.data.message
+            : error.message,
+      });
+    }
+  };
 
 export const deleteArticle = (id) => async (dispatch, getState) => {
   try {

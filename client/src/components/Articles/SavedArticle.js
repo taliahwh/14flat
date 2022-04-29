@@ -1,19 +1,37 @@
 import React from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
+import ReactTooltip from 'react-tooltip';
 import moment from 'moment';
 import readingTime from 'reading-time/lib/reading-time';
 
-import { BsBookmarkFill, BsBookmark } from 'react-icons/bs';
+import { BsBookmarkFill } from 'react-icons/bs';
+
+// Actions
+import { deleteSavedArticle } from '../../actions/articleActions';
 
 const SavedArticle = ({ article }) => {
+  const user = JSON.parse(localStorage.getItem('userInfo'));
+  const dispatch = useDispatch();
   const { text: readingLength } = readingTime(article.content);
+
+  const handleDeleteSavedArticle = () => {
+    if (user) {
+      dispatch(deleteSavedArticle(article, user));
+    }
+  };
   return (
     <>
       {article && (
         <>
           <div className="md:grid grid-cols-12 hidden">
             <div className="col-span-1">
-              <BsBookmarkFill className="text-2xl" />
+              <button onClick={handleDeleteSavedArticle}>
+                <div data-tip="Remove saved article">
+                  <BsBookmarkFill className="text-2xl" />
+                  <ReactTooltip />
+                </div>
+              </button>
             </div>
 
             <div className="col-span-11 ">

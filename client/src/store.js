@@ -11,6 +11,7 @@ import {
   deleteArticleReducer,
   saveArticleReducer,
   listSavedArticlesReducer,
+  deleteSavedArticleReducer,
 } from './reducers/articleReducers';
 
 import {
@@ -28,6 +29,7 @@ const reducer = combineReducers({
   newArticle: newArticleReducer,
   likeArticle: likeArticleReducer,
   saveArticle: saveArticleReducer,
+  deleteSavedArticle: deleteSavedArticleReducer,
   savedArticles: listSavedArticlesReducer,
   deleteArticle: deleteArticleReducer,
   featuredPodcasts: featuredPodcastReducer,

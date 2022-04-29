@@ -7,6 +7,7 @@ import {
   createArticle,
   likeArticle,
   saveArticle,
+  deleteSavedArticle,
   getUserArticles,
   deleteArticle,
 } from '../controllers/articleController.js';
@@ -28,6 +29,8 @@ router.get('/:id', getArticleById);
 router.delete('/:id', authMiddleware, deleteArticle);
 
 router.put('/:id/likearticle', authMiddleware, likeArticle);
+
+router.put('/:id/delete-saved-article', authMiddleware, deleteSavedArticle);
 
 router.put('/:id/savearticle', authMiddleware, saveArticle);
 

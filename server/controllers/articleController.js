@@ -9,10 +9,32 @@ import User from '../models/userModel.js';
 // @access Public
 const getArticles = asyncHandler(async (req, res) => {
   const articles = await Article.find();
-  const latestArticles = articles.reverse();
-  // console.log(latestArticles);
+  const latestArticles = articles.reverse().slice(3);
 
+  // console.log(latestArticles);
   res.json(latestArticles);
+});
+
+// @desc Fetch cover article (most recent article)
+// @route GET /api/cover-article
+// @access Public
+const getCoverArticle = asyncHandler(async (req, res) => {
+  const articles = await Article.find();
+  const articleList = articles.reverse();
+  const coverArticle = articleList[0];
+
+  // console.log(latestArticles);
+  res.json(coverArticle);
+});
+
+// @desc Fetch featured articles (second and third most recent articles)
+// @route GET /api/featured-articles
+// @access Public
+const getFeaturedArticles = asyncHandler(async (req, res) => {
+  const articles = await Article.find();
+  const featuredArticles = articles.reverse().slice(1, 3);
+
+  res.json(featuredArticles);
 });
 
 // @desc Fetch article by id
@@ -246,6 +268,8 @@ const deleteSavedArticle = asyncHandler(async (req, res) => {
 
 export {
   getArticles,
+  getCoverArticle,
+  getFeaturedArticles,
   getArticleById,
   getSavedArticles,
   createArticle,

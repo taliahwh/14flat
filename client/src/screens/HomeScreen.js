@@ -3,7 +3,11 @@ import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 
 // ACTIONS
-import { listArticles } from '../actions/articleActions';
+import {
+  listArticles,
+  listCoverArticle,
+  listFeaturedArticles,
+} from '../actions/articleActions';
 import { listLatestEpisodes } from '../actions/podcastActions';
 
 // COMPONENTS
@@ -25,6 +29,18 @@ const HomeScreen = () => {
   } = useSelector((state) => state.articleList);
 
   const {
+    loading: loadingCoverArticle,
+    article: coverArticle,
+    error: errorCoverArticle,
+  } = useSelector((state) => state.coverArticle);
+
+  const {
+    loading: loadingFeaturedArticles,
+    articles: featuredArticles,
+    error: errorFeautredArticles,
+  } = useSelector((state) => state.featuredArticles);
+
+  const {
     loading: loadingLatestEpisodes,
     latestEpisodes,
     error: errorLatestEpisodes,
@@ -32,6 +48,8 @@ const HomeScreen = () => {
 
   useEffect(() => {
     dispatch(listArticles());
+    dispatch(listCoverArticle());
+    dispatch(listFeaturedArticles());
     dispatch(listLatestEpisodes());
   }, [dispatch]);
 
@@ -41,17 +59,37 @@ const HomeScreen = () => {
       {/* Featured Articles Section */}
       <div className="grid grid-cols-1 md:grid-cols-10 gap-7 divide-y-1 md:divide-y-0 md:divide-x-1 divide-neutral-300">
         <div className="col-span-1 md:col-span-6">
-          <CoverArticle />
+          {loadingCoverArticle && <Loader />}
+          {errorCoverArticle && (
+            <Alert variant="error">{errorCoverArticle}</Alert>
+          )}
+          {coverArticle && <CoverArticle article={coverArticle} />}
         </div>
         <div className="md:grid md:col-span-4 pt-10 md:pt-0 hidden">
-          <FeaturedArticle />
-          <FeaturedArticle />
+          {loadingFeaturedArticles && <Loader />}
+          {errorFeautredArticles && (
+            <Alert variant="error">{errorFeautredArticles}</Alert>
+          )}
+          {featuredArticles &&
+            featuredArticles.map((article) => (
+              <div key={article._id}>
+                <FeaturedArticle article={article} />
+              </div>
+            ))}
         </div>
 
         <div className="col-span-1 md:hidden pt-10">
           <div className="flex space-x-7">
-            <FeaturedArticle />
-            <FeaturedArticle />
+            {loadingFeaturedArticles && <Loader />}
+            {errorFeautredArticles && (
+              <Alert variant="error">{errorFeautredArticles}</Alert>
+            )}
+            {featuredArticles &&
+              featuredArticles.map((article) => (
+                <div key={article._id}>
+                  <FeaturedArticle article={article} />
+                </div>
+              ))}
           </div>
         </div>
       </div>
@@ -92,7 +130,7 @@ const HomeScreen = () => {
                 ))}
 
               <Link
-                to="/"
+                to="/blog"
                 className="md:hidden font-spratRegular text-sm text-neutral-900 text-center border-1 py-2 border-neutral-900 hover:shadow-md"
               >
                 View all articles

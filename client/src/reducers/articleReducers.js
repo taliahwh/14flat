@@ -2,6 +2,12 @@ import {
   ARTICLE_LIST_REQUEST,
   ARTICLE_LIST_SUCCESS,
   ARTICLE_LIST_FAILURE,
+  COVER_ARTICLE_REQUEST,
+  COVER_ARTICLE_SUCCESS,
+  COVER_ARTICLE_FAILURE,
+  FEATURED_ARTICLES_REQUEST,
+  FEATURED_ARTICLES_SUCCESS,
+  FEATURED_ARTICLES_FAILURE,
   ARTICLE_DETAILS_REQUEST,
   ARTICLE_DETAILS_SUCCESS,
   ARTICLE_DETAILS_FAILURE,
@@ -35,6 +41,32 @@ export const articleListReducer = (state = { articles: [] }, action) => {
     case ARTICLE_LIST_SUCCESS:
       return { loading: false, success: true, articles: action.payload };
     case ARTICLE_LIST_FAILURE:
+      return { loading: false, error: action.payload };
+    default:
+      return state;
+  }
+};
+
+export const coverArticleReducer = (state = { article: {} }, action) => {
+  switch (action.type) {
+    case COVER_ARTICLE_REQUEST:
+      return { loading: true, ...state };
+    case COVER_ARTICLE_SUCCESS:
+      return { loading: false, success: true, article: action.payload };
+    case COVER_ARTICLE_FAILURE:
+      return { loading: false, error: action.payload };
+    default:
+      return state;
+  }
+};
+
+export const featuredArticlesReducer = (state = { articles: [] }, action) => {
+  switch (action.type) {
+    case FEATURED_ARTICLES_REQUEST:
+      return { loading: true, ...state };
+    case FEATURED_ARTICLES_SUCCESS:
+      return { loading: false, success: true, articles: action.payload };
+    case FEATURED_ARTICLES_FAILURE:
       return { loading: false, error: action.payload };
     default:
       return state;

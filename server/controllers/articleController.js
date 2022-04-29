@@ -175,7 +175,7 @@ const likeArticle = asyncHandler(async (req, res) => {
 });
 
 // @desc Save article (bookmark) by article id
-// @route PUT /api/:id/likearticle
+// @route PUT /api/:id/save-article
 // @access Public
 const saveArticle = asyncHandler(async (req, res) => {
   const { id } = req.params;
@@ -207,6 +207,43 @@ const saveArticle = asyncHandler(async (req, res) => {
   res.json(updatedUser);
 });
 
+// @desc Delete saved article (bookmark) by article id
+// @route PUT /api/:id/delete-saved-article
+// @access Public
+const deleteSavedArticle = asyncHandler(async (req, res) => {
+  const { id } = req.params;
+  const user = await User.findById(req.user._id);
+
+  if (!user) {
+    res.status(404);
+    throw new Error('Must be logged in to save article');
+  }
+
+  if (!mongoose.Types.ObjectId.isValid(id))
+    return res.status(404).send('No article with that id');
+
+  const article = await Article.findById(id);
+
+  const existingSavedArticles = user.savedArticles.map((article) =>
+    String(article._id)
+  );
+
+  const articleExists = existingSavedArticles.includes(String(article._id));
+
+  if (articleExists) {
+    user.savedArticles = user.savedArticles.filter(
+      (article) => String(article._id) !== String(id)
+    );
+  }
+
+  const updatedUser = await User.findByIdAndUpdate(req.user._id, user, {
+    new: true,
+  });
+
+  res.status(200);
+  res.json(updatedUser);
+});
+
 export {
   getArticles,
   getArticleById,
@@ -214,6 +251,7 @@ export {
   createArticle,
   likeArticle,
   saveArticle,
+  deleteSavedArticle,
   getUserArticles,
   deleteArticle,
 };

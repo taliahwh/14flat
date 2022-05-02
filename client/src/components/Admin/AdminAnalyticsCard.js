@@ -5,8 +5,8 @@ import { FiPaperclip } from 'react-icons/fi';
 const AdminAnalyticsCard = ({
   users = false,
   userCount,
-  posts = false,
-  postCount,
+  articles = false,
+  articleCount,
   views,
   dailyViews,
   weeklyViews,
@@ -29,14 +29,14 @@ const AdminAnalyticsCard = ({
         </div>
       )}
 
-      {posts && (
+      {articles && (
         <div className="border-1 border-neutral-900 py-5 px-8 flex justify-between items-center">
           <div className="flex flex-col space-y-3">
             <h1 className="font-spratRegular text-md md:text-lg">
-              Total Posts
+              Total Articles
             </h1>
             <h3 className="text-2xl md:text-3xl font-roboto font-bold">
-              {postCount}
+              {articleCount}
             </h3>
           </div>
           <FaPen className="text-4xl lg:text-5xl text-neutral-800" />

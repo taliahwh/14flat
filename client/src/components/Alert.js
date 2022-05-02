@@ -1,16 +1,7 @@
 import React, { useState, useEffect } from 'react';
 
 const Alert = ({ variant, children }) => {
-  const [alert, setAlert] = useState(true);
-
-  useEffect(() => {
-    if (variant === 'success') {
-      // when the component is mounted, the alert is displayed for 3 seconds
-      setTimeout(() => {
-        setAlert(false);
-      }, 3000);
-    }
-  }, [variant]);
+  useEffect(() => {}, []);
 
   return (
     <>

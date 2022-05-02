@@ -4,6 +4,7 @@ import bcrypt from 'bcryptjs';
 import generateToken from '../utils/generateToken.js';
 
 import User from '../models/userModel.js';
+import Article from '../models/articleModel.js';
 
 // @desc Authenticate user & get token
 // @route POST /api/users/signin
@@ -26,7 +27,7 @@ const signIn = asyncHandler(async (req, res) => {
     throw new Error('Invalid password');
   }
 
-  // If use exists && req.password === user's password
+  // If user exists && req.password === user's password
   if (user && correctPassword) {
     res.json({
       _id: user._id,
@@ -101,4 +102,159 @@ const signUp = asyncHandler(async (req, res) => {
   }
 });
 
-export { signIn, signUp };
+// @desc Get user details by id
+// @route GET /api/users/:id
+// @access Private
+const getUserDetails = asyncHandler(async (req, res) => {
+  const { id } = req.params;
+  const user = await User.findById(id).select('-password');
+
+  if (!user) {
+    res.status(404);
+    throw new Error('User not found');
+  }
+
+  res.status(200).json(user);
+});
+
+// @desc Update user email
+// @route PUT /api/users/profile-email
+// @access Private
+const updateUserEmail = asyncHandler(async (req, res) => {
+  const { newEmail, confirmNewEmail } = req.body;
+  const user = await User.findById(req.user._id);
+
+  if (!user) {
+    res.status(404);
+    throw new Error('User not found');
+  }
+
+  const allUsers = await User.find({});
+  const userEmails = allUsers.map((user) => user.email);
+  const emailExists = userEmails.includes(newEmail);
+
+  if (emailExists) {
+    res.status(400);
+    throw new Error('Email already exists, please choose a different email.');
+  }
+
+  if (newEmail !== confirmNewEmail) {
+    res.status(400);
+    throw new Error('Emails do not match. Please re-enter.');
+  }
+
+  user.email = newEmail || user.email;
+
+  // if (req.body.password) {
+  //   user.password = await bcrypt.hash(req.body.password, 12);
+  // }
+
+  const updatedUser = await user.save();
+
+  res.json({
+    _id: updatedUser._id,
+    name: updatedUser.name,
+    email: updatedUser.email,
+    token: generateToken(updatedUser._id),
+  });
+});
+
+// @desc Update user password
+// @route PUT /api/users/profile-password
+// @access Private
+const updateUserPassword = asyncHandler(async (req, res) => {
+  const { oldPassword, newPassword, confirmNewPassword } = req.body;
+  const user = await User.findById(req.user._id);
+
+  if (!user) {
+    res.status(404);
+    throw new Error('User not found');
+  }
+
+  const correctPassword = await bcrypt.compare(oldPassword, user.password);
+
+  if (!correctPassword) {
+    res.status(400);
+    throw new Error(
+      'Old password incorrect, please enter correct passsword to update'
+    );
+  }
+
+  if (oldPassword === newPassword) {
+    res.status(400);
+    throw new Error(
+      'New and old password must be different in order to update.'
+    );
+  }
+
+  if (newPassword !== confirmNewPassword) {
+    res.status(400);
+    throw new Error('Passwords do not match. Please try again.');
+  }
+
+  // Password strength requirement (uppercase, lowercase, number and special char)
+  if (newPassword.length < 8) {
+    res.status(400);
+    throw new Error('Password must be at least 8 characters.');
+  }
+
+  const hasUpperCase = /[A-Z]/.test(newPassword);
+  const hasLowerCase = /[a-z]/.test(newPassword);
+  const hasNumbers = /\d/.test(newPassword);
+  const hasNonalphas = /\W/.test(newPassword);
+  if (!hasUpperCase || !hasLowerCase || !hasNumbers || !hasNonalphas) {
+    res.status(400);
+    throw new Error(
+      'Password must be at least 8 characters, contain an upper and lowercase letter, a number, and special character.'
+    );
+  }
+
+  const newHashedPassword = await bcrypt.hash(newPassword, 12);
+
+  user.password = newHashedPassword;
+
+  await user.save();
+
+  res.status(200).json({
+    _id: user._id,
+    name: user.name,
+    email: user.email,
+    isAdmin: user.isAdmin,
+    token: generateToken(user._id),
+  });
+});
+
+// @desc Get analytics (total users and posts)
+// @route GET /api/users/analytics
+// @access Private (Admin only)
+const adminGetAnalytics = asyncHandler(async (req, res) => {
+  const users = await User.find({});
+
+  if (!users) {
+    res.status(404);
+    throw new Error('No users found');
+  }
+  const totalUsers = users.length;
+
+  const articles = await Article.find({});
+
+  if (!articles) {
+    res.status(404);
+    throw new Error('No articles found');
+  }
+  const totalArticles = articles.length;
+
+  res.status(200).json({
+    totalUsers,
+    totalArticles,
+  });
+});
+
+export {
+  signIn,
+  signUp,
+  getUserDetails,
+  updateUserEmail,
+  updateUserPassword,
+  adminGetAnalytics,
+};

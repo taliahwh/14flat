@@ -23,7 +23,14 @@ import {
   podcastLatestEpsiodeReducer,
 } from './reducers/podcastReducers';
 
-import { userSignInReducer, userSignUpReducer } from './reducers/userReducers';
+import {
+  adminAnalyticsReducer,
+  userDetailsReducer,
+  userSignInReducer,
+  userSignUpReducer,
+  userUpdateEmailReducer,
+  userUpdatePasswordReducer,
+} from './reducers/userReducers';
 
 const reducer = combineReducers({
   articleList: articleListReducer,
@@ -43,6 +50,10 @@ const reducer = combineReducers({
   userArticles: userArticleReducer,
   userSignIn: userSignInReducer,
   userSignUp: userSignUpReducer,
+  userDetails: userDetailsReducer,
+  userUpdateEmail: userUpdateEmailReducer,
+  userUpdatePassword: userUpdatePasswordReducer,
+  adminAnalytics: adminAnalyticsReducer,
 });
 
 const userInfoFromStorage = localStorage.getItem('userInfo')

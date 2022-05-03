@@ -19,10 +19,10 @@ import Header from '../components/Header';
 import Loader from '../components/Loader';
 import Alert from '../components/Alert';
 import FullScreen from '../components/FullScreen';
-import FullHeight from '../components/FullHeight';
 import ViewWrittenArticle from '../components/Articles/ViewWrittenArticle';
 import AdminAnalyticsCard from '../components/Admin/AdminAnalyticsCard';
 import UserRequestCard from '../components/Admin/UserRequestCard';
+import { FiChevronDown } from 'react-icons/fi';
 
 const UserProfileScreen = () => {
   const userFromLocalStorage = JSON.parse(localStorage.getItem('userInfo'));
@@ -36,6 +36,8 @@ const UserProfileScreen = () => {
   const [newPassword, setNewPassword] = useState('');
   const [confirmNewPassword, setConfirmNewPassword] = useState('');
   const [passwordOpen, setPasswordOpen] = useState(false);
+  const [writerDescription, setWriterDescription] = useState('');
+  const [requestFormOpen, setRequestFormOpen] = useState(false);
 
   const { userDetails, error: errorUserDetails } = useSelector(
     (state) => state.userDetails
@@ -82,14 +84,29 @@ const UserProfileScreen = () => {
     setConfirmNewPassword('');
   };
 
+  const handleWriterRequest = (e) => {
+    e.preventDefault();
+
+    console.log(writerDescription);
+    setWriterDescription('');
+  };
+
   useEffect(() => {
     if (!userFromLocalStorage._id) {
       navigate('/signin');
     }
     dispatch(getUserDetails(userFromLocalStorage._id));
     dispatch(listUserArticles(userFromLocalStorage._id));
-    dispatch(getAnalytics());
-  }, [userFromLocalStorage._id, dispatch, navigate, successArticleDelete]);
+    if (userFromLocalStorage.isAdmin === true) {
+      dispatch(getAnalytics());
+    }
+  }, [
+    userFromLocalStorage._id,
+    userFromLocalStorage.isAdmin,
+    dispatch,
+    navigate,
+    successArticleDelete,
+  ]);
 
   return (
     <div
@@ -296,6 +313,75 @@ const UserProfileScreen = () => {
                     </div>
                   </form>
                 </Transition>
+
+                {userDetails && userDetails.isAdmin === false && (
+                  <>
+                    {/* Border */}
+                    <div className="border-t-1 border-x-neutral-500 mt-5"></div>
+
+                    <div className="pt-5">
+                      <div className="flex justify-end space-x-2">
+                        <p className="">Request to be a writer</p>
+
+                        <FiChevronDown
+                          className="text-xl mt-0.5 text-[#4A90E2]"
+                          onClick={() => setRequestFormOpen(!requestFormOpen)}
+                        />
+                      </div>
+
+                      <Transition
+                        show={requestFormOpen}
+                        enter="transition-opacity duration-300"
+                        enterFrom="opacity-0"
+                        enterTo="opacity-100"
+                        leave="transition-opacity duration-150"
+                        leaveFrom="opacity-100"
+                        leaveTo="opacity-0"
+                      >
+                        <form
+                          action="submit"
+                          id="emailForm"
+                          onSubmit={handleWriterRequest}
+                          className="mt-5 flex flex-col space-y-5"
+                        >
+                          {/* {errorUpdatePassword && (
+                            <Alert variant="error">{errorUpdatePassword}</Alert>
+                          )}
+                          {successUpdatePassword && (
+                            <Alert variant="success">
+                              Password updated successfully
+                            </Alert>
+                          )} */}
+
+                          <input
+                            type="text"
+                            id="requestDescription"
+                            value={writerDescription}
+                            autoComplete="off"
+                            className="font-robotoLight bg-neutral-100 border border-gray-300 text-gray-900 text-sm  focus:ring-neutral-500 focus:bg-neutral-100 focus:outline-none block w-full p-2.5"
+                            placeholder="A sentence or two to introduce yourself"
+                            onChange={(e) =>
+                              setWriterDescription(e.target.value)
+                            }
+                          />
+                          <div className="flex space-x-2">
+                            <button
+                              type="sumbit"
+                              className="bg-neutral-600 px-6 py-2 text-white font-medium text-sm transition ease-in-out hover:-translate-y-1 hover:scale-105  duration-300"
+                            >
+                              SEND REQUEST
+                            </button>
+                          </div>
+                        </form>
+                      </Transition>
+
+                      {/* Pending */}
+                      {/* <div className="bg-[#c9a82f] px-6 py-3 text-white font-medium text-sm w-fit mx-auto transition ease-in-out hover:-translate-y-1 hover:scale-105  duration-300">
+                        WRITER'S REQUEST PENDING
+                      </div> */}
+                    </div>
+                  </>
+                )}
               </div>
             </div>
           )}
@@ -342,12 +428,15 @@ const UserProfileScreen = () => {
               <Alert variant="info">
                 There are no requests for writers at this time.
               </Alert>
-              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
+              {/* <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
                 <UserRequestCard />
                 <UserRequestCard />
-                {/* <UserRequestCard />
-              <UserRequestCard />
-              <UserRequestCard /> */}
+                
+              </div> */}
+              <div className="flex flex-col space-y-1">
+                <UserRequestCard />
+                <UserRequestCard />
+                <UserRequestCard />
               </div>
             </div>
           )}

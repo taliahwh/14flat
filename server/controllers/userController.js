@@ -4,6 +4,7 @@ import bcrypt from 'bcryptjs';
 import generateToken from '../utils/generateToken.js';
 
 import User from '../models/userModel.js';
+import Notification from '../models/notificationModel.js';
 import Article from '../models/articleModel.js';
 
 // @desc Authenticate user & get token
@@ -250,6 +251,32 @@ const adminGetAnalytics = asyncHandler(async (req, res) => {
   });
 });
 
+// @desc Send request to be a writer
+// @route POST /api/users/writer-request
+// @access Public
+const sendWriterRequest = asyncHandler(async (req, res) => {
+  const { name, description } = req.body;
+  const { id } = req.user;
+
+  const notificationExists = await Notification.find({ requestUserId: id });
+
+  if (!notificationExists) {
+    const newNotification = await Notification.create({
+      requestUserId: id,
+      typeOfNotification: 'Writer Request',
+      name,
+      description,
+    });
+
+    res.status(201).json(newNotification);
+  } else {
+    res.status(403);
+    throw new Error(
+      'Request already submitted, please wait for admin response'
+    );
+  }
+});
+
 export {
   signIn,
   signUp,
@@ -257,4 +284,5 @@ export {
   updateUserEmail,
   updateUserPassword,
   adminGetAnalytics,
+  sendWriterRequest,
 };

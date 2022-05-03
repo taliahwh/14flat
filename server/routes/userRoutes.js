@@ -9,6 +9,7 @@ import {
   updateUserEmail,
   updateUserPassword,
   adminGetAnalytics,
+  sendWriterRequest,
 } from '../controllers/userController.js';
 
 const router = express.Router();
@@ -20,6 +21,8 @@ router.get('/:id', authMiddleware, getUserDetails);
 router.post('/signin', signIn);
 
 router.post('/signup', signUp);
+
+router.post('/writer-request', authMiddleware, sendWriterRequest);
 
 router.put('/profile-email', authMiddleware, updateUserEmail);
 

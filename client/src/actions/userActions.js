@@ -329,6 +329,7 @@ export const getAnalytics = () => async (dispatch, getState) => {
 export const approveRequest = (id) => async (dispatch, getState) => {
   try {
     dispatch({ type: ADMIN_APPROVE_REQUEST_REQUEST });
+    // dispatch({ type: ADMIN_APPROVE_REQUEST_REQUEST });
 
     const { userInfo } = getState().userSignIn;
     const config = {

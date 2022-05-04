@@ -25,7 +25,12 @@ import {
 
 import {
   adminAnalyticsReducer,
+  adminApproveRequestReducer,
+  adminDeclineRequestReducer,
+  userDeleteNotificationReducer,
   userDetailsReducer,
+  userNotificationsReducer,
+  userSendWriterRequestReducer,
   userSignInReducer,
   userSignUpReducer,
   userUpdateEmailReducer,
@@ -53,7 +58,12 @@ const reducer = combineReducers({
   userDetails: userDetailsReducer,
   userUpdateEmail: userUpdateEmailReducer,
   userUpdatePassword: userUpdatePasswordReducer,
+  userNotifications: userNotificationsReducer,
+  userDeleteNotification: userDeleteNotificationReducer,
+  userSendWriterRequest: userSendWriterRequestReducer,
   adminAnalytics: adminAnalyticsReducer,
+  adminApproveRequest: adminApproveRequestReducer,
+  adminDeclineRequest: adminDeclineRequestReducer,
 });
 
 const userInfoFromStorage = localStorage.getItem('userInfo')

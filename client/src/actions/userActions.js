@@ -17,9 +17,24 @@ import {
   USER_UPDATE_PASSWORD_REQUEST,
   USER_UPDATE_PASSWORD_SUCCESS,
   USER_UPDATE_PASSWORD_FAILURE,
+  USER_SEND_WRITER_REQUEST_REQUEST,
+  USER_SEND_WRITER_REQUEST_SUCCESS,
+  USER_SEND_WRITER_REQUEST_FAILURE,
+  USER_GET_NOTIFICATIONS_REQUEST,
+  USER_GET_NOTIFICATIONS_SUCCESS,
+  USER_GET_NOTIFICATIONS_FAILURE,
   ADMIN_ANALYTICS_REQUEST,
   ADMIN_ANALYTICS_SUCCESS,
   ADMIN_ANALYTICS_FAILURE,
+  USER_DELETE_NOTIFICATION_REQUEST,
+  USER_DELETE_NOTIFICATION_SUCCESS,
+  USER_DELETE_NOTIFICATION_FAILURE,
+  ADMIN_APPROVE_REQUEST_REQUEST,
+  ADMIN_APPROVE_REQUEST_SUCCESS,
+  ADMIN_APPROVE_REQUEST_FAILURE,
+  ADMIN_DECLINE_REQUEST_REQUEST,
+  ADMIN_DECLINE_REQUEST_SUCCESS,
+  ADMIN_DECLINE_REQUEST_FAILURE,
 } from '../constants/userConstants';
 
 export const signIn = (email, password) => async (dispatch) => {
@@ -122,6 +137,37 @@ export const getUserDetails = (id) => async (dispatch, getState) => {
   }
 };
 
+export const sendWriterRequest =
+  (name, description) => async (dispatch, getState) => {
+    try {
+      dispatch({ type: USER_SEND_WRITER_REQUEST_REQUEST });
+
+      const { userInfo } = getState().userSignIn;
+      const config = {
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${userInfo.token}`,
+        },
+      };
+
+      const { data } = await axios.post(
+        '/api/users/writer-request',
+        { name, description },
+        config
+      );
+
+      dispatch({ type: USER_SEND_WRITER_REQUEST_SUCCESS, payload: data });
+    } catch (error) {
+      dispatch({
+        type: USER_SEND_WRITER_REQUEST_FAILURE,
+        payload:
+          error.response && error.response.data.message
+            ? error.response.data.message
+            : error.message,
+      });
+    }
+  };
+
 export const updateEmail =
   (newEmail, confirmNewEmail) => async (dispatch, getState) => {
     try {
@@ -197,6 +243,61 @@ export const updatePassword =
     }
   };
 
+export const getNotifications = () => async (dispatch, getState) => {
+  try {
+    dispatch({ type: USER_GET_NOTIFICATIONS_REQUEST });
+
+    const { userInfo } = getState().userSignIn;
+    const config = {
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${userInfo.token}`,
+      },
+    };
+
+    const { data } = await axios.get('/api/users/notifications', config);
+
+    dispatch({ type: USER_GET_NOTIFICATIONS_SUCCESS, payload: data });
+  } catch (error) {
+    dispatch({
+      type: USER_GET_NOTIFICATIONS_FAILURE,
+      payload:
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message,
+    });
+  }
+};
+
+export const deleteNotifications = (id) => async (dispatch, getState) => {
+  try {
+    dispatch({ type: USER_DELETE_NOTIFICATION_REQUEST });
+
+    const { userInfo } = getState().userSignIn;
+    const config = {
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${userInfo.token}`,
+      },
+    };
+
+    const { data } = await axios.delete(
+      `/api/users/notifications/${id}`,
+      config
+    );
+
+    dispatch({ type: USER_DELETE_NOTIFICATION_SUCCESS, payload: data });
+  } catch (error) {
+    dispatch({
+      type: USER_DELETE_NOTIFICATION_FAILURE,
+      payload:
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message,
+    });
+  }
+};
+
 /* -------------- ADMIN ---------------- */
 
 export const getAnalytics = () => async (dispatch, getState) => {
@@ -217,6 +318,64 @@ export const getAnalytics = () => async (dispatch, getState) => {
   } catch (error) {
     dispatch({
       type: ADMIN_ANALYTICS_FAILURE,
+      payload:
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message,
+    });
+  }
+};
+
+export const approveRequest = (id) => async (dispatch, getState) => {
+  try {
+    dispatch({ type: ADMIN_APPROVE_REQUEST_REQUEST });
+
+    const { userInfo } = getState().userSignIn;
+    const config = {
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${userInfo.token}`,
+      },
+    };
+
+    const { data } = await axios.post(
+      `/api/users/approve-writer-request/${id}`,
+      config
+    );
+
+    dispatch({ type: ADMIN_APPROVE_REQUEST_SUCCESS, payload: data });
+  } catch (error) {
+    dispatch({
+      type: ADMIN_APPROVE_REQUEST_FAILURE,
+      payload:
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message,
+    });
+  }
+};
+
+export const declineRequest = (id) => async (dispatch, getState) => {
+  try {
+    dispatch({ type: ADMIN_DECLINE_REQUEST_REQUEST });
+
+    const { userInfo } = getState().userSignIn;
+    const config = {
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${userInfo.token}`,
+      },
+    };
+
+    const { data } = await axios.post(
+      `/api/users/decline-writer-request/${id}`,
+      config
+    );
+
+    dispatch({ type: ADMIN_DECLINE_REQUEST_SUCCESS, payload: data });
+  } catch (error) {
+    dispatch({
+      type: ADMIN_DECLINE_REQUEST_FAILURE,
       payload:
         error.response && error.response.data.message
           ? error.response.data.message

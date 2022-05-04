@@ -251,6 +251,20 @@ const adminGetAnalytics = asyncHandler(async (req, res) => {
   });
 });
 
+// @desc Get notifications
+// @route GET /api/users/notifications
+// @access Private (Admin only)
+const getNotifications = asyncHandler(async (req, res) => {
+  const notifications = await Notification.find({});
+
+  if (!notifications) {
+    res.status(404);
+    throw new Error('There are no notifications at this time');
+  }
+
+  res.status(200).json(notifications);
+});
+
 // @desc Send request to be a writer
 // @route POST /api/users/writer-request
 // @access Public
@@ -258,7 +272,8 @@ const sendWriterRequest = asyncHandler(async (req, res) => {
   const { name, description } = req.body;
   const { id } = req.user;
 
-  const notificationExists = await Notification.find({ requestUserId: id });
+  const notification = await Notification.find({ requestUserId: id });
+  const notificationExists = notification.length === 1;
 
   if (!notificationExists) {
     const newNotification = await Notification.create({
@@ -266,15 +281,133 @@ const sendWriterRequest = asyncHandler(async (req, res) => {
       typeOfNotification: 'Writer Request',
       name,
       description,
+      adminOnly: true,
     });
 
     res.status(201).json(newNotification);
   } else {
     res.status(403);
     throw new Error(
-      'Request already submitted, please wait for admin response'
+      'Request already submitted. Please wait for admin response.'
     );
   }
+});
+
+// @desc Approve request to be a writer
+// @route POST /api/users/approve-writer-request
+// @access Private (Admin only)
+const approveWriterRequest = asyncHandler(async (req, res) => {
+  const { id: notificationId } = req.params;
+  const { id: reqId } = req.user;
+
+  const notification = await Notification.findById(notificationId);
+
+  if (!notification) {
+    res.status(404);
+    throw new Error('No request found with that id.');
+  }
+
+  const requestingUserId = notification.requestUserId;
+  const requestingUser = await User.findById(requestingUserId);
+
+  if (!requestingUser) {
+    res.status(404);
+    throw new Error('User account that requested no longer exists');
+  }
+
+  // Give user that requested admin capabilities
+  requestingUser.isAdmin = true;
+  const updatedUser = await requestingUser.save();
+
+  // Send approval notification to user that requested
+  const approvalNotification = await Notification.create({
+    requestUserId: reqId,
+    requestTo: requestingUser._id,
+    typeOfNotification: 'Writer Request Approval',
+    name: requestingUser.name,
+    description:
+      'You have been approved to be a writer here at 14flat. Go to the user menu and create your first article!',
+    adminOnly: false,
+  });
+
+  // Delete(Approve) initial notification
+  await Notification.findByIdAndDelete(notificationId);
+
+  await approvalNotification.save();
+
+  res.status(200).json(approvalNotification);
+});
+
+// @desc Decline request to be a writer
+// @route POST /api/users/approve-writer-request
+// @access Private (Admin only)
+const declineWriterRequest = asyncHandler(async (req, res) => {
+  const { id: notificationId } = req.params;
+  const { id: reqId } = req.user;
+  const { description } = req.body;
+
+  const notification = await Notification.findById(notificationId);
+
+  if (!notification) {
+    res.status(404);
+    throw new Error('No request found with that id.');
+  }
+
+  const requestingUserId = notification.requestUserId;
+  const requestingUser = await User.findById(requestingUserId);
+
+  if (!requestingUser) {
+    res.status(404);
+    throw new Error('User account that requested no longer exists');
+  }
+
+  // Send declined notification to user that requested
+  const declinedNotification = await Notification.create({
+    requestUserId: reqId,
+    requestTo: requestingUser._id,
+    typeOfNotification: 'Writer Request Declined',
+    name: requestingUser.name,
+    description,
+    adminOnly: false,
+  });
+
+  // Delete(Decline) initial notification
+  await Notification.findByIdAndDelete(notificationId);
+
+  await declinedNotification.save();
+
+  res.status(200).json(declinedNotification);
+});
+
+// @desc Delete notification
+// @route DEL /api/users/notifications/:id
+// @access Private
+const deleteNotification = asyncHandler(async (req, res) => {
+  const { id: notificationId } = req.params;
+  const { id: reqId } = req.user;
+
+  const requestingUser = await User.findById(reqId);
+
+  const notification = await Notification.findById(notificationId);
+
+  if (
+    requestingUser.isAdmin === false &&
+    String(reqId) !== String(notification.requestTo)
+  ) {
+    res.status(401);
+    throw new Error('Not authorized to delete this notification');
+  }
+
+  const notificationToDelete = await Notification.findByIdAndDelete(
+    notificationId
+  );
+
+  if (!notificationToDelete) {
+    res.status(404);
+    throw new Error('No request found with that id.');
+  }
+
+  res.status(200).json({ message: 'Notification deleted successfully' });
 });
 
 export {
@@ -285,4 +418,8 @@ export {
   updateUserPassword,
   adminGetAnalytics,
   sendWriterRequest,
+  approveWriterRequest,
+  declineWriterRequest,
+  getNotifications,
+  deleteNotification,
 };

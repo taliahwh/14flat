@@ -10,8 +10,10 @@ import { listUserArticles } from '../actions/articleActions';
 import {
   getAnalytics,
   getUserDetails,
+  getNotifications,
   updateEmail,
   updatePassword,
+  sendWriterRequest,
 } from '../actions/userActions';
 
 // Components
@@ -66,6 +68,22 @@ const UserProfileScreen = () => {
     error: errorAnalytics,
   } = useSelector((state) => state.adminAnalytics);
 
+  const {
+    loading: loadingNotifications,
+    notifications,
+    error: errorNotifications,
+  } = useSelector((state) => state.userNotifications);
+
+  const { error: errorSendWriterRequest, success: successSendWriterRequest } =
+    useSelector((state) => state.userSendWriterRequest);
+
+  const { success: successApproveRequest } = useSelector(
+    (state) => state.adminApproveRequest
+  );
+  const { success: successDeclineRequest } = useSelector(
+    (state) => state.adminDeclineRequest
+  );
+
   /* TODO Create alert module for user to confirm they want
   to delete article before dispatching the action */
 
@@ -87,7 +105,7 @@ const UserProfileScreen = () => {
   const handleWriterRequest = (e) => {
     e.preventDefault();
 
-    console.log(writerDescription);
+    dispatch(sendWriterRequest(userFromLocalStorage.name, writerDescription));
     setWriterDescription('');
   };
 
@@ -97,6 +115,7 @@ const UserProfileScreen = () => {
     }
     dispatch(getUserDetails(userFromLocalStorage._id));
     dispatch(listUserArticles(userFromLocalStorage._id));
+    dispatch(getNotifications());
     if (userFromLocalStorage.isAdmin === true) {
       dispatch(getAnalytics());
     }
@@ -106,6 +125,8 @@ const UserProfileScreen = () => {
     dispatch,
     navigate,
     successArticleDelete,
+    successApproveRequest,
+    successDeclineRequest,
   ]);
 
   return (
@@ -163,9 +184,18 @@ const UserProfileScreen = () => {
                   Admin
                 </NavLink>
 
-                <span className="hidden sm:inline-flex bg-neutral-300 text-neutral-800 text-xs font-medium font-roboto items-center px-2.5 py-0.5 rounded">
-                  <MdCircleNotifications className="text-sm mr-1" />2 requests
-                </span>
+                {notifications && notifications.length > 0 && (
+                  <span className="hidden sm:inline-flex bg-neutral-300 text-neutral-800 text-xs font-medium font-roboto items-center px-2.5 py-0.5 rounded">
+                    <MdCircleNotifications className="text-sm mr-1" />
+                    {notifications && notifications.length > 0 && (
+                      <>
+                        {notifications.length === 1
+                          ? `${notifications.length} request`
+                          : `${notifications.length} requests`}
+                      </>
+                    )}
+                  </span>
+                )}
               </>
             )}
           </div>
@@ -344,14 +374,17 @@ const UserProfileScreen = () => {
                           onSubmit={handleWriterRequest}
                           className="mt-5 flex flex-col space-y-5"
                         >
-                          {/* {errorUpdatePassword && (
-                            <Alert variant="error">{errorUpdatePassword}</Alert>
-                          )}
-                          {successUpdatePassword && (
-                            <Alert variant="success">
-                              Password updated successfully
+                          {errorSendWriterRequest && (
+                            <Alert variant="error">
+                              {errorSendWriterRequest}
                             </Alert>
-                          )} */}
+                          )}
+                          {successSendWriterRequest && (
+                            <Alert variant="success">
+                              Your request has been sent to the admin. Please
+                              wait for a response.
+                            </Alert>
+                          )}
 
                           <input
                             type="text"
@@ -425,18 +458,25 @@ const UserProfileScreen = () => {
                 </div>
               )}
               <h1 className="font-spratRegular text-4xl">Requests</h1>
-              <Alert variant="info">
-                There are no requests for writers at this time.
-              </Alert>
-              {/* <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
-                <UserRequestCard />
-                <UserRequestCard />
-                
-              </div> */}
+              {notifications && notifications.length === 0 && (
+                <Alert variant="info">
+                  There are no requests for writers at this time.
+                </Alert>
+              )}
+              {loadingNotifications && <Loader />}
+              {errorNotifications && (
+                <Alert variant="error">{errorNotifications}</Alert>
+              )}
               <div className="flex flex-col space-y-1">
-                <UserRequestCard />
-                <UserRequestCard />
-                <UserRequestCard />
+                {notifications &&
+                  notifications.length > 0 &&
+                  notifications.map((notification) => (
+                    <div key={notification._id}>
+                      {notification.adminOnly === true && (
+                        <UserRequestCard request={notification} />
+                      )}
+                    </div>
+                  ))}
               </div>
             </div>
           )}

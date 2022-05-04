@@ -15,9 +15,24 @@ import {
   USER_UPDATE_PASSWORD_REQUEST,
   USER_UPDATE_PASSWORD_SUCCESS,
   USER_UPDATE_PASSWORD_FAILURE,
+  USER_SEND_WRITER_REQUEST_REQUEST,
+  USER_SEND_WRITER_REQUEST_SUCCESS,
+  USER_SEND_WRITER_REQUEST_FAILURE,
   ADMIN_ANALYTICS_REQUEST,
   ADMIN_ANALYTICS_SUCCESS,
   ADMIN_ANALYTICS_FAILURE,
+  USER_GET_NOTIFICATIONS_REQUEST,
+  USER_GET_NOTIFICATIONS_SUCCESS,
+  USER_GET_NOTIFICATIONS_FAILURE,
+  USER_DELETE_NOTIFICATION_REQUEST,
+  USER_DELETE_NOTIFICATION_SUCCESS,
+  USER_DELETE_NOTIFICATION_FAILURE,
+  ADMIN_APPROVE_REQUEST_REQUEST,
+  ADMIN_APPROVE_REQUEST_SUCCESS,
+  ADMIN_APPROVE_REQUEST_FAILURE,
+  ADMIN_DECLINE_REQUEST_REQUEST,
+  ADMIN_DECLINE_REQUEST_SUCCESS,
+  ADMIN_DECLINE_REQUEST_FAILURE,
 } from '../constants/userConstants';
 
 export const userSignInReducer = (state = {}, action) => {
@@ -95,6 +110,54 @@ export const userUpdatePasswordReducer = (state = {}, action) => {
   }
 };
 
+export const userNotificationsReducer = (
+  state = { notifications: {} },
+  action
+) => {
+  switch (action.type) {
+    case USER_GET_NOTIFICATIONS_REQUEST:
+      return { loading: true };
+    case USER_GET_NOTIFICATIONS_SUCCESS:
+      return { loading: false, success: true, notifications: action.payload };
+    case USER_GET_NOTIFICATIONS_FAILURE:
+      return { loading: false, error: action.payload };
+    case USER_LOGOUT:
+      return {};
+    default:
+      return state;
+  }
+};
+
+export const userDeleteNotificationReducer = (state = {}, action) => {
+  switch (action.type) {
+    case USER_DELETE_NOTIFICATION_REQUEST:
+      return { loading: true };
+    case USER_DELETE_NOTIFICATION_SUCCESS:
+      return { loading: false, success: true };
+    case USER_DELETE_NOTIFICATION_FAILURE:
+      return { loading: false, error: action.payload };
+    case USER_LOGOUT:
+      return {};
+    default:
+      return state;
+  }
+};
+
+export const userSendWriterRequestReducer = (state = {}, action) => {
+  switch (action.type) {
+    case USER_SEND_WRITER_REQUEST_REQUEST:
+      return { loading: true };
+    case USER_SEND_WRITER_REQUEST_SUCCESS:
+      return { loading: false, success: true };
+    case USER_SEND_WRITER_REQUEST_FAILURE:
+      return { loading: false, error: action.payload };
+    case USER_LOGOUT:
+      return {};
+    default:
+      return state;
+  }
+};
+
 export const adminAnalyticsReducer = (state = {}, action) => {
   switch (action.type) {
     case ADMIN_ANALYTICS_REQUEST:
@@ -102,6 +165,36 @@ export const adminAnalyticsReducer = (state = {}, action) => {
     case ADMIN_ANALYTICS_SUCCESS:
       return { loading: false, success: true, analytics: action.payload };
     case ADMIN_ANALYTICS_FAILURE:
+      return { loading: false, error: action.payload };
+    case USER_LOGOUT:
+      return {};
+    default:
+      return state;
+  }
+};
+
+export const adminApproveRequestReducer = (state = {}, action) => {
+  switch (action.type) {
+    case ADMIN_APPROVE_REQUEST_REQUEST:
+      return { loading: true };
+    case ADMIN_APPROVE_REQUEST_SUCCESS:
+      return { loading: false, success: true };
+    case ADMIN_APPROVE_REQUEST_FAILURE:
+      return { loading: false, error: action.payload };
+    case USER_LOGOUT:
+      return {};
+    default:
+      return state;
+  }
+};
+
+export const adminDeclineRequestReducer = (state = {}, action) => {
+  switch (action.type) {
+    case ADMIN_DECLINE_REQUEST_REQUEST:
+      return { loading: true };
+    case ADMIN_DECLINE_REQUEST_SUCCESS:
+      return { loading: false, success: true, analytics: action.payload };
+    case ADMIN_DECLINE_REQUEST_FAILURE:
       return { loading: false, error: action.payload };
     case USER_LOGOUT:
       return {};

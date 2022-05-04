@@ -17,6 +17,14 @@ export const notificationSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  requestTo: {
+    type: String,
+    required: false,
+  },
+  adminOnly: {
+    type: Boolean,
+    required: true,
+  },
 });
 
 const Notification = mongoose.model('Notification', notificationSchema);

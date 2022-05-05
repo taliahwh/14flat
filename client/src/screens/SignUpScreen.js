@@ -47,6 +47,7 @@ const SignUpScreen = () => {
             type="text"
             id="name"
             value={name}
+            required
             className="bg-gray-50 border border-gray-300 text-gray-900 text-sm  focus:ring-neutral-500 focus:bg-neutral-100 focus:outline-none block w-full p-2.5"
             placeholder="Enter full name"
             onChange={(e) => setName(e.target.value)}
@@ -62,6 +63,7 @@ const SignUpScreen = () => {
             type="email"
             id="email"
             value={email}
+            required
             className="bg-gray-50 border border-gray-300 text-gray-900 text-sm  focus:ring-neutral-500 focus:bg-neutral-100 focus:outline-none block w-full p-2.5"
             placeholder="email@14flat.com"
             onChange={(e) => setEmail(e.target.value)}
@@ -77,6 +79,7 @@ const SignUpScreen = () => {
             type="password"
             id="password"
             value={password}
+            required
             className="bg-gray-50 border border-gray-300 text-gray-900 text-sm  focus:ring-neutral-500 focus:bg-neutral-100 focus:outline-none block w-full p-2.5"
             placeholder="•••••••"
             onChange={(e) => setPassword(e.target.value)}
@@ -92,6 +95,7 @@ const SignUpScreen = () => {
             type="password"
             id="confirmPassword"
             value={confirmPassword}
+            required
             className="bg-gray-50 border border-gray-300 text-gray-900 text-sm  focus:ring-neutral-500 focus:bg-neutral-100 focus:outline-none block w-full p-2.5"
             placeholder="•••••••"
             onChange={(e) => setConfirmPassword(e.target.value)}

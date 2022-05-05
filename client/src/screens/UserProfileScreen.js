@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { NavLink, useLocation, useNavigate } from 'react-router-dom';
 import { Transition } from '@headlessui/react';
+import _ from 'lodash';
 
 import { MdCircleNotifications } from 'react-icons/md';
 
@@ -10,7 +11,8 @@ import { listUserArticles } from '../actions/articleActions';
 import {
   getAnalytics,
   getUserDetails,
-  getNotifications,
+  getAdminNotifications,
+  getUserNotifications,
   updateEmail,
   updatePassword,
   sendWriterRequest,
@@ -28,6 +30,7 @@ import { FiChevronDown } from 'react-icons/fi';
 
 const UserProfileScreen = () => {
   const userFromLocalStorage = JSON.parse(localStorage.getItem('userInfo'));
+  const userId = userFromLocalStorage._id;
   const location = useLocation();
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -40,6 +43,9 @@ const UserProfileScreen = () => {
   const [passwordOpen, setPasswordOpen] = useState(false);
   const [writerDescription, setWriterDescription] = useState('');
   const [requestFormOpen, setRequestFormOpen] = useState(false);
+  const [adminNotificationsOpen, setAdminNotificationsOpen] = useState(true);
+  const [userNotificationsOpen, setUserNotificationsOpen] = useState(true);
+  const [requestsOpen, setRequestsOpen] = useState(true);
 
   const { userDetails, error: errorUserDetails } = useSelector(
     (state) => state.userDetails
@@ -69,10 +75,22 @@ const UserProfileScreen = () => {
   } = useSelector((state) => state.adminAnalytics);
 
   const {
-    loading: loadingNotifications,
-    notifications,
-    error: errorNotifications,
+    loading: loadingUserNotifications,
+    notifications: userNotifications,
+    error: errorUserNotifications,
   } = useSelector((state) => state.userNotifications);
+  const noUserNotifications = _.isEmpty(userNotifications) === true;
+
+  const { success: successUserDeleteNotification } = useSelector(
+    (state) => state.userDeleteNotification
+  );
+
+  const {
+    loading: loadingAdminNotifications,
+    notifications: adminNotifications,
+    error: errorAdminNotifications,
+  } = useSelector((state) => state.adminNotifications);
+  const noAdminNotifications = _.isEmpty(adminNotifications) === true;
 
   const { error: errorSendWriterRequest, success: successSendWriterRequest } =
     useSelector((state) => state.userSendWriterRequest);
@@ -115,9 +133,11 @@ const UserProfileScreen = () => {
     }
     dispatch(getUserDetails(userFromLocalStorage._id));
     dispatch(listUserArticles(userFromLocalStorage._id));
-    dispatch(getNotifications());
     if (userFromLocalStorage.isAdmin === true) {
+      dispatch(getAdminNotifications());
       dispatch(getAnalytics());
+    } else {
+      dispatch(getUserNotifications(userFromLocalStorage._id));
     }
   }, [
     userFromLocalStorage._id,
@@ -127,6 +147,7 @@ const UserProfileScreen = () => {
     successArticleDelete,
     successApproveRequest,
     successDeclineRequest,
+    successUserDeleteNotification,
   ]);
 
   return (
@@ -184,14 +205,14 @@ const UserProfileScreen = () => {
                   Admin
                 </NavLink>
 
-                {notifications && notifications.length > 0 && (
+                {adminNotifications && adminNotifications.length > 0 && (
                   <span className="hidden sm:inline-flex bg-neutral-300 text-neutral-800 text-xs font-medium font-roboto items-center px-2.5 py-0.5 rounded">
                     <MdCircleNotifications className="text-sm mr-1" />
-                    {notifications && notifications.length > 0 && (
+                    {adminNotifications && adminNotifications.length > 0 && (
                       <>
-                        {notifications.length === 1
-                          ? `${notifications.length} request`
-                          : `${notifications.length} requests`}
+                        {adminNotifications.length === 1
+                          ? `${adminNotifications.length} request`
+                          : `${adminNotifications.length} requests`}
                       </>
                     )}
                   </span>
@@ -202,11 +223,14 @@ const UserProfileScreen = () => {
 
           {/* Account Settings Screen */}
           {location.pathname.includes('profile') && (
-            <div className="flex flex-col space-y-6 w-full md:w-1/2 mx-auto font-roboto text-[#333333]">
+            <div className="flex flex-col space-y-6 w-full md:w-4/5 mx-auto font-roboto text-[#333333]">
               <div className="pt-4 md:pt-10">
                 {errorUserDetails && (
                   <Alert variant="error">{errorUserDetails}</Alert>
                 )}
+                <h1 className="font-spratRegular text-2xl pb-5">
+                  User Information
+                </h1>
                 <h2 className="font-medium">{userFromLocalStorage.name}</h2>
               </div>
 
@@ -344,6 +368,54 @@ const UserProfileScreen = () => {
                   </form>
                 </Transition>
 
+                {/* Border */}
+                <div className="border-t-1 border-x-neutral-500 my-5"></div>
+
+                <div className="flex space-x-2 items-center">
+                  <h1 className="font-spratRegular text-2xl">Notifications</h1>
+
+                  <FiChevronDown
+                    className="text-xl mt-1"
+                    onClick={() =>
+                      setUserNotificationsOpen(!userNotificationsOpen)
+                    }
+                  />
+                </div>
+
+                <Transition
+                  show={userNotificationsOpen}
+                  enter="transition-opacity duration-300"
+                  enterFrom="opacity-0"
+                  enterTo="opacity-100"
+                  leave="transition-opacity duration-150"
+                  leaveFrom="opacity-100"
+                  leaveTo="opacity-0"
+                >
+                  {noUserNotifications && (
+                    <div className="pt-2">
+                      <Alert variant="info">
+                        You don't have any notifications at this time.
+                      </Alert>
+                    </div>
+                  )}
+                  {loadingUserNotifications && <Loader />}
+                  {errorUserNotifications && (
+                    <Alert variant="error">{errorUserNotifications}</Alert>
+                  )}
+                  <div className="flex flex-col space-y-1 pt-3">
+                    {userNotifications &&
+                      userNotifications.length > 0 &&
+                      userNotifications.map((notification) => (
+                        <div key={notification._id}>
+                          <UserRequestCard
+                            request={notification}
+                            markAsViewed={true}
+                          />
+                        </div>
+                      ))}
+                  </div>
+                </Transition>
+
                 {userDetails && userDetails.isAdmin === false && (
                   <>
                     {/* Border */}
@@ -407,11 +479,6 @@ const UserProfileScreen = () => {
                           </div>
                         </form>
                       </Transition>
-
-                      {/* Pending */}
-                      {/* <div className="bg-[#c9a82f] px-6 py-3 text-white font-medium text-sm w-fit mx-auto transition ease-in-out hover:-translate-y-1 hover:scale-105  duration-300">
-                        WRITER'S REQUEST PENDING
-                      </div> */}
                     </div>
                   </>
                 )}
@@ -457,23 +524,35 @@ const UserProfileScreen = () => {
                   <AdminAnalyticsCard views={true} dailyViews={1365} />
                 </div>
               )}
-              <h1 className="font-spratRegular text-4xl">Requests</h1>
-              {notifications && notifications.length === 0 && (
+
+              {/* Requests */}
+              <div className="flex space-x-2 items-center">
+                <h1 className="font-spratRegular text-4xl">Requests</h1>
+
+                <FiChevronDown
+                  className="text-2xl mt-2 "
+                  onClick={() => setRequestsOpen(!requestsOpen)}
+                />
+              </div>
+              {noAdminNotifications && (
                 <Alert variant="info">
                   There are no requests for writers at this time.
                 </Alert>
               )}
-              {loadingNotifications && <Loader />}
-              {errorNotifications && (
-                <Alert variant="error">{errorNotifications}</Alert>
+              {loadingAdminNotifications && <Loader />}
+              {errorAdminNotifications && (
+                <Alert variant="error">{errorAdminNotifications}</Alert>
               )}
               <div className="flex flex-col space-y-1">
-                {notifications &&
-                  notifications.length > 0 &&
-                  notifications.map((notification) => (
+                {adminNotifications &&
+                  adminNotifications.length > 0 &&
+                  adminNotifications.map((notification) => (
                     <div key={notification._id}>
                       {notification.adminOnly === true && (
-                        <UserRequestCard request={notification} />
+                        <UserRequestCard
+                          request={notification}
+                          respond={true}
+                        />
                       )}
                     </div>
                   ))}

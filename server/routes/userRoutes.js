@@ -12,7 +12,8 @@ import {
   sendWriterRequest,
   approveWriterRequest,
   declineWriterRequest,
-  getNotifications,
+  getAdminNotifications,
+  getUserNotifications,
   deleteNotification,
 } from '../controllers/userController.js';
 
@@ -20,13 +21,16 @@ const router = express.Router();
 
 router.get('/analytics', authMiddleware, isAdmin, adminGetAnalytics);
 
-router.get('/notifications', authMiddleware, getNotifications);
+router.get(
+  '/admin-notifications',
+  authMiddleware,
+  isAdmin,
+  getAdminNotifications
+);
+
+router.get('/user-notifications/:id', authMiddleware, getUserNotifications);
 
 router.get('/:id', authMiddleware, getUserDetails);
-
-router.post('/signin', signIn);
-
-router.post('/signup', signUp);
 
 router.post(
   '/approve-writer-request/:id',
@@ -41,6 +45,10 @@ router.post(
   isAdmin,
   declineWriterRequest
 );
+
+router.post('/signin', signIn);
+
+router.post('/signup', signUp);
 
 router.post('/writer-request', authMiddleware, sendWriterRequest);
 

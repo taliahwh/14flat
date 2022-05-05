@@ -56,26 +56,11 @@ const CreateArticleScreen = () => {
     }
   };
 
-  const modules = {
-    toolbar: [
-      [{ header: [1, 2] }],
-      [['bold', 'italic', 'underline']],
-      [
-        { list: 'ordered' },
-        { list: 'bullet' },
-        { indent: '-1' },
-        { indent: '+1' },
-      ],
-      ['link'],
-      ['image'],
-    ],
-  };
-
   const handleFormSubmit = (e) => {
     e.preventDefault();
 
     dispatch(createNewArticle(title, image, content, excerpt, tags));
-    // console.log(tags);
+
     navigate('/blog');
   };
 

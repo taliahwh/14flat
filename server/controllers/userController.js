@@ -251,18 +251,42 @@ const adminGetAnalytics = asyncHandler(async (req, res) => {
   });
 });
 
-// @desc Get notifications
-// @route GET /api/users/notifications
-// @access Private (Admin only)
-const getNotifications = asyncHandler(async (req, res) => {
-  const notifications = await Notification.find({});
+// @desc Get user notifications by user id
+// @route GET /api/users/user-notifications/:id
+// @access Private
+const getUserNotifications = asyncHandler(async (req, res) => {
+  const { id: paramsId } = req.params;
+  const { id: requestId } = req.user;
 
-  if (!notifications) {
+  if (String(paramsId) !== String(requestId)) {
+    res.status(401);
+    throw new Error(`Not authorized to view other user's notifications`);
+  }
+
+  const userNotifications = await Notification.find({
+    requestTo: String(paramsId),
+  });
+
+  if (!userNotifications) {
     res.status(404);
     throw new Error('There are no notifications at this time');
   }
 
-  res.status(200).json(notifications);
+  res.status(200).json(userNotifications);
+});
+
+// @desc Get admin notifications
+// @route GET /api/users/admin-notifications
+// @access Private (Admin only)
+const getAdminNotifications = asyncHandler(async (req, res) => {
+  const adminNotifications = await Notification.find({ adminOnly: true });
+
+  if (!adminNotifications) {
+    res.status(404);
+    throw new Error('There are no notifications at this time');
+  }
+
+  res.status(200).json(adminNotifications);
 });
 
 // @desc Send request to be a writer
@@ -356,6 +380,8 @@ const declineWriterRequest = asyncHandler(async (req, res) => {
   const requestingUserId = notification.requestUserId;
   const requestingUser = await User.findById(requestingUserId);
 
+  const admin = await User.findById(reqId);
+
   if (!requestingUser) {
     res.status(404);
     throw new Error('User account that requested no longer exists');
@@ -364,6 +390,7 @@ const declineWriterRequest = asyncHandler(async (req, res) => {
   // Send declined notification to user that requested
   const declinedNotification = await Notification.create({
     requestUserId: reqId,
+    admin: `Admin: ${admin.name}`,
     requestTo: requestingUser._id,
     typeOfNotification: 'Writer Request Declined',
     name: requestingUser.name,
@@ -385,6 +412,7 @@ const declineWriterRequest = asyncHandler(async (req, res) => {
 const deleteNotification = asyncHandler(async (req, res) => {
   const { id: notificationId } = req.params;
   const { id: reqId } = req.user;
+  console.log(req.user);
 
   const requestingUser = await User.findById(reqId);
 
@@ -420,6 +448,7 @@ export {
   sendWriterRequest,
   approveWriterRequest,
   declineWriterRequest,
-  getNotifications,
+  getAdminNotifications,
+  getUserNotifications,
   deleteNotification,
 };

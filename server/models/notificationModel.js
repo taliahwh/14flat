@@ -25,6 +25,10 @@ export const notificationSchema = new mongoose.Schema({
     type: Boolean,
     required: true,
   },
+  admin: {
+    type: String,
+    required: false,
+  },
 });
 
 const Notification = mongoose.model('Notification', notificationSchema);

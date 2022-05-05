@@ -27,6 +27,9 @@ import {
   USER_DELETE_NOTIFICATION_REQUEST,
   USER_DELETE_NOTIFICATION_SUCCESS,
   USER_DELETE_NOTIFICATION_FAILURE,
+  ADMIN_GET_NOTIFICATIONS_REQUEST,
+  ADMIN_GET_NOTIFICATIONS_SUCCESS,
+  ADMIN_GET_NOTIFICATIONS_FAILURE,
   ADMIN_APPROVE_REQUEST_REQUEST,
   ADMIN_APPROVE_REQUEST_SUCCESS,
   ADMIN_APPROVE_REQUEST_FAILURE,
@@ -121,8 +124,22 @@ export const userNotificationsReducer = (
       return { loading: false, success: true, notifications: action.payload };
     case USER_GET_NOTIFICATIONS_FAILURE:
       return { loading: false, error: action.payload };
-    case USER_LOGOUT:
-      return {};
+    default:
+      return state;
+  }
+};
+
+export const adminNotificationsReducer = (
+  state = { notifications: {} },
+  action
+) => {
+  switch (action.type) {
+    case ADMIN_GET_NOTIFICATIONS_REQUEST:
+      return { loading: true };
+    case ADMIN_GET_NOTIFICATIONS_SUCCESS:
+      return { loading: false, success: true, notifications: action.payload };
+    case ADMIN_GET_NOTIFICATIONS_FAILURE:
+      return { loading: false, error: action.payload };
     default:
       return state;
   }

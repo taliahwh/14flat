@@ -23,12 +23,15 @@ import {
   USER_GET_NOTIFICATIONS_REQUEST,
   USER_GET_NOTIFICATIONS_SUCCESS,
   USER_GET_NOTIFICATIONS_FAILURE,
-  ADMIN_ANALYTICS_REQUEST,
-  ADMIN_ANALYTICS_SUCCESS,
-  ADMIN_ANALYTICS_FAILURE,
   USER_DELETE_NOTIFICATION_REQUEST,
   USER_DELETE_NOTIFICATION_SUCCESS,
   USER_DELETE_NOTIFICATION_FAILURE,
+  ADMIN_GET_NOTIFICATIONS_REQUEST,
+  ADMIN_GET_NOTIFICATIONS_SUCCESS,
+  ADMIN_GET_NOTIFICATIONS_FAILURE,
+  ADMIN_ANALYTICS_REQUEST,
+  ADMIN_ANALYTICS_SUCCESS,
+  ADMIN_ANALYTICS_FAILURE,
   ADMIN_APPROVE_REQUEST_REQUEST,
   ADMIN_APPROVE_REQUEST_SUCCESS,
   ADMIN_APPROVE_REQUEST_FAILURE,
@@ -76,7 +79,7 @@ export const logout = () => async (dispatch) => {
 };
 
 export const signUp =
-  (email, name, password, confirmPassword) => async (dispatch) => {
+  (name, email, password, confirmPassword) => async (dispatch) => {
     try {
       dispatch({ type: USER_SIGN_UP_REQUEST });
 
@@ -243,7 +246,7 @@ export const updatePassword =
     }
   };
 
-export const getNotifications = () => async (dispatch, getState) => {
+export const getUserNotifications = (id) => async (dispatch, getState) => {
   try {
     dispatch({ type: USER_GET_NOTIFICATIONS_REQUEST });
 
@@ -255,7 +258,10 @@ export const getNotifications = () => async (dispatch, getState) => {
       },
     };
 
-    const { data } = await axios.get('/api/users/notifications', config);
+    const { data } = await axios.get(
+      `/api/users/user-notifications/${id}`,
+      config
+    );
 
     dispatch({ type: USER_GET_NOTIFICATIONS_SUCCESS, payload: data });
   } catch (error) {
@@ -269,7 +275,7 @@ export const getNotifications = () => async (dispatch, getState) => {
   }
 };
 
-export const deleteNotifications = (id) => async (dispatch, getState) => {
+export const deleteNotification = (id) => async (dispatch, getState) => {
   try {
     dispatch({ type: USER_DELETE_NOTIFICATION_REQUEST });
 
@@ -326,10 +332,35 @@ export const getAnalytics = () => async (dispatch, getState) => {
   }
 };
 
+export const getAdminNotifications = () => async (dispatch, getState) => {
+  try {
+    dispatch({ type: ADMIN_GET_NOTIFICATIONS_REQUEST });
+
+    const { userInfo } = getState().userSignIn;
+    const config = {
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${userInfo.token}`,
+      },
+    };
+
+    const { data } = await axios.get('/api/users/admin-notifications', config);
+
+    dispatch({ type: ADMIN_GET_NOTIFICATIONS_SUCCESS, payload: data });
+  } catch (error) {
+    dispatch({
+      type: ADMIN_GET_NOTIFICATIONS_FAILURE,
+      payload:
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message,
+    });
+  }
+};
+
 export const approveRequest = (id) => async (dispatch, getState) => {
   try {
     dispatch({ type: ADMIN_APPROVE_REQUEST_REQUEST });
-    // dispatch({ type: ADMIN_APPROVE_REQUEST_REQUEST });
 
     const { userInfo } = getState().userSignIn;
     const config = {
@@ -341,6 +372,7 @@ export const approveRequest = (id) => async (dispatch, getState) => {
 
     const { data } = await axios.post(
       `/api/users/approve-writer-request/${id}`,
+      {},
       config
     );
 
@@ -356,31 +388,34 @@ export const approveRequest = (id) => async (dispatch, getState) => {
   }
 };
 
-export const declineRequest = (id) => async (dispatch, getState) => {
-  try {
-    dispatch({ type: ADMIN_DECLINE_REQUEST_REQUEST });
+export const declineRequest =
+  (id, description) => async (dispatch, getState) => {
+    try {
+      dispatch({ type: ADMIN_DECLINE_REQUEST_REQUEST });
 
-    const { userInfo } = getState().userSignIn;
-    const config = {
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${userInfo.token}`,
-      },
-    };
+      const { userInfo } = getState().userSignIn;
 
-    const { data } = await axios.post(
-      `/api/users/decline-writer-request/${id}`,
-      config
-    );
+      const config = {
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${userInfo.token}`,
+        },
+      };
 
-    dispatch({ type: ADMIN_DECLINE_REQUEST_SUCCESS, payload: data });
-  } catch (error) {
-    dispatch({
-      type: ADMIN_DECLINE_REQUEST_FAILURE,
-      payload:
-        error.response && error.response.data.message
-          ? error.response.data.message
-          : error.message,
-    });
-  }
-};
+      const { data } = await axios.post(
+        `/api/users/decline-writer-request/${id}`,
+        { description },
+        config
+      );
+
+      dispatch({ type: ADMIN_DECLINE_REQUEST_SUCCESS, payload: data });
+    } catch (error) {
+      dispatch({
+        type: ADMIN_DECLINE_REQUEST_FAILURE,
+        payload:
+          error.response && error.response.data.message
+            ? error.response.data.message
+            : error.message,
+      });
+    }
+  };

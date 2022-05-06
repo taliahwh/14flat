@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import axios from 'axios';
@@ -23,7 +23,6 @@ import { createNewArticle } from '../actions/articleActions';
 const CreateArticleScreen = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const tooltipRef = useRef();
 
   const [image, setImage] = useState('');
   const [title, setTitle] = useState('');

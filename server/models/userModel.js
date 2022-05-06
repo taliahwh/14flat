@@ -1,7 +1,5 @@
 import mongoose from 'mongoose';
-import Article from './articleModel.js';
 import { articleSchema } from './articleModel.js';
-import { notificationSchema } from './notificationModel.js';
 
 const userSchema = new mongoose.Schema(
   {

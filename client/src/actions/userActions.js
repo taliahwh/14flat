@@ -38,6 +38,12 @@ import {
   ADMIN_DECLINE_REQUEST_REQUEST,
   ADMIN_DECLINE_REQUEST_SUCCESS,
   ADMIN_DECLINE_REQUEST_FAILURE,
+  ADMIN_LIST_USERS_REQUEST,
+  ADMIN_LIST_USERS_SUCCESS,
+  ADMIN_LIST_USERS_FAILURE,
+  ADMIN_DELETE_USER_REQUEST,
+  ADMIN_DELETE_USER_SUCCESS,
+  ADMIN_DELETE_USER_FAILURE,
 } from '../constants/userConstants';
 
 export const signIn = (email, password) => async (dispatch) => {
@@ -324,6 +330,58 @@ export const getAnalytics = () => async (dispatch, getState) => {
   } catch (error) {
     dispatch({
       type: ADMIN_ANALYTICS_FAILURE,
+      payload:
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message,
+    });
+  }
+};
+
+export const listUsers = () => async (dispatch, getState) => {
+  try {
+    dispatch({ type: ADMIN_LIST_USERS_REQUEST });
+
+    const { userInfo } = getState().userSignIn;
+    const config = {
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${userInfo.token}`,
+      },
+    };
+
+    const { data } = await axios.get('/api/users', config);
+
+    dispatch({ type: ADMIN_LIST_USERS_SUCCESS, payload: data });
+  } catch (error) {
+    dispatch({
+      type: ADMIN_LIST_USERS_FAILURE,
+      payload:
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message,
+    });
+  }
+};
+
+export const deleteUser = (id) => async (dispatch, getState) => {
+  try {
+    dispatch({ type: ADMIN_DELETE_USER_REQUEST });
+
+    const { userInfo } = getState().userSignIn;
+    const config = {
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${userInfo.token}`,
+      },
+    };
+
+    await axios.delete(`/api/users/${id}`, config);
+
+    dispatch({ type: ADMIN_DELETE_USER_SUCCESS });
+  } catch (error) {
+    dispatch({
+      type: ADMIN_DELETE_USER_FAILURE,
       payload:
         error.response && error.response.data.message
           ? error.response.data.message

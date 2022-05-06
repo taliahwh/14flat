@@ -16,6 +16,9 @@ import {
   NEW_ARTICLE_REQUEST,
   NEW_ARTICLE_SUCCESS,
   NEW_ARTICLE_FAILURE,
+  UPDATE_ARTICLE_REQUEST,
+  UPDATE_ARTICLE_SUCCESS,
+  UPDATE_ARTICLE_FAILURE,
   LIKE_ARTICLE_REQUEST,
   LIKE_ARTICLE_SUCCESS,
   LIKE_ARTICLE_FAILURE,
@@ -197,6 +200,36 @@ export const createNewArticle =
       });
     }
   };
+
+export const updateArticle = (article) => async (dispatch, getState) => {
+  try {
+    dispatch({ type: UPDATE_ARTICLE_REQUEST });
+
+    const { userInfo } = getState().userSignIn;
+    const config = {
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${userInfo.token}`,
+      },
+    };
+
+    const { data } = await axios.put(
+      `/api/articles/update-article/${article._id}`,
+      article,
+      config
+    );
+
+    dispatch({ type: UPDATE_ARTICLE_SUCCESS, payload: data });
+  } catch (error) {
+    dispatch({
+      type: UPDATE_ARTICLE_FAILURE,
+      payload:
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message,
+    });
+  }
+};
 
 export const likeArticle = (article) => async (dispatch, getState) => {
   try {

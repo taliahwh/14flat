@@ -36,6 +36,12 @@ import {
   ADMIN_DECLINE_REQUEST_REQUEST,
   ADMIN_DECLINE_REQUEST_SUCCESS,
   ADMIN_DECLINE_REQUEST_FAILURE,
+  ADMIN_LIST_USERS_REQUEST,
+  ADMIN_LIST_USERS_SUCCESS,
+  ADMIN_LIST_USERS_FAILURE,
+  ADMIN_DELETE_USER_REQUEST,
+  ADMIN_DELETE_USER_SUCCESS,
+  ADMIN_DELETE_USER_FAILURE,
 } from '../constants/userConstants';
 
 export const userSignInReducer = (state = {}, action) => {
@@ -91,8 +97,7 @@ export const userUpdateEmailReducer = (state = {}, action) => {
       return { loading: false, success: true, userInfo: action.payload };
     case USER_UPDATE_EMAIL_FAILURE:
       return { loading: false, error: action.payload };
-    case USER_LOGOUT:
-      return {};
+
     default:
       return state;
   }
@@ -106,8 +111,7 @@ export const userUpdatePasswordReducer = (state = {}, action) => {
       return { loading: false, success: true };
     case USER_UPDATE_PASSWORD_FAILURE:
       return { loading: false, error: action.payload };
-    case USER_LOGOUT:
-      return {};
+
     default:
       return state;
   }
@@ -168,8 +172,7 @@ export const userSendWriterRequestReducer = (state = {}, action) => {
       return { loading: false, success: true };
     case USER_SEND_WRITER_REQUEST_FAILURE:
       return { loading: false, error: action.payload };
-    case USER_LOGOUT:
-      return {};
+
     default:
       return state;
   }
@@ -183,8 +186,7 @@ export const adminAnalyticsReducer = (state = {}, action) => {
       return { loading: false, success: true, analytics: action.payload };
     case ADMIN_ANALYTICS_FAILURE:
       return { loading: false, error: action.payload };
-    case USER_LOGOUT:
-      return {};
+
     default:
       return state;
   }
@@ -198,8 +200,7 @@ export const adminApproveRequestReducer = (state = {}, action) => {
       return { loading: false, success: true };
     case ADMIN_APPROVE_REQUEST_FAILURE:
       return { loading: false, error: action.payload };
-    case USER_LOGOUT:
-      return {};
+
     default:
       return state;
   }
@@ -213,8 +214,35 @@ export const adminDeclineRequestReducer = (state = {}, action) => {
       return { loading: false, success: true, analytics: action.payload };
     case ADMIN_DECLINE_REQUEST_FAILURE:
       return { loading: false, error: action.payload };
-    case USER_LOGOUT:
-      return {};
+
+    default:
+      return state;
+  }
+};
+
+export const adminUsersReducer = (state = { users: {} }, action) => {
+  switch (action.type) {
+    case ADMIN_LIST_USERS_REQUEST:
+      return { loading: true };
+    case ADMIN_LIST_USERS_SUCCESS:
+      return { loading: false, success: true, users: action.payload };
+    case ADMIN_LIST_USERS_FAILURE:
+      return { loading: false, error: action.payload };
+
+    default:
+      return state;
+  }
+};
+
+export const adminDeleteUserReducer = (state = {}, action) => {
+  switch (action.type) {
+    case ADMIN_DELETE_USER_REQUEST:
+      return { loading: true };
+    case ADMIN_DELETE_USER_SUCCESS:
+      return { loading: false, success: true };
+    case ADMIN_DELETE_USER_FAILURE:
+      return { loading: false, error: action.payload };
+
     default:
       return state;
   }

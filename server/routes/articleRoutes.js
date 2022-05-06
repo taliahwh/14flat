@@ -7,6 +7,7 @@ import {
   getArticleById,
   getSavedArticles,
   createArticle,
+  updateArticle,
   likeArticle,
   saveArticle,
   deleteSavedArticle,
@@ -33,6 +34,8 @@ router.get('/user/:id/saved-articles', authMiddleware, getSavedArticles);
 router.get('/:id', getArticleById);
 
 router.delete('/:id', authMiddleware, deleteArticle);
+
+router.put('/update-article/:id', authMiddleware, updateArticle);
 
 router.put('/:id/likearticle', authMiddleware, likeArticle);
 

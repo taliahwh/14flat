@@ -251,6 +251,42 @@ const adminGetAnalytics = asyncHandler(async (req, res) => {
   });
 });
 
+// @desc Get user list
+// @route GET /api/users/
+// @access Private (Admin only)
+const adminGetUsers = asyncHandler(async (req, res) => {
+  const { id } = req.user;
+  const users = await User.find({});
+
+  if (!users) {
+    res.status(404);
+    throw new Error('No users found');
+  }
+
+  const userList = users.filter((user) => String(user._id) !== String(id));
+
+  res.status(200).json(userList);
+});
+
+// @desc Delete user by id
+// @route DEL /api/users/:id
+// @access Private (Admin only)
+const adminDeleteUser = asyncHandler(async (req, res) => {
+  // const { id: reqId } = req.user;
+  const { id: paramsId } = req.params;
+
+  const user = await User.findById(paramsId);
+
+  if (!user) {
+    res.status(404);
+    throw new Error('No user found');
+  }
+
+  await User.findByIdAndDelete(paramsId);
+
+  res.status(200).json({ message: 'User successfully deleted' });
+});
+
 // @desc Get user notifications by user id
 // @route GET /api/users/user-notifications/:id
 // @access Private
@@ -445,6 +481,8 @@ export {
   updateUserEmail,
   updateUserPassword,
   adminGetAnalytics,
+  adminGetUsers,
+  adminDeleteUser,
   sendWriterRequest,
   approveWriterRequest,
   declineWriterRequest,

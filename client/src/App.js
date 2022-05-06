@@ -12,6 +12,7 @@ import SignUpScreen from './screens/SignUpScreen';
 import SavedArticlesScreen from './screens/SavedArticlesScreen';
 import UserProfileScreen from './screens/UserProfileScreen';
 import CreateArticleScreen from './screens/CreateArticleScreen';
+import EditArticleScreen from './screens/EditArticleScreen';
 
 const App = () => {
   return (
@@ -23,6 +24,11 @@ const App = () => {
           <Route path="/signup" exact element={<SignUpScreen />} />
           <Route path="/profile" exact element={<UserProfileScreen />} />
           <Route path="/new-article" exact element={<CreateArticleScreen />} />
+          <Route
+            path="/edit-article/:id"
+            exact
+            element={<EditArticleScreen />}
+          />
           <Route path="/view-articles" exact element={<UserProfileScreen />} />
           <Route path="/admin" exact element={<UserProfileScreen />} />
           <Route path="/blog" exact element={<BlogScreen />} />

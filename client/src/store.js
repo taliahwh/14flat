@@ -14,6 +14,7 @@ import {
   deleteSavedArticleReducer,
   coverArticleReducer,
   featuredArticlesReducer,
+  updateArticleReducer,
 } from './reducers/articleReducers';
 
 import {
@@ -27,7 +28,9 @@ import {
   adminAnalyticsReducer,
   adminApproveRequestReducer,
   adminDeclineRequestReducer,
+  adminDeleteUserReducer,
   adminNotificationsReducer,
+  adminUsersReducer,
   userDeleteNotificationReducer,
   userDetailsReducer,
   userNotificationsReducer,
@@ -44,6 +47,7 @@ const reducer = combineReducers({
   featuredArticles: featuredArticlesReducer,
   articleDetails: articleDetailsReducer,
   newArticle: newArticleReducer,
+  updateArticle: updateArticleReducer,
   likeArticle: likeArticleReducer,
   saveArticle: saveArticleReducer,
   deleteSavedArticle: deleteSavedArticleReducer,
@@ -64,6 +68,8 @@ const reducer = combineReducers({
   userSendWriterRequest: userSendWriterRequestReducer,
   adminNotifications: adminNotificationsReducer,
   adminAnalytics: adminAnalyticsReducer,
+  adminUsers: adminUsersReducer,
+  adminDeleteUser: adminDeleteUserReducer,
   adminApproveRequest: adminApproveRequestReducer,
   adminDeclineRequest: adminDeclineRequestReducer,
 });

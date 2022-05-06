@@ -9,6 +9,8 @@ import {
   updateUserEmail,
   updateUserPassword,
   adminGetAnalytics,
+  adminGetUsers,
+  adminDeleteUser,
   sendWriterRequest,
   approveWriterRequest,
   declineWriterRequest,
@@ -18,6 +20,8 @@ import {
 } from '../controllers/userController.js';
 
 const router = express.Router();
+
+router.get('/', authMiddleware, isAdmin, adminGetUsers);
 
 router.get('/analytics', authMiddleware, isAdmin, adminGetAnalytics);
 
@@ -55,6 +59,8 @@ router.post('/writer-request', authMiddleware, sendWriterRequest);
 router.put('/profile-email', authMiddleware, updateUserEmail);
 
 router.put('/profile-password', authMiddleware, updateUserPassword);
+
+router.delete('/:id', authMiddleware, isAdmin, adminDeleteUser);
 
 router.delete('/notifications/:id', authMiddleware, deleteNotification);
 

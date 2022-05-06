@@ -4,8 +4,6 @@ import { NavLink, useLocation, useNavigate } from 'react-router-dom';
 import { Transition } from '@headlessui/react';
 import _ from 'lodash';
 
-import { MdCircleNotifications } from 'react-icons/md';
-
 // Actions
 import { listUserArticles } from '../actions/articleActions';
 import {
@@ -13,6 +11,7 @@ import {
   getUserDetails,
   getAdminNotifications,
   getUserNotifications,
+  listUsers,
   updateEmail,
   updatePassword,
   sendWriterRequest,
@@ -25,12 +24,13 @@ import Alert from '../components/Alert';
 import FullScreen from '../components/FullScreen';
 import ViewWrittenArticle from '../components/Articles/ViewWrittenArticle';
 import AdminAnalyticsCard from '../components/Admin/AdminAnalyticsCard';
+import UserCard from '../components/Admin/UserCard';
 import UserRequestCard from '../components/Admin/UserRequestCard';
 import { FiChevronDown } from 'react-icons/fi';
+import { MdCircleNotifications } from 'react-icons/md';
 
 const UserProfileScreen = () => {
   const userFromLocalStorage = JSON.parse(localStorage.getItem('userInfo'));
-  const userId = userFromLocalStorage._id;
   const location = useLocation();
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -43,9 +43,9 @@ const UserProfileScreen = () => {
   const [passwordOpen, setPasswordOpen] = useState(false);
   const [writerDescription, setWriterDescription] = useState('');
   const [requestFormOpen, setRequestFormOpen] = useState(false);
-  const [adminNotificationsOpen, setAdminNotificationsOpen] = useState(true);
+  const [adminRequestsOpen, setAdminRequestsOpen] = useState(true);
   const [userNotificationsOpen, setUserNotificationsOpen] = useState(true);
-  const [requestsOpen, setRequestsOpen] = useState(true);
+  const [userListOpen, setUserListOpen] = useState(true);
 
   const { userDetails, error: errorUserDetails } = useSelector(
     (state) => state.userDetails
@@ -102,6 +102,17 @@ const UserProfileScreen = () => {
     (state) => state.adminDeclineRequest
   );
 
+  const { success: successDeleteUser } = useSelector(
+    (state) => state.adminDeleteUser
+  );
+
+  const {
+    loading: loadingUserList,
+    users: userList,
+    error: errorUserList,
+  } = useSelector((state) => state.adminUsers);
+  const userListisEmpty = _.isEmpty(userList) === true;
+
   /* TODO Create alert module for user to confirm they want
   to delete article before dispatching the action */
 
@@ -136,6 +147,7 @@ const UserProfileScreen = () => {
     if (userFromLocalStorage.isAdmin === true) {
       dispatch(getAdminNotifications());
       dispatch(getAnalytics());
+      dispatch(listUsers());
     } else {
       dispatch(getUserNotifications(userFromLocalStorage._id));
     }
@@ -148,6 +160,7 @@ const UserProfileScreen = () => {
     successApproveRequest,
     successDeclineRequest,
     successUserDeleteNotification,
+    successDeleteUser,
   ]);
 
   return (
@@ -228,7 +241,7 @@ const UserProfileScreen = () => {
                 {errorUserDetails && (
                   <Alert variant="error">{errorUserDetails}</Alert>
                 )}
-                <h1 className="font-spratRegular text-2xl pb-5">
+                <h1 className="font-spratRegular text-xl md:text-2xl pb-5">
                   User Information
                 </h1>
                 <h2 className="font-medium">{userFromLocalStorage.name}</h2>
@@ -372,7 +385,9 @@ const UserProfileScreen = () => {
                 <div className="border-t-1 border-x-neutral-500 my-5"></div>
 
                 <div className="flex space-x-2 items-center">
-                  <h1 className="font-spratRegular text-2xl">Notifications</h1>
+                  <h1 className="font-spratRegular text-xl md:text-2xl">
+                    Notifications
+                  </h1>
 
                   <FiChevronDown
                     className="text-xl mt-1"
@@ -525,38 +540,86 @@ const UserProfileScreen = () => {
                 </div>
               )}
 
-              {/* Requests */}
+              {/* Admin Requests */}
               <div className="flex space-x-2 items-center">
                 <h1 className="font-spratRegular text-4xl">Requests</h1>
 
                 <FiChevronDown
                   className="text-2xl mt-2 "
-                  onClick={() => setRequestsOpen(!requestsOpen)}
+                  onClick={() => setAdminRequestsOpen(!adminRequestsOpen)}
                 />
               </div>
-              {noAdminNotifications && (
-                <Alert variant="info">
-                  There are no requests for writers at this time.
-                </Alert>
-              )}
-              {loadingAdminNotifications && <Loader />}
-              {errorAdminNotifications && (
-                <Alert variant="error">{errorAdminNotifications}</Alert>
-              )}
-              <div className="flex flex-col space-y-1">
-                {adminNotifications &&
-                  adminNotifications.length > 0 &&
-                  adminNotifications.map((notification) => (
-                    <div key={notification._id}>
-                      {notification.adminOnly === true && (
+
+              <Transition
+                show={adminRequestsOpen}
+                enter="transition-opacity duration-300"
+                enterFrom="opacity-0"
+                enterTo="opacity-100"
+                leave="transition-opacity duration-150"
+                leaveFrom="opacity-100"
+                leaveTo="opacity-0"
+              >
+                {noAdminNotifications && (
+                  <Alert variant="info">
+                    There are no requests for writers at this time.
+                  </Alert>
+                )}
+                {loadingAdminNotifications && <Loader />}
+                {errorAdminNotifications && (
+                  <Alert variant="error">{errorAdminNotifications}</Alert>
+                )}
+                <div className="flex flex-col space-y-1">
+                  {adminNotifications &&
+                    adminNotifications.length > 0 &&
+                    adminNotifications.map((notification) => (
+                      <div key={notification._id}>
                         <UserRequestCard
                           request={notification}
                           respond={true}
                         />
-                      )}
-                    </div>
-                  ))}
+                      </div>
+                    ))}
+                </div>
+              </Transition>
+
+              {/* Users */}
+              <div className="flex space-x-2 items-center">
+                <h1 className="font-spratRegular text-4xl">Users</h1>
+
+                <FiChevronDown
+                  className="text-2xl mt-2 "
+                  onClick={() => setUserListOpen(!userListOpen)}
+                />
               </div>
+
+              <Transition
+                show={userListOpen}
+                enter="transition-opacity duration-300"
+                enterFrom="opacity-0"
+                enterTo="opacity-100"
+                leave="transition-opacity duration-150"
+                leaveFrom="opacity-100"
+                leaveTo="opacity-0"
+              >
+                {userListisEmpty && (
+                  <Alert variant="info">
+                    There are no requests for writers at this time.
+                  </Alert>
+                )}
+                {loadingUserList && <Loader />}
+                {errorUserList && (
+                  <Alert variant="error">{errorUserList}</Alert>
+                )}
+                <div className="flex flex-col space-y-2">
+                  {userList &&
+                    userList.length > 0 &&
+                    userList.map((user) => (
+                      <div key={user._id}>
+                        <UserCard user={user} />
+                      </div>
+                    ))}
+                </div>
+              </Transition>
             </div>
           )}
         </div>

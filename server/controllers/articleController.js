@@ -64,7 +64,7 @@ const getUserArticles = asyncHandler(async (req, res) => {
 
   // dot notation for nested documents (mongoose)
   const articles = await Article.find({
-    'writtenBy.writerId': String(user._id),
+    'writtenBy.writerId': String(req.user._id),
   });
 
   const userArticles = articles.reverse();
@@ -120,6 +120,50 @@ const createArticle = asyncHandler(async (req, res) => {
   await user.save();
 
   res.status(201).json(createdArticle);
+});
+
+// @desc Update article
+// @route PUT /api/articles/update-article/:id
+// @access Public
+const updateArticle = asyncHandler(async (req, res) => {
+  const { title, coverImage, content, excerpt, tags } = req.body;
+  const { id: paramsId } = req.params;
+  const { id: reqId } = req.user;
+
+  const article = await Article.findById(paramsId);
+
+  if (!article) {
+    res.status(404);
+    throw new Error('No article found');
+  }
+
+  const articleId = String(article.writtenBy.writerId);
+
+  if (articleId !== String(reqId)) {
+    res.status(401);
+    throw new Error('Not authorized to edit this article');
+  }
+
+  const user = await User.findById(reqId);
+  // Delete exisiting article from user
+  user.articles = user.articles.filter(
+    (article) => String(article._id) !== String(paramsId)
+  );
+
+  // Update article
+  article.title = title || article.title;
+  article.coverImage = coverImage || article.coverImage;
+  article.content = content || article.content;
+  article.excerpt = excerpt || article.excerpt;
+  article.tags = tags || article.tags;
+
+  const updatedArticle = await article.save();
+
+  // Push new (updated) article into user's articles
+  user.articles.push(updatedArticle);
+  const updatedUser = await user.save();
+
+  res.status(201).json(updatedArticle);
 });
 
 // @desc Delete article
@@ -273,6 +317,7 @@ export {
   getArticleById,
   getSavedArticles,
   createArticle,
+  updateArticle,
   likeArticle,
   saveArticle,
   deleteSavedArticle,

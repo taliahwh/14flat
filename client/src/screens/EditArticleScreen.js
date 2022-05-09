@@ -19,7 +19,7 @@ import Loader from '../components/Loader';
 import Alert from '../components/Alert';
 
 // Actions
-import { listArticleDetails } from '../actions/articleActions';
+import { listArticleDetails, updateArticle } from '../actions/articleActions';
 
 const EditArticleScreen = () => {
   const dispatch = useDispatch();
@@ -33,7 +33,7 @@ const EditArticleScreen = () => {
   } = useSelector((state) => state.articleDetails);
 
   const [image, setImage] = useState('');
-  const [title, setTitle] = useState(articleDetails.title);
+  const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
   const [excerpt, setExcerpt] = useState('');
   const [uploading, setUploading] = useState(false);
@@ -65,11 +65,19 @@ const EditArticleScreen = () => {
 
   const handleFormSubmit = (e) => {
     e.preventDefault();
-    console.log('Update article');
+    const article = {
+      _id: articleDetails._id,
+      title,
+      image,
+      content,
+      excerpt,
+      tags,
+      likes: articleDetails.likes,
+      writtenBy: articleDetails.writtenBy,
+    };
+    dispatch(updateArticle(article));
 
-    // dispatch(createNewArticle(title, image, content, excerpt, tags));
-
-    // navigate('/blog');
+    navigate(`/blog/${article._id}`);
   };
 
   useEffect(() => {

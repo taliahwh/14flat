@@ -1,10 +1,11 @@
 import React, { useEffect } from 'react';
+import { Helmet } from 'react-helmet';
 import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 
 // ACTIONS
 import {
-  listArticles,
+  listLatestArticles,
   listCoverArticle,
   listFeaturedArticles,
 } from '../actions/articleActions';
@@ -23,10 +24,10 @@ const HomeScreen = () => {
   const dispatch = useDispatch();
 
   const {
-    loading: loadingArticleList,
-    articles,
-    error: errorArticleList,
-  } = useSelector((state) => state.articleList);
+    loading: loadingLatestArticles,
+    articles: latestArticles,
+    error: errorLatestArticles,
+  } = useSelector((state) => state.latestArticles);
 
   const {
     loading: loadingCoverArticle,
@@ -47,14 +48,18 @@ const HomeScreen = () => {
   } = useSelector((state) => state.latestEpisodes);
 
   useEffect(() => {
-    dispatch(listArticles());
     dispatch(listCoverArticle());
     dispatch(listFeaturedArticles());
+    dispatch(listLatestArticles());
     dispatch(listLatestEpisodes());
   }, [dispatch]);
 
   return (
     <div className="bg-background px-4 md:px-10 max-w-8xl mx-auto">
+      <Helmet>
+        <title>1-4 Flat | Home</title>
+        <meta name="description" content="Basketball news blog"></meta>
+      </Helmet>
       <Header />
       {/* Featured Articles Section */}
       <div className="grid grid-cols-1 md:grid-cols-10 gap-7 divide-y-1 md:divide-y-0 md:divide-x-1 divide-neutral-300">
@@ -115,18 +120,18 @@ const HomeScreen = () => {
         </div>
 
         <div className="flex flex-col space-y-10 pt-5 md:pt-14">
-          {loadingArticleList ? (
+          {loadingLatestArticles ? (
             <Loader />
-          ) : errorArticleList ? (
-            <Alert variant="error">{errorArticleList}</Alert>
+          ) : errorLatestArticles ? (
+            <Alert variant="error">{errorLatestArticles}</Alert>
           ) : (
             <>
-              {articles &&
-                articles.length > 0 &&
-                articles.slice(0, 5).map((article) => (
-                  <Link to={`/blog/${article._id}`} key={article._id}>
+              {latestArticles &&
+                latestArticles.length > 0 &&
+                latestArticles.slice(0, 5).map((article) => (
+                  <div key={article._id}>
                     <LatestArticle article={article} />
-                  </Link>
+                  </div>
                 ))}
 
               <Link

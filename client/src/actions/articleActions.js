@@ -10,6 +10,9 @@ import {
   FEATURED_ARTICLES_REQUEST,
   FEATURED_ARTICLES_SUCCESS,
   FEATURED_ARTICLES_FAILURE,
+  LATEST_ARTICLES_REQUEST,
+  LATEST_ARTICLES_SUCCESS,
+  LATEST_ARTICLES_FAILURE,
   ARTICLE_DETAILS_REQUEST,
   ARTICLE_DETAILS_SUCCESS,
   ARTICLE_DETAILS_FAILURE,
@@ -40,23 +43,27 @@ import {
 } from '../constants/articleConstants';
 import { USER_SIGN_IN_SUCCESS } from '../constants/userConstants';
 
-export const listArticles = () => async (dispatch) => {
-  try {
-    dispatch({ type: ARTICLE_LIST_REQUEST });
+export const listArticles =
+  (pageNumber = '') =>
+  async (dispatch) => {
+    try {
+      dispatch({ type: ARTICLE_LIST_REQUEST });
 
-    const { data } = await axios.get('/api/articles');
+      const { data } = await axios.get(
+        `/api/articles?pageNumber=${pageNumber}`
+      );
 
-    dispatch({ type: ARTICLE_LIST_SUCCESS, payload: data });
-  } catch (error) {
-    dispatch({
-      type: ARTICLE_LIST_FAILURE,
-      payload:
-        error.response && error.response.data.message
-          ? error.response.data.message
-          : error.message,
-    });
-  }
-};
+      dispatch({ type: ARTICLE_LIST_SUCCESS, payload: data });
+    } catch (error) {
+      dispatch({
+        type: ARTICLE_LIST_FAILURE,
+        payload:
+          error.response && error.response.data.message
+            ? error.response.data.message
+            : error.message,
+      });
+    }
+  };
 
 export const listCoverArticle = () => async (dispatch) => {
   try {
@@ -86,6 +93,24 @@ export const listFeaturedArticles = () => async (dispatch) => {
   } catch (error) {
     dispatch({
       type: FEATURED_ARTICLES_FAILURE,
+      payload:
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message,
+    });
+  }
+};
+
+export const listLatestArticles = () => async (dispatch) => {
+  try {
+    dispatch({ type: LATEST_ARTICLES_REQUEST });
+
+    const { data } = await axios.get('/api/articles/latest-articles');
+
+    dispatch({ type: LATEST_ARTICLES_SUCCESS, payload: data });
+  } catch (error) {
+    dispatch({
+      type: LATEST_ARTICLES_FAILURE,
       payload:
         error.response && error.response.data.message
           ? error.response.data.message

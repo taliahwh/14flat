@@ -8,6 +8,9 @@ import {
   FEATURED_ARTICLES_REQUEST,
   FEATURED_ARTICLES_SUCCESS,
   FEATURED_ARTICLES_FAILURE,
+  LATEST_ARTICLES_REQUEST,
+  LATEST_ARTICLES_SUCCESS,
+  LATEST_ARTICLES_FAILURE,
   ARTICLE_DETAILS_REQUEST,
   ARTICLE_DETAILS_SUCCESS,
   ARTICLE_DETAILS_FAILURE,
@@ -42,7 +45,12 @@ export const articleListReducer = (state = { articles: [] }, action) => {
     case ARTICLE_LIST_REQUEST:
       return { loading: true, ...state };
     case ARTICLE_LIST_SUCCESS:
-      return { loading: false, success: true, articles: action.payload };
+      return {
+        loading: false,
+        articles: action.payload.articles,
+        pages: action.payload.pages,
+        page: action.payload.page,
+      };
     case ARTICLE_LIST_FAILURE:
       return { loading: false, error: action.payload };
     default:
@@ -70,6 +78,19 @@ export const featuredArticlesReducer = (state = { articles: [] }, action) => {
     case FEATURED_ARTICLES_SUCCESS:
       return { loading: false, success: true, articles: action.payload };
     case FEATURED_ARTICLES_FAILURE:
+      return { loading: false, error: action.payload };
+    default:
+      return state;
+  }
+};
+
+export const latestArticlesReducer = (state = { articles: [] }, action) => {
+  switch (action.type) {
+    case LATEST_ARTICLES_REQUEST:
+      return { loading: true, ...state };
+    case LATEST_ARTICLES_SUCCESS:
+      return { loading: false, success: true, articles: action.payload };
+    case LATEST_ARTICLES_FAILURE:
       return { loading: false, error: action.payload };
     default:
       return state;

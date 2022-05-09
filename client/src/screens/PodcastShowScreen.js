@@ -97,14 +97,14 @@ const PodcastShowScreen = () => {
               </p>
             </a>
 
-            <Link to="/">
+            {/* <Link to="/">
               <p className="font-robotoLight text-sm border-1 border-[#7D50DF] text-[#7D50DF] hover:bg-[#7D50DF] hover:text-white py-1.5 px-3">
                 Listen on
                 <span className="font-roboto font-medium pl-1">
                   Apple Podcasts
                 </span>
               </p>
-            </Link>
+            </Link> */}
           </div>
           {/* Border */}
           <div className="border-t-1 border-x-neutral-300"></div>
@@ -161,14 +161,14 @@ const PodcastShowScreen = () => {
               </p>
             </Link>
 
-            <Link to="/">
+            {/* <Link to="/">
               <p className="font-robotoLight w-52 text-sm border-1 border-[#7D50DF] text-[#7D50DF] hover:bg-[#7D50DF] hover:text-white py-1.5 px-3">
                 Listen on
                 <span className="font-roboto font-medium pl-1">
                   Apple Podcasts
                 </span>
               </p>
-            </Link>
+            </Link> */}
           </div>
         </div>
         {/* Border */}

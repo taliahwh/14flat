@@ -7,11 +7,26 @@ import User from '../models/userModel.js';
 // @desc Fetch all articles
 // @route GET /api/articles
 // @access Public
-const getArticles = asyncHandler(async (req, res) => {
+const getAllArticles = asyncHandler(async (req, res) => {
+  const pageSize = 5;
+  const page = Number(req.query.pageNumber) || 1;
+  const count = await Article.count();
+  const articles = await Article.find()
+    .sort({ createdAt: -1 })
+    .limit(pageSize)
+    .skip(pageSize * (page - 1));
+  // const allArticles = articles.reverse();
+
+  res.json({ articles, page, pages: Math.ceil(count / pageSize) });
+});
+
+// @desc Fetch latest articles
+// @route GET /api/articles
+// @access Public
+const getLatestArticles = asyncHandler(async (req, res) => {
   const articles = await Article.find();
   const latestArticles = articles.reverse().slice(3);
 
-  // console.log(latestArticles);
   res.json(latestArticles);
 });
 
@@ -23,7 +38,6 @@ const getCoverArticle = asyncHandler(async (req, res) => {
   const articleList = articles.reverse();
   const coverArticle = articleList[0];
 
-  // console.log(latestArticles);
   res.json(coverArticle);
 });
 
@@ -64,7 +78,7 @@ const getUserArticles = asyncHandler(async (req, res) => {
 
   // dot notation for nested documents (mongoose)
   const articles = await Article.find({
-    'writtenBy.writerId': String(req.user._id),
+    'writtenBy.writerId': String(user._id),
   });
 
   const userArticles = articles.reverse();
@@ -311,7 +325,8 @@ const deleteSavedArticle = asyncHandler(async (req, res) => {
 });
 
 export {
-  getArticles,
+  getAllArticles,
+  getLatestArticles,
   getCoverArticle,
   getFeaturedArticles,
   getArticleById,

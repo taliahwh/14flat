@@ -32,6 +32,7 @@ const App = () => {
           <Route path="/view-articles" exact element={<UserProfileScreen />} />
           <Route path="/admin" exact element={<UserProfileScreen />} />
           <Route path="/blog" exact element={<BlogScreen />} />
+          <Route path="/blog/page/:pageNumber" exact element={<BlogScreen />} />
           <Route path="/blog/:id" exact element={<ArticleDetailsScreen />} />
           <Route path="/podcasts" exact element={<PodcastScreen />} />
           <Route

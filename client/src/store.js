@@ -15,6 +15,7 @@ import {
   coverArticleReducer,
   featuredArticlesReducer,
   updateArticleReducer,
+  latestArticlesReducer,
 } from './reducers/articleReducers';
 
 import {
@@ -45,6 +46,7 @@ const reducer = combineReducers({
   articleList: articleListReducer,
   coverArticle: coverArticleReducer,
   featuredArticles: featuredArticlesReducer,
+  latestArticles: latestArticlesReducer,
   articleDetails: articleDetailsReducer,
   newArticle: newArticleReducer,
   updateArticle: updateArticleReducer,

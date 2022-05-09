@@ -4,6 +4,11 @@ import { useDispatch, useSelector } from 'react-redux';
 import moment from 'moment';
 import AudioPlayer from 'react-h5-audio-player';
 import 'react-h5-audio-player/lib/styles.css';
+import {
+  FacebookShareButton,
+  TwitterShareButton,
+  LinkedinShareButton,
+} from 'react-share';
 
 import { FaFacebookSquare, FaTwitterSquare, FaLinkedin } from 'react-icons/fa';
 import { GoPlay } from 'react-icons/go';
@@ -26,6 +31,7 @@ import {
 const PodcastEpisodeScreen = () => {
   const dispatch = useDispatch();
   const { id } = useParams();
+  const url = window.location.href;
 
   const {
     loading: loadingEpisodeDetails,
@@ -158,9 +164,15 @@ const PodcastEpisodeScreen = () => {
                   Share this podcast
                 </h2>
                 <div className="flex flex-col md:flex-row md:space-x-4 justify-end items-end">
-                  <FaFacebookSquare className="text-4xl text-neutral-700" />
-                  <FaTwitterSquare className="text-4xl text-neutral-700" />
-                  <FaLinkedin className="text-4xl text-neutral-700" />
+                  <FacebookShareButton url={url}>
+                    <FaFacebookSquare className="text-4xl text-neutral-700" />
+                  </FacebookShareButton>
+                  <TwitterShareButton url={url}>
+                    <FaTwitterSquare className="text-4xl text-neutral-700" />
+                  </TwitterShareButton>
+                  <LinkedinShareButton url={url}>
+                    <FaLinkedin className="text-4xl text-neutral-700" />
+                  </LinkedinShareButton>
                 </div>
               </div>
 
@@ -182,9 +194,15 @@ const PodcastEpisodeScreen = () => {
                 {episodeDetails.description}
               </div>
               <div className="flex space-x-4 items-center pb-10">
-                <FaFacebookSquare className="text-3xl text-neutral-700" />
-                <FaTwitterSquare className="text-3xl text-neutral-700" />
-                <FaLinkedin className="text-3xl text-neutral-700" />
+                <FacebookShareButton url={url}>
+                  <FaFacebookSquare className="text-3xl text-neutral-700" />
+                </FacebookShareButton>
+                <TwitterShareButton url={url}>
+                  <FaTwitterSquare className="text-3xl text-neutral-700" />
+                </TwitterShareButton>
+                <LinkedinShareButton url={url}>
+                  <FaLinkedin className="text-3xl text-neutral-700" />
+                </LinkedinShareButton>
               </div>
             </div>
           </>

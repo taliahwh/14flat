@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import moment from 'moment';
 import readingTime from 'reading-time/lib/reading-time';
 
@@ -20,7 +21,11 @@ const LatestArticle = ({ article }) => {
               BY {article.writtenBy.name.toUpperCase()}
             </span>
           </p>
-          <h1 className="text-2xl font-spratRegular">{article.title}</h1>
+          <Link to={`/blog/${article._id}`}>
+            <h1 className="text-2xl font-spratRegular hover:underline">
+              {article.title}
+            </h1>
+          </Link>
           <p className="font-robotoLight text-sm">{article.excerpt}</p>
 
           <div className="flex space-x-3 text-xs pt-3">
@@ -44,7 +49,6 @@ const LatestArticle = ({ article }) => {
         <div className="flex justify-between pt-3 font-robotoLight text-sm">
           <div className="flex space-x-3 text-xs">
             <p className="text-neutral-400">
-              {' '}
               {moment(article.createdAt).format('MMMM D')}
             </p>
             <p className="text-neutral-400">•</p>
@@ -58,7 +62,11 @@ const LatestArticle = ({ article }) => {
           </p>
         </div>
 
-        <h1 className="text-2xl font-spratRegular py-3">{article.title}</h1>
+        <Link to={`/blog/${article._id}`}>
+          <h1 className="text-2xl font-spratRegular py-3 hover:underline">
+            {article.title}
+          </h1>
+        </Link>
         <p className="font-robotoLight text-sm text-justify">
           {article.excerpt}
         </p>

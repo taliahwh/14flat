@@ -13,6 +13,7 @@ import { listLatestEpisodes } from '../actions/podcastActions';
 
 // COMPONENTS
 import Header from '../components/Header';
+import Meta from '../components/Meta';
 import Loader from '../components/Loader';
 import Alert from '../components/Alert';
 import CoverArticle from '../components/Articles/CoverArticle';
@@ -56,10 +57,7 @@ const HomeScreen = () => {
 
   return (
     <div className="bg-background px-4 md:px-10 max-w-8xl mx-auto">
-      <Helmet>
-        <title>1-4 Flat | Home</title>
-        <meta name="description" content="Basketball news blog"></meta>
-      </Helmet>
+      <Meta title={'1-4 Flat | Home'} />
       <Header />
       {/* Featured Articles Section */}
       <div className="grid grid-cols-1 md:grid-cols-10 gap-7 divide-y-1 md:divide-y-0 md:divide-x-1 divide-neutral-300">

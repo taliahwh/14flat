@@ -4,6 +4,7 @@ import { useParams } from 'react-router-dom';
 
 // Components
 import Header from '../components/Header';
+import Meta from '../components/Meta';
 import Alert from '../components/Alert';
 import Loader from '../components/Loader';
 import Pagination from '../components/Pagination';
@@ -37,6 +38,7 @@ const BlogScreen = () => {
 
   return (
     <FullScreen>
+      <Meta title={`1-4 Flat | Blog`} />
       <div className="bg-background px-4 md:px-10 max-w-8xl mx-auto">
         <Header />
         <ScrollToTop />

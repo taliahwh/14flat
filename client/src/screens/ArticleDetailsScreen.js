@@ -21,6 +21,7 @@ import {
 // Components
 import ScrollToTop from '../config/ScrollToTop';
 import Header from '../components/Header';
+import Meta from '../components/Meta';
 import Loader from '../components/Loader';
 import Alert from '../components/Alert';
 import FullHeight from '../components/FullHeight';
@@ -62,7 +63,7 @@ const ArticleDetailsScreen = () => {
     if (user) {
       dispatch(saveArticle(article, user));
     } else {
-      console.log('Save article ERROR');
+      navigate('/signin');
     }
   };
 
@@ -128,6 +129,7 @@ const ArticleDetailsScreen = () => {
           <Alert variant="error">{errorArticleDetails}</Alert>
         ) : (
           <>
+            {article.title && <Meta title={`1-4 Flat | ${article.title}`} />}
             <Link
               to="/blog"
               className="font-robotoLight underline text-sm flex items-center space-x-2 pb-5 pl-5 text-neutral-500"

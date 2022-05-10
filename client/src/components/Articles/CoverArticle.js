@@ -1,10 +1,11 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import moment from 'moment';
-import readingTime from 'reading-time/lib/reading-time';
+import parse from 'html-react-parser';
+// import readingTime from 'reading-time/lib/reading-time';
 
 const CoverArticle = ({ article }) => {
-  // const { text: readingLength } = readingTime(article.content);
+  // const { text: readingLength } = readingTime(article.excerpt);
   return (
     <>
       {article && (
@@ -21,8 +22,10 @@ const CoverArticle = ({ article }) => {
                   {article.createdAt &&
                     moment(article.createdAt).format('MMMM D')}
                 </p>
-                {/* <p className="text-neutral-400">•</p> */}
-                {/* <p className="text-neutral-400">{readingLength}</p> */}
+                {/* <p className="text-neutral-400">•</p>
+                {article.content && (
+                  <p className="text-neutral-400">{readingLength}</p>
+                )} */}
               </div>
               <p className="text-neutral-600 text-xs md:text-sm">
                 ⸻
@@ -38,7 +41,11 @@ const CoverArticle = ({ article }) => {
               {article.title}
             </h1>
           </Link>
-          <p className="font-robotoLight md:block hidden">{article.excerpt}</p>
+          {article.content && (
+            <div className="font-robotoLight md:block hidden">
+              {parse(article.content.slice(0, 710))}
+            </div>
+          )}
         </div>
       )}
     </>

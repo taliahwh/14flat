@@ -38,7 +38,7 @@ const SignInScreen = () => {
             {errorSignIn && <Alert variant="error">{errorSignIn}</Alert>}
 
             <label
-              className="block mb-2 text-sm font-medium text-gray-900"
+              className="block mb-2 text-sm font-robotoMedium text-gray-900"
               htmlFor="email"
             >
               Email
@@ -53,7 +53,7 @@ const SignInScreen = () => {
             />
 
             <label
-              className="block mb-2 text-sm font-medium text-gray-900 pt-2"
+              className="block mb-2 text-sm font-robotoMedium text-gray-900 pt-2"
               htmlFor="password"
             >
               Password
@@ -71,7 +71,7 @@ const SignInScreen = () => {
 
             <button
               type="submit"
-              className="text-white w-full font-medium text-sm px-5 py-2.5 text-center bg-neutral-600 hover:bg-neutral-700 focus:outline-none transition-colors"
+              className="text-white w-full font-robotoMedium text-sm px-5 py-2.5 text-center bg-neutral-600 hover:bg-neutral-700 focus:outline-none transition-colors"
             >
               Sign in
             </button>
@@ -79,7 +79,7 @@ const SignInScreen = () => {
             <p className="text-sm block mb-2  text-neutral-600 pt-1 text-center">
               Don't have an account?{' '}
               <span>
-                <Link to="/signup" className="font-medium underline ">
+                <Link to="/signup" className="font-robotoMedium underline ">
                   Sign up
                 </Link>
               </span>

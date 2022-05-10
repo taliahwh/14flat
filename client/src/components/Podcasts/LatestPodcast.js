@@ -44,7 +44,7 @@ const LatestPodcast = ({ episode }) => {
       {/* Mobile view */}
       <div className="flex flex-col space-y-2 w-full md:hidden">
         <img
-          className="h-full object-fit"
+          className="h-[20rem] object-fit"
           src={episode.images[0].url}
           alt="latest article"
         />

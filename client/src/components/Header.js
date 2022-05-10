@@ -37,7 +37,7 @@ const Header = () => {
             to="/"
             className={({ isActive }) =>
               isActive
-                ? 'underline underline-offset-12 font-roboto font-medium'
+                ? 'underline underline-offset-12  font-robotoMedium'
                 : 'no-underline font-robotoLight'
             }
           >
@@ -47,7 +47,7 @@ const Header = () => {
             to="/blog"
             className={({ isActive }) =>
               isActive
-                ? 'underline underline-offset-12 font-roboto font-medium'
+                ? 'underline underline-offset-12  font-robotoMedium'
                 : 'no-underline font-robotoLight'
             }
           >
@@ -57,7 +57,7 @@ const Header = () => {
             to="/podcasts"
             className={({ isActive }) =>
               isActive
-                ? 'underline underline-offset-12 font-roboto font-medium'
+                ? 'underline underline-offset-12  font-robotoMedium'
                 : 'no-underline font-robotoLight'
             }
           >
@@ -66,10 +66,6 @@ const Header = () => {
         </div>
 
         <div className="items-center hidden md:flex">
-          {/* <Link to="/">
-            <img src={user} className="w-8 h-8" alt="user" />
-          </Link> */}
-
           {/* User Drowdown Dropdown */}
           <div
             className="text-black text-3xl cursor-pointer hidden md:flex"
@@ -83,7 +79,7 @@ const Header = () => {
           </div>
           {userOpen && userInfo && (
             <div className=" absolute top-full right-0 flex flex-col  w-1/5 h-[20rem] py-8 bg-background shadow-md">
-              <h1 className="font-roboto font-medium text-md text-center py-4 text-neutral-600">
+              <h1 className="font-robotoMedium text-md text-center py-4 text-neutral-600">
                 {userInfo.name}
               </h1>
 
@@ -95,27 +91,29 @@ const Header = () => {
                   to="/profile"
                   className={({ isActive }) =>
                     isActive
-                      ? 'underline underline-offset-12 font-roboto font-medium'
+                      ? 'underline underline-offset-12 font-robotoMedium'
                       : 'no-underline font-robotoLight'
                   }
                 >
                   Profile
                 </NavLink>
-                <NavLink
-                  to="/new-article"
-                  className={({ isActive }) =>
-                    isActive
-                      ? 'underline underline-offset-12 font-roboto font-medium'
-                      : 'no-underline font-robotoLight'
-                  }
-                >
-                  New Article
-                </NavLink>
+                {userInfo && userInfo.isAdmin === true && (
+                  <NavLink
+                    to="/new-article"
+                    className={({ isActive }) =>
+                      isActive
+                        ? 'underline underline-offset-12  font-robotoMedium'
+                        : 'no-underline font-robotoLight'
+                    }
+                  >
+                    New Article
+                  </NavLink>
+                )}
                 <NavLink
                   to="/saved-articles"
                   className={({ isActive }) =>
                     isActive
-                      ? 'underline underline-offset-12 font-roboto font-medium'
+                      ? 'underline underline-offset-12  font-robotoMedium'
                       : 'no-underline font-robotoLight'
                   }
                 >
@@ -124,7 +122,7 @@ const Header = () => {
 
                 <button
                   onClick={handleLogout}
-                  className="'underline underline-offset-12 font-roboto font-medium text-sm"
+                  className="'underline underline-offset-12  font-robotoMedium text-sm"
                 >
                   Logout
                 </button>
@@ -135,19 +133,13 @@ const Header = () => {
           {userOpen && !userInfo && (
             <div className=" absolute top-full right-0 flex flex-col  w-1/5 h-[8rem] py-8 bg-background shadow-md">
               <div className="flex-1 flex flex-col items-center text-md space-y-1">
-                <Link
-                  to="/signin"
-                  className="no-underline font-roboto font-medium"
-                >
+                <Link to="/signin" className="no-underline  font-robotoMedium">
                   Sign In
                 </Link>
 
                 <p className="text-sm font-roboto">or</p>
 
-                <Link
-                  to="/signup"
-                  className="no-underline font-roboto font-medium"
-                >
+                <Link to="/signup" className="no-underline  font-robotoMedium">
                   Create an Account
                 </Link>
               </div>
@@ -173,7 +165,7 @@ const Header = () => {
                 to="/"
                 className={({ isActive }) =>
                   isActive
-                    ? 'underline underline-offset-12 font-roboto font-medium'
+                    ? 'underline underline-offset-12  font-robotoMedium'
                     : 'no-underline font-robotoLight'
                 }
               >
@@ -183,7 +175,7 @@ const Header = () => {
                 to="/blog"
                 className={({ isActive }) =>
                   isActive
-                    ? 'underline underline-offset-12 font-roboto font-medium'
+                    ? 'underline underline-offset-12 font-robotoMedium'
                     : 'no-underline font-robotoLight'
                 }
               >
@@ -193,7 +185,7 @@ const Header = () => {
                 to="/podcasts"
                 className={({ isActive }) =>
                   isActive
-                    ? 'underline underline-offset-12 font-roboto font-medium'
+                    ? 'underline underline-offset-12  font-robotoMedium'
                     : 'no-underline font-robotoLight'
                 }
               >
@@ -204,7 +196,7 @@ const Header = () => {
             {/* Border */}
             <div className="border-t-1 border-x-neutral-500 pb-5"></div>
 
-            <h1 className="font-roboto font-medium text-md text-center py-4 text-neutral-600">
+            <h1 className=" font-robotoMedium text-md text-center py-4 text-neutral-600">
               {userInfo.name}
             </h1>
 
@@ -213,27 +205,29 @@ const Header = () => {
                 to="/profile"
                 className={({ isActive }) =>
                   isActive
-                    ? 'underline underline-offset-12 font-roboto font-medium'
+                    ? 'underline underline-offset-12  font-robotoMedium'
                     : 'no-underline font-robotoLight'
                 }
               >
                 Profile
               </NavLink>
-              <NavLink
-                to="/new-article"
-                className={({ isActive }) =>
-                  isActive
-                    ? 'underline underline-offset-12 font-roboto font-medium'
-                    : 'no-underline font-robotoLight'
-                }
-              >
-                New Article
-              </NavLink>
+              {userInfo && userInfo.isAdmin === true && (
+                <NavLink
+                  to="/new-article"
+                  className={({ isActive }) =>
+                    isActive
+                      ? 'underline underline-offset-12 font-robotoMedium'
+                      : 'no-underline font-robotoLight'
+                  }
+                >
+                  New Article
+                </NavLink>
+              )}
               <NavLink
                 to="/saved-articles"
                 className={({ isActive }) =>
                   isActive
-                    ? 'underline underline-offset-12 font-roboto font-medium'
+                    ? 'underline underline-offset-12 font-robotoMedium'
                     : 'no-underline font-robotoLight'
                 }
               >
@@ -242,7 +236,7 @@ const Header = () => {
 
               <button
                 onClick={handleLogout}
-                className="'underline underline-offset-12 font-roboto font-medium text-sm"
+                className="'underline underline-offset-12 font-robotoMedium text-sm"
               >
                 Logout
               </button>
@@ -257,7 +251,7 @@ const Header = () => {
                 to="/"
                 className={({ isActive }) =>
                   isActive
-                    ? 'underline underline-offset-12 font-roboto font-medium'
+                    ? 'underline underline-offset-12 font-robotoMedium'
                     : 'no-underline font-robotoLight'
                 }
               >
@@ -267,7 +261,7 @@ const Header = () => {
                 to="/blog"
                 className={({ isActive }) =>
                   isActive
-                    ? 'underline underline-offset-12 font-roboto font-medium'
+                    ? 'underline underline-offset-12  font-robotoMedium'
                     : 'no-underline font-robotoLight'
                 }
               >
@@ -277,7 +271,7 @@ const Header = () => {
                 to="/podcasts"
                 className={({ isActive }) =>
                   isActive
-                    ? 'underline underline-offset-12 font-roboto font-medium'
+                    ? 'underline underline-offset-12  font-robotoMedium'
                     : 'no-underline font-robotoLight'
                 }
               >
@@ -291,17 +285,14 @@ const Header = () => {
             <div className="flex-1 flex flex-col items-center text-md space-y-2">
               <Link
                 to="/signin"
-                className="no-underline font-roboto font-medium pt-2"
+                className="no-underline  font-robotoMedium pt-2"
               >
                 Sign In
               </Link>
 
               <p className="text-sm font-roboto">or</p>
 
-              <Link
-                to="/signup"
-                className="no-underline font-roboto font-medium"
-              >
+              <Link to="/signup" className="no-underline  font-robotoMedium">
                 Create an Account
               </Link>
             </div>

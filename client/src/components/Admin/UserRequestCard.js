@@ -57,7 +57,7 @@ const UserRequestCard = ({ request, markAsViewed, respond }) => {
                     <>
                       <button
                         onClick={handleApproveRequest}
-                        className="bg-green-500 px-4 py-2 text-white font-medium text-sm transition ease-in-out hover:-translate-y-1 hover:scale-105  duration-300"
+                        className="bg-green-500 px-4 py-2 text-white font-robotoMedium text-sm transition ease-in-out hover:-translate-y-1 hover:scale-105  duration-300"
                       >
                         ACCEPT
                       </button>
@@ -65,7 +65,7 @@ const UserRequestCard = ({ request, markAsViewed, respond }) => {
                         onClick={() =>
                           setDeclineResponeOpen(!declineResponseOpen)
                         }
-                        className="bg-red-600 px-4 py-1 lg:py-1 text-white font-medium text-sm transition ease-in-out hover:-translate-y-1 hover:scale-105  duration-300"
+                        className="bg-red-600 px-4 py-1 lg:py-1 text-white font-robotoMedium text-sm transition ease-in-out hover:-translate-y-1 hover:scale-105  duration-300"
                       >
                         DECLINE
                       </button>
@@ -110,7 +110,7 @@ const UserRequestCard = ({ request, markAsViewed, respond }) => {
                   <div className="flex space-x-2">
                     <button
                       type="sumbit"
-                      className="bg-neutral-600 px-6 py-2 text-white font-medium text-sm transition ease-in-out hover:-translate-y-1 hover:scale-105  duration-300"
+                      className="bg-neutral-600 px-6 py-2 text-white font-robotoMedium text-sm transition ease-in-out hover:-translate-y-1 hover:scale-105  duration-300"
                     >
                       DECLINE REQUEST
                     </button>
@@ -130,13 +130,13 @@ const UserRequestCard = ({ request, markAsViewed, respond }) => {
                 <>
                   <button
                     onClick={handleApproveRequest}
-                    className="bg-green-500 px-4 py-2 text-white font-medium text-sm transition ease-in-out hover:-translate-y-1 hover:scale-105  duration-300"
+                    className="bg-green-500 px-4 py-2 text-white font-robotoMedium text-sm transition ease-in-out hover:-translate-y-1 hover:scale-105  duration-300"
                   >
                     ACCEPT
                   </button>
                   <button
                     onClick={() => setDeclineResponeOpen(!declineResponseOpen)}
-                    className="bg-red-600 px-4 py-1 lg:py-1 text-white font-medium text-sm transition ease-in-out hover:-translate-y-1 hover:scale-105  duration-300"
+                    className="bg-red-600 px-4 py-1 lg:py-1 text-white font-robotoMedium text-sm transition ease-in-out hover:-translate-y-1 hover:scale-105  duration-300"
                   >
                     DECLINE
                   </button>

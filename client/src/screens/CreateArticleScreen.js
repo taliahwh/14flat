@@ -64,7 +64,7 @@ const CreateArticleScreen = () => {
   };
 
   useEffect(() => {
-    if (!userInfo) {
+    if (!userInfo || userInfo.isAdmin === false) {
       navigate('/');
     }
   }, [userInfo, navigate]);
@@ -205,7 +205,7 @@ const CreateArticleScreen = () => {
 
         <button
           type="submitForm"
-          className="font-roboto font-medium text-white bg-neutral-500 w-full py-2 text-md"
+          className="font-robotoMedium text-white bg-neutral-500 w-full py-2 text-md"
         >
           PUBLISH POST
         </button>

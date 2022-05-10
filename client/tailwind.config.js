@@ -11,10 +11,13 @@ module.exports = {
       roboto: ['Roboto', 'san-serif'],
       robotoLight: ['Roboto-Light', 'san-serif'],
       robotoRegular: ['Roboto-Regular', 'san-serif'],
+      robotoMedium: ['Roboto-Medium', 'san-serif'],
+      robotoBold: ['Roboto-Bold', 'san-serif'],
       spratBold: ['Sprat-Bold', 'serif'],
-      spratBlack: ['Sprat-Black', 'serif'],
-      spratRegular: ['Sprat-Regular', 'serif'],
       spratLight: ['Sprat-Light', 'serif'],
+      spratRegular: ['Sprat-Regular', 'serif'],
+      spratMedium: ['Sprat-Medium', 'serif'],
+      spratBlack: ['Sprat-Black', 'serif'],
     },
     extend: {
       colors: {

@@ -11,18 +11,22 @@ const Pagination = ({ pages, page }) => {
           className=" flex justify-center font-spratRegular items-center space-x-2"
           aria-label="Pagination"
         >
-          <Link to={`/blog/page/${page - 1}`}>
-            <span className="sr-only">Previous</span>
-            <BsArrowLeft />
-          </Link>
+          {page > 1 && (
+            <Link to={`/blog/page/${page - 1}`}>
+              <span className="sr-only">Previous</span>
+              <BsArrowLeft />
+            </Link>
+          )}
 
           <div>
             Page {page} of {pages}
           </div>
-          <Link to={`/blog/page/${page + 1}`}>
-            <span className="sr-only">Next</span>
-            <BsArrowRight />
-          </Link>
+          {page <= pages && (
+            <Link to={`/blog/page/${page + 1}`}>
+              <span className="sr-only">Next</span>
+              <BsArrowRight />
+            </Link>
+          )}
         </nav>
       </div>
     )

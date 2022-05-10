@@ -48,7 +48,7 @@ const BlogScreen = () => {
 
           {/* Latest Articles Section */}
           <div className="pt-8 md:pt-12 pb-8">
-            <div className="flex justify-center border-t-1  border-b-1 border-neutral-300">
+            <div className="flex justify-left border-t-1  border-b-1 border-neutral-300">
               <form onSubmit={handleSearch}>
                 <label
                   htmlFor="default-search"

@@ -93,14 +93,14 @@ const PodcastShowScreen = () => {
                 </p>
                 <div className="flex space-x-2 pb-5">
                   <a
-                    href={`https://open.spotify.com/show/${id}`}
+                    href={show[0].uri}
                     target="_blank"
                     rel="noreferrer"
                     aria-label={show[0].name}
                   >
                     <p className="font-robotoLight text-sm border-1 border-green-600 text-green-600 hover:bg-green-600 hover:text-white py-1.5 px-3 ">
                       Listen on
-                      <span className="font-roboto font-medium pl-1">
+                      <span className="font-robotoMedium pl-1">
                         Spotify Podcasts
                       </span>
                     </p>
@@ -158,14 +158,19 @@ const PodcastShowScreen = () => {
                   {show[0].total_episodes} episodes
                 </p>
 
-                <Link to="/">
+                <a
+                  href={show[0].uri}
+                  target="_blank"
+                  rel="noreferrer"
+                  aria-label={show[0].name}
+                >
                   <p className="font-robotoLight w-52 text-sm border-1 border-green-600 text-green-600 hover:bg-green-600 hover:text-white py-1.5 px-3 ">
                     Listen on
-                    <span className="font-roboto font-medium pl-1">
+                    <span className="font-robotoMedium pl-1">
                       Spotify Podcasts
                     </span>
                   </p>
-                </Link>
+                </a>
               </div>
             </div>
             {/* Border */}

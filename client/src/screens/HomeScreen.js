@@ -68,6 +68,7 @@ const HomeScreen = () => {
           )}
           {coverArticle && <CoverArticle article={coverArticle} />}
         </div>
+        {/* Featured Article Desktop View */}
         <div className="md:grid md:col-span-4 pt-10 md:pt-0 hidden">
           {loadingFeaturedArticles && <Loader />}
           {errorFeautredArticles && (
@@ -81,15 +82,16 @@ const HomeScreen = () => {
             ))}
         </div>
 
+        {/* Featured Article Mobile View */}
         <div className="col-span-1 md:hidden pt-10">
-          <div className="flex space-x-7">
+          <div className="flex space-x-5">
             {loadingFeaturedArticles && <Loader />}
             {errorFeautredArticles && (
               <Alert variant="error">{errorFeautredArticles}</Alert>
             )}
             {featuredArticles &&
               featuredArticles.map((article) => (
-                <div key={article._id}>
+                <div key={article._id} className="w-1/2">
                   <FeaturedArticle article={article} />
                 </div>
               ))}

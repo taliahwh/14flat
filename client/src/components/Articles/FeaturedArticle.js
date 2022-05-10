@@ -9,7 +9,7 @@ const FeaturedArticle = ({ article }) => {
     <div className="flex flex-col space-y-2 pb-4 md:pl-8 pl-0">
       <div className="flex flex-col space-y-1">
         <img
-          className="md:w-full h-48 w-full md:h-52 md:object-fit object-fit"
+          className="md:w-full md:h-52 md:object-fit object-fit"
           src={article.coverImage}
           alt="Cover"
         />
@@ -30,8 +30,11 @@ const FeaturedArticle = ({ article }) => {
         </div>
       </div>
 
-      <p className="text-neutral-600 text-xs md:text-sm block lg:hidden">
-        ⸻<span className="pl-3">BY {article.writtenBy.name.toUpperCase()}</span>
+      <p className="text-neutral-600 font-robotoLight text-xs md:text-sm block lg:hidden">
+        ⸻
+        <span className="pl-1.5">
+          BY {article.writtenBy.name.toUpperCase()}
+        </span>
       </p>
 
       <Link to={`/blog/${article._id}`}>

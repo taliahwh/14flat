@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 
 // Components
 import Header from '../components/Header';
+import Meta from '../components/Meta';
 import Loader from '../components/Loader';
 import Alert from '../components/Alert';
 import PodcastCard from '../components/Podcasts/PodcastCard';
@@ -28,6 +29,7 @@ const PodcastScreen = () => {
   return (
     <div className="bg-background px-4 md:px-10 max-w-8xl mx-auto">
       <Header />
+      <Meta title={`1-4 Flat | Podcasts`} />
 
       <h1 className="font-spratBold text-7xl lg:text-8xl pb-5">Podcasts</h1>
 

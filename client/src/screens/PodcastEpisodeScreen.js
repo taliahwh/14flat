@@ -17,6 +17,7 @@ import { BsArrowLeft } from 'react-icons/bs';
 
 // Components
 import Header from '../components/Header';
+import Meta from '../components/Meta';
 import Loader from '../components/Loader';
 import Alert from '../components/Alert';
 import ScrollToTop from '../config/ScrollToTop';
@@ -57,6 +58,7 @@ const PodcastEpisodeScreen = () => {
         episodeDetails.images.length > 0 && (
           <>
             <ScrollToTop />
+            <Meta title={`1-4 Flat | ${episodeDetails.name}`} />
             <Link
               to={`/podcasts/show/${episodeDetails.show.id}`}
               className="font-robotoLight underline text-sm flex items-center space-x-2 pt-2 pb-5 text-neutral-500"

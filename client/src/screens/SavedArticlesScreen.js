@@ -74,6 +74,7 @@ const SavedArticlesScreen = () => {
                     ></path>
                   </svg>
                 </div>
+                {/* TODO Search feature */}
                 <input
                   type="search"
                   id="default-search"
@@ -90,11 +91,6 @@ const SavedArticlesScreen = () => {
           </div>
 
           {/* Mobile Header View */}
-          {/* <div className="block md:hidden w-full border-t-1 border-b-1 border-neutral-300">
-          <p className="font-spratRegular text-center text-xl md:text-3xl py-3">
-            THE LATEST ARTICLES
-          </p>
-        </div> */}
 
           <div className="flex flex-col space-y-10 pt-5 md:pt-14">
             {loadingSavedArticles && <Loader />}
@@ -108,12 +104,13 @@ const SavedArticlesScreen = () => {
                   <SavedArticle article={article} />
                 </div>
               ))}
-            <Link
+            {/* TODO Pagagination */}
+            {/* <Link
               to="/"
               className="font-spratRegular text-sm text-neutral-900 text-center border-1 py-2 border-neutral-900 hover:shadow-md"
             >
               Show more
-            </Link>
+            </Link> */}
           </div>
         </div>
       </Body>

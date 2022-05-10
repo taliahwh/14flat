@@ -28,16 +28,21 @@ app.use('/api/articles', articleRoutes);
 app.use('/api/podcasts', podcastRoutes);
 app.use('/api/upload', uploadRoutes);
 
-app.get('/', (req, res) => {
-  res.send('API is running...');
-});
-
-// used to get spotify API token
-// getSpotifyAuth();
-
 // Making uploads folder static
 const __dirname = path.resolve();
 app.use('/uploads', express.static(path.join(__dirname, '/uploads')));
+
+if (process.env.NODE_ENV === 'production') {
+  app.use(express.static(path.join(__dirname, '/client/build')));
+
+  app.get('*', (req, res) =>
+    res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html'))
+  );
+} else {
+  app.get('/', (req, res) => {
+    res.send('API is running...');
+  });
+}
 
 // Error handling middleware
 app.use(notFound);

@@ -22,14 +22,11 @@
     "url": "https://github.com/taliahwh/14flat/issues"
   },
   "homepage": "https://github.com/taliahwh/14flat#readme",
-  "devDependencies": {
-    "colors": "^1.4.0",
-    "nodemon": "^2.0.15"
-  },
   "dependencies": {
     "axios": "^0.26.1",
     "bcryptjs": "^2.4.3",
     "body-parser": "^1.20.0",
+    "colors": "^1.4.0",
     "dotenv": "^16.0.0",
     "express": "^4.18.1",
     "express-async-handler": "^1.2.0",
@@ -37,6 +34,7 @@
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^6.3.3",
     "multer": "^1.4.4",
+    "nodemon": "^2.0.16",
     "qs": "^6.10.3",
     "validator": "^13.7.0"
   }

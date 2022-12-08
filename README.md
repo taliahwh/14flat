@@ -55,6 +55,7 @@ A blogging platform for journalists covering the NBA to create, edit, save, and 
 * [![TailwindCSS][TailwindCSS-Badge]][TailwindCSS-url]
 * [![MongoDB][MongoDB-Badge]][MongoDB-url]
 * [![Node.js][Node.js-Badge]][Node.js-url]
+* [![Express.js][Express.js-Badge]][Express.js-url]
 
 </hr>
 
@@ -99,4 +100,6 @@ For testing admin and writer functionality, login as:
 [TailWindCSS-url]: https://tailwindcss.com/
 [Redux-Badge]: https://img.shields.io/badge/Redux-593D88?style=for-the-badge&logo=redux&logoColor=white
 [Redux-url]: https://redux.js.org/
+[Express.js-Badge]: https://img.shields.io/badge/Express.js-000000?style=for-the-badge&logo=express&logoColor=white
+[Express.js-url]: https://expressjs.com/
 

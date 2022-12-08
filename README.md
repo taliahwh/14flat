@@ -56,6 +56,7 @@ A blogging platform for journalists covering the NBA to create, edit, save, and 
 * [![MongoDB][MongoDB-Badge]][MongoDB-url]
 * [![Node.js][Node.js-Badge]][Node.js-url]
 * [![Express.js][Express.js-Badge]][Express.js-url]
+* [![Redux][Redux-Badge]][Redux-url]
 
 </hr>
 
